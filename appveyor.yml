@@ -9,8 +9,8 @@ init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 
 install:
-  - ps: Start-FileDownload 'https://download.microsoft.com/download/8/F/9/8F9659B9-E628-4D1A-B6BF-C3004C8C954B/dotnet-1.1.1-sdk-win-x64.exe'
-  - cmd: dotnet-1.1.1-sdk-win-x64.exe /quiet
+  - ps: Start-FileDownload 'https://download.microsoft.com/download/6/1/B/61B3E81F-5509-48D2-BB4F-5189E23CD29A/dotnet-sdk-2.0.0-preview2-006497-win-x64.exe'
+  - cmd: dotnet-sdk-2.0.0-preview2-006497-win-x64.exe /quiet
   - ps: $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = "true"
 
 environment:
