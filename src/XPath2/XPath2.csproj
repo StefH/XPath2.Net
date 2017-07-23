@@ -4,13 +4,13 @@
     <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
-    <VersionPrefix>1.0.4.0</VersionPrefix>
+    <VersionPrefix>1.0.5.0</VersionPrefix>
     <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net35;net40;netstandard20</TargetFrameworks>
     <AssemblyName>XPath2</AssemblyName>
     <PackageId>XPath2</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS</PackageTags>
-    <PackageReleaseNotes>Upgraded to VS2017 csproj format</PackageReleaseNotes>
+    <PackageReleaseNotes>Added netstandard2.0</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>
@@ -27,15 +27,16 @@
     <DebugType>full</DebugType>
     <RootNamespace>Wmhelp.XPath2</RootNamespace>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+  
+  <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net20' ">
-    <Reference Include="System" />
-  </ItemGroup>
-
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard20' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+  
   <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -50,7 +51,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard20' ">
     <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
     <PackageReference Include="System.Globalization" Version="4.3.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
