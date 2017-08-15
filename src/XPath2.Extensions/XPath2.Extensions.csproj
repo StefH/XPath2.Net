@@ -21,6 +21,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <RootNamespace>Wmhelp.XPath2.Extensions</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <DebugType>portable</DebugType>
   </PropertyGroup>
   
