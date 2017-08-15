@@ -31,49 +31,47 @@ using Wmhelp.XPath2.MS;
 
 namespace Wmhelp.XPath2
 {
-	internal class YYParser
-	{	     
-		private XPath2Context context;
+    internal class YYParser
+    {         
+        private XPath2Context context;
 
-		public YYParser(XPath2Context context)
-		{
-		    errorText = new StringWriter();	    	 
-		    this.context = context;
-		}
+        public YYParser(XPath2Context context)
+        {
+            errorText = new StringWriter();
+            this.context = context;
+        }
 
-		public object yyparseSafe (Tokenizer tok)
-		{
-			return yyparseSafe (tok, null);
-		}
+        public object yyparseSafe(Tokenizer tok)
+        {
+            return yyparseSafe(tok, null);
+        }
 
-		public object yyparseSafe (Tokenizer tok, object yyDebug)
-		{ 
-		    try
-			{
-			   return yyparse (tok, yyDebug);    
-			}
+        public object yyparseSafe(Tokenizer tok, object yyDebug)
+        { 
+            try
+            {
+                return yyparse(tok, yyDebug);
+            }
             catch (XPath2Exception)
-			{
-				throw;
-			}
-			catch (Exception)   
-			{
-				throw new XPath2Exception ("XPST0003", "{2} at line {1} pos {0}", tok.ColNo, tok.LineNo, errorText.ToString());
-			}
-		}
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new XPath2Exception("XPST0003", "{2} at line {1} pos {0}", tok.ColNo, tok.LineNo, errorText.ToString());
+            }
+        }
 
-		public object yyparseDebug (Tokenizer tok)
-		{
-			return yyparseSafe (tok, new yydebug.yyDebugSimple ());
-		}	
-		
-%}
-
+        public object yyparseDebug (Tokenizer tok)
+        {
+            return yyparseSafe(tok, new yydebug.yyDebugSimple());
+        }
+    %}
 
 %token StringLiteral
-%token IntegerLiteral 
-%token DecimalLiteral 
-%token DoubleLiteral   
+%token IntegerLiteral
+%token DecimalLiteral
+%token DoubleLiteral
 
 %token NCName
 %token QName
@@ -83,7 +81,7 @@ namespace Wmhelp.XPath2
 %token IN
 %token IF
 %token THEN
-%token ELSE 
+%token ELSE
 %token SOME
 %token EVERY
 %token SATISFIES
@@ -114,17 +112,17 @@ namespace Wmhelp.XPath2
 
 %token NODE
 %token DOUBLE_PERIOD
-%token DOUBLE_SLASH								/* // */
-%token EMPTY_SEQUENCE							/* empty-sequence() */
-%token ITEM										/* item() */
+%token DOUBLE_SLASH /* // */
+%token EMPTY_SEQUENCE /* empty-sequence() */
+%token ITEM /* item() */
 
 %token AXIS_CHILD AXIS_DESCENDANT AXIS_ATTRIBUTE AXIS_SELF AXIS_DESCENDANT_OR_SELF
    AXIS_FOLLOWING_SIBLING AXIS_FOLLOWING AXIS_PARENT AXIS_ANCESTOR AXIS_PRECEDING_SIBLING
    AXIS_PRECEDING AXIS_ANCESTOR_OR_SELF AXIS_NAMESPACE
 
-%token Indicator1								/* ? */
-%token Indicator2								/* + */
-%token Indicator3								/* * */
+%token Indicator1 /* ? */
+%token Indicator2 /* + */
+%token Indicator3 /* * */
 
 %token DOCUMENT_NODE
 %token SCHEMA_ELEMENT
@@ -141,18 +139,18 @@ Expr
   | Expr ',' ExprSingle
   {
      ExprNode expr = $1 as ExprNode;
-	 if (expr == null)
-	     expr = new ExprNode(context, $1);
-	 expr.Add($3);
-	 $$ = expr;
+     if (expr == null)
+         expr = new ExprNode(context, $1);
+     expr.Add($3);
+     $$ = expr;
   }
-  ;     
-  
+  ;
+
 ExprSingle
   : FORExpr
   | QuantifiedExpr
   | IfExpr
-  | OrExpr      
+  | OrExpr
   ;
 
 
@@ -160,8 +158,8 @@ FORExpr
   : SimpleForClause RETURN ExprSingle
   {
      ForNode node = (ForNode)$1;
-	 node.AddTail($3);
-	 $$ = node;
+     node.AddTail($3);
+     $$ = node;
   }
   ;
 
@@ -170,14 +168,14 @@ SimpleForClause
   {
      $$ = $2;
   }
-  ;      
+  ;
 
 ForClauseBody
   : ForClauseOperator
   | ForClauseBody ',' ForClauseOperator
   {
-	 ((ForNode)$1).Add($3);
-	 $$ = $1;
+     ((ForNode)$1).Add($3);
+     $$ = $1;
   }
   ;
 
@@ -192,40 +190,40 @@ QuantifiedExpr
   : SOME QuantifiedExprBody SATISFIES ExprSingle
   {
      ForNode node = (ForNode)$2;
-	 node.AddTail($4);     
-	 $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Some(arg), node, XPath2ResultType.Boolean);
+     node.AddTail($4);
+     $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Some(arg), node, XPath2ResultType.Boolean);
   }
   | EVERY QuantifiedExprBody SATISFIES ExprSingle
   {
      ForNode node = (ForNode)$2;
-	 node.AddTail($4);     
-	 $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Every(arg), node, XPath2ResultType.Boolean);
+     node.AddTail($4);
+     $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Every(arg), node, XPath2ResultType.Boolean);
   }
-  ; 
+  ;
 
 QuantifiedExprBody
   : QuantifiedExprOper
   | QuantifiedExprBody ',' QuantifiedExprOper
   {
-	 ((ForNode)$1).Add($3);
-	 $$ = $1;      
+     ((ForNode)$1).Add($3);
+     $$ = $1;
   }
-  ; 
+  ;
   
 QuantifiedExprOper
   : '$' VarName IN ExprSingle
   {
      $$ = new ForNode(context, (Tokenizer.VarName)$2, $4);
   }
-  ;  
+  ;
 
 IfExpr
   : IF '(' Expr ')' THEN ExprSingle ELSE ExprSingle
   {
      $$ = new IfNode(context, $3, $6, $8);
   }
-  ;  
-  
+  ;
+
 OrExpr
   : AndExpr
   | OrExpr OR AndExpr
@@ -241,7 +239,7 @@ AndExpr
      $$ = new AndExprNode(context, $1, $3);
   }
   ;
- 
+
 ComparisonExpr
   : RangeExpr
   | ValueComp
@@ -253,88 +251,87 @@ GeneralComp
   : RangeExpr '=' RangeExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralEQ(context, arg1, arg2), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralEQ(context, arg1, arg2), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr '!' '='  RangeExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralNE(context, arg1, arg2), $1, $4, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralNE(context, arg1, arg2), $1, $4, XPath2ResultType.Boolean);
   }
   | RangeExpr '<' RangeExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralLT(context, arg1, arg2), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralLT(context, arg1, arg2), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr '<' '=' RangeExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralLE(context, arg1, arg2), $1, $4, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralLE(context, arg1, arg2), $1, $4, XPath2ResultType.Boolean);
   }
   | RangeExpr '>' RangeExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralGT(context, arg1, arg2), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralGT(context, arg1, arg2), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr '>' '=' RangeExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralGE(context, arg1, arg2), $1, $4, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralGE(context, arg1, arg2), $1, $4, XPath2ResultType.Boolean);
   }
-  ; 
-  
+  ;
+
 ValueComp
   : RangeExpr EQ RangeExpr
   {
      $$ = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorEq(arg1, arg2), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorEq(arg1, arg2), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr NE RangeExpr
   {
      $$ = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.Not(CoreFuncs.OperatorEq(arg1, arg2)), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.Not(CoreFuncs.OperatorEq(arg1, arg2)), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr LT RangeExpr
   {
      $$ = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr LE RangeExpr
   {
      $$ = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1) == CoreFuncs.True ||
-	      CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1) == CoreFuncs.True ||
+          CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr GT RangeExpr
   {
      $$ = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr GE RangeExpr
   {
      $$ = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2) == CoreFuncs.True ||
-	      CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2) == CoreFuncs.True ||
+          CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, $1, $3, XPath2ResultType.Boolean);
   }
   ;
-  
+
 NodeComp
   : RangeExpr IS RangeExpr
   {
      $$ = new SingletonBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.SameNode(arg1, arg2), $1, $3, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.SameNode(arg1, arg2), $1, $3, XPath2ResultType.Boolean);
   }
   | RangeExpr '<' '<' RangeExpr
   {
      $$ = new SingletonBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.PrecedingNode(arg1, arg2), $1, $4, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.PrecedingNode(arg1, arg2), $1, $4, XPath2ResultType.Boolean);
   }
   | RangeExpr '>' '>' RangeExpr
   {
      $$ = new SingletonBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.FollowingNode(arg1, arg2), $1, $4, XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.FollowingNode(arg1, arg2), $1, $4, XPath2ResultType.Boolean);
   }
-  ;   
-
+  ;
 
 RangeExpr
   : AdditiveExpr
@@ -343,46 +340,46 @@ RangeExpr
       $$ = new RangeNode(context, $1, $3);
   }
   ;
-  
+
 AdditiveExpr
   : MultiplicativeExpr
   | AdditiveExpr '+' MultiplicativeExpr
   {
      $$ = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) + ValueProxy.New(arg2), $1, $3, 
-			ArithmeticBinaryOperatorNode.AdditionResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) + ValueProxy.New(arg2), $1, $3, 
+            ArithmeticBinaryOperatorNode.AdditionResult);
   }
   | AdditiveExpr '-' MultiplicativeExpr 
   {
      $$ = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) - ValueProxy.New(arg2), $1, $3, 
-			ArithmeticBinaryOperatorNode.SubstractionResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) - ValueProxy.New(arg2), $1, $3, 
+            ArithmeticBinaryOperatorNode.SubstractionResult);
   }
   ;
-  
+
 MultiplicativeExpr
   : UnionExpr 
   | MultiplicativeExpr ML UnionExpr 
   {
      $$ = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) * ValueProxy.New(arg2), $1, $3, 
-			ArithmeticBinaryOperatorNode.MultiplyResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) * ValueProxy.New(arg2), $1, $3, 
+            ArithmeticBinaryOperatorNode.MultiplyResult);
   }
   | MultiplicativeExpr DIV UnionExpr  
   {
      $$ = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) / ValueProxy.New(arg2), $1, $3, 
-			ArithmeticBinaryOperatorNode.DivisionResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) / ValueProxy.New(arg2), $1, $3, 
+            ArithmeticBinaryOperatorNode.DivisionResult);
   }
   | MultiplicativeExpr IDIV UnionExpr  
   {
      $$ = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.op_IntegerDivide(ValueProxy.New(arg1), ValueProxy.New(arg2)), $1, $3, null);
+        (provider, arg1, arg2) => ValueProxy.op_IntegerDivide(ValueProxy.New(arg1), ValueProxy.New(arg2)), $1, $3, null);
   }
   | MultiplicativeExpr MOD UnionExpr  
   {
      $$ = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) % ValueProxy.New(arg2), $1, $3, null);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) % ValueProxy.New(arg2), $1, $3, null);
   }
   ;
 
@@ -391,26 +388,26 @@ UnionExpr
   | UnionExpr UNION IntersectExceptExpr
   {
      $$ = new OrderedBinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
   }
   | UnionExpr '|' IntersectExceptExpr 
   {
      $$ = new OrderedBinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
   }
   ;
-  
+
 IntersectExceptExpr
   : InstanceofExpr
   | IntersectExceptExpr INTERSECT InstanceofExpr
   {
      $$ = new OrderedBinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Intersect(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Intersect(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
   }
   | IntersectExceptExpr EXCEPT InstanceofExpr
   {
      $$ = new BinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Except(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Except(context, arg1, arg2), $1, $3, XPath2ResultType.NodeSet);
   }
   ;
 
@@ -420,27 +417,27 @@ InstanceofExpr
   {
      SequenceType destType = (SequenceType)$3;
      $$ = new UnaryOperatorNode(context, 
-	    (provider, arg) => CoreFuncs.InstanceOf(context, arg, destType), $1, XPath2ResultType.Boolean);
+        (provider, arg) => CoreFuncs.InstanceOf(context, arg, destType), $1, XPath2ResultType.Boolean);
   }
   ;
-  
+
 TreatExpr
   : CastableExpr
   | CastableExpr TREAT_AS SequenceType      
   {
      SequenceType destType = (SequenceType)$3;
      $$ = new UnaryOperatorNode(context, 
-	    (provider, arg) => CoreFuncs.TreatAs(context, arg, destType), $1, CoreFuncs.GetXPath2ResultType(destType));
+        (provider, arg) => CoreFuncs.TreatAs(context, arg, destType), $1, CoreFuncs.GetXPath2ResultType(destType));
   }
   ;
-  
+
 CastableExpr
   : CastExpr  
   | CastExpr CASTABLE_AS SingleType
   {     
      SequenceType destType = (SequenceType)$3;
-	 ValueNode value = $1 as ValueNode;
-	 bool isString = $1 is String || (value != null && value.Content is String);
+     ValueNode value = $1 as ValueNode;
+     bool isString = $1 is String || (value != null && value.Content is String);
      if (destType == null)
          throw new XPath2Exception("XPST0051",Properties.Resources.XPST0051, "xs:untyped");
      if (destType.SchemaType == SequenceType.XmlSchema.AnyType)
@@ -456,14 +453,14 @@ CastableExpr
      $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Castable(context, arg, destType, isString), $1, XPath2ResultType.Boolean);
   }
   ;
-  
+
 CastExpr
   : UnaryExpr
   | UnaryExpr CAST_AS SingleType
   {
      SequenceType destType = (SequenceType)$3;
-	 ValueNode value = $1 as ValueNode;
-	 bool isString = $1 is String || (value != null && value.Content is String);
+     ValueNode value = $1 as ValueNode;
+     bool isString = $1 is String || (value != null && value.Content is String);
      if (destType == null)
          throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "xs:untyped");
      if (destType.SchemaType == SequenceType.XmlSchema.AnyType)
@@ -477,7 +474,7 @@ CastExpr
      if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore || destType.Cardinality == XmlTypeCardinality.OneOrMore)
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
      $$ = new UnaryOperatorNode(context, (provider, arg) => 
-		CoreFuncs.CastTo(context, arg, destType, isString), $1, CoreFuncs.GetXPath2ResultType(destType));
+        CoreFuncs.CastTo(context, arg, destType, isString), $1, CoreFuncs.GetXPath2ResultType(destType));
   }
   ;
   
@@ -485,14 +482,14 @@ UnaryExpr
   : UnaryOperator ValueExpr
   {
      if ($1 != null)
-	 {
-	   if ($1 == CoreFuncs.True)
-		  $$ = new AtomizedUnaryOperatorNode(context, (provider, arg) => -ValueProxy.New(arg), $2, XPath2ResultType.Number);
-	    else
-	      $$ = new AtomizedUnaryOperatorNode(context, (provider, arg) => 0 + ValueProxy.New(arg), $2, XPath2ResultType.Number);
+     {
+       if ($1 == CoreFuncs.True)
+          $$ = new AtomizedUnaryOperatorNode(context, (provider, arg) => -ValueProxy.New(arg), $2, XPath2ResultType.Number);
+        else
+          $$ = new AtomizedUnaryOperatorNode(context, (provider, arg) => 0 + ValueProxy.New(arg), $2, XPath2ResultType.Number);
      }
-	 else
-	    $$ = $2;
+     else
+        $$ = $2;
   }
   ;
 
@@ -501,19 +498,19 @@ UnaryOperator
   {
      $$ = null;
   }
-  | '+' UnaryOperator  
+  | '+' UnaryOperator
   {
      if ($2 == null)
-	   $$ = CoreFuncs.False;
-	 else
-		$$ = $2;
+       $$ = CoreFuncs.False;
+     else
+        $$ = $2;
   } 
   | '-' UnaryOperator
   {
      if ($2 == null || $2 == CoreFuncs.False)
-	     $$ = CoreFuncs.True;
+         $$ = CoreFuncs.True;
      else
-	     $$ = CoreFuncs.False;
+         $$ = CoreFuncs.False;
   }
   ; 
 
@@ -525,56 +522,56 @@ PathExpr
   : '/' 
   {
      $$ = new UnaryOperatorNode(context, (provider, arg) => 
-		XPath2NodeIterator.Create(CoreFuncs.GetRoot(arg)), new ContextItemNode(context), XPath2ResultType.NodeSet);
+        XPath2NodeIterator.Create(CoreFuncs.GetRoot(arg)), new ContextItemNode(context), XPath2ResultType.NodeSet);
   }
   | '/' RelativePathExpr
   { 
      $$ = $2 is PathStep 
-	   ? new PathExprNode(context, (PathStep)$2) : $2;
+       ? new PathExprNode(context, (PathStep)$2) : $2;
   }
   | DOUBLE_SLASH RelativePathExpr
   {
-	 PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
+     PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
         XPath2ExprType.DescendantOrSelf);
-	 descendantOrSelf.AddLast(PathStep.Create(context, $2));
+     descendantOrSelf.AddLast(PathStep.Create(context, $2));
      $$ = new PathExprNode(context, descendantOrSelf);
   }
   | RelativePathExpr
   {
      $$ = $1 is PathStep 
-	   ? new PathExprNode(context, (PathStep)$1) : $1;
+       ? new PathExprNode(context, (PathStep)$1) : $1;
   }
-  ;  
-   
+  ;
+
 RelativePathExpr
   : StepExpr
   | RelativePathExpr '/' StepExpr
   {
      PathStep relativePathExpr = PathStep.Create(context, $1);
-	 relativePathExpr.AddLast(PathStep.Create(context, $3));
-	 $$ = relativePathExpr;
+     relativePathExpr.AddLast(PathStep.Create(context, $3));
+     $$ = relativePathExpr;
   }
   | RelativePathExpr DOUBLE_SLASH StepExpr
   {
      PathStep relativePathExpr = PathStep.Create(context, $1);
      PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
         XPath2ExprType.DescendantOrSelf);
-	 relativePathExpr.AddLast(descendantOrSelf);
-	 relativePathExpr.AddLast(PathStep.Create(context, $3));
-	 $$ = relativePathExpr;
+     relativePathExpr.AddLast(descendantOrSelf);
+     relativePathExpr.AddLast(PathStep.Create(context, $3));
+     $$ = relativePathExpr;
   }
   ;
-  
+
 StepExpr
   : AxisStep 
   | FilterExpr
   ;
-  
+
 AxisStep
   : ForwardStep
   | ForwardStep PredicateList
   {
-	 $$ = PathStep.CreateFilter(context, $1, (List<Object>)$2);
+     $$ = PathStep.CreateFilter(context, $1, (List<Object>)$2);
   }
   | ReverseStep
   | ReverseStep PredicateList
@@ -582,7 +579,7 @@ AxisStep
      $$ = PathStep.CreateFilter(context, $1, (List<Object>)$2);
   }
   ;
-  
+
 ForwardStep
    : AXIS_CHILD NodeTest 
    {
@@ -616,9 +613,9 @@ ForwardStep
    {
       $$ = new PathStep($2, XPath2ExprType.Namespace);
    }
-   | AbbrevForwardStep  
+   | AbbrevForwardStep
    ;
-       
+
 AbbrevForwardStep
    : '@' NodeTest
    {
@@ -628,9 +625,9 @@ AbbrevForwardStep
    {
        $$ = new PathStep($1, XPath2ExprType.Child);
    }
-   ;    
-   
-ReverseStep  
+   ;
+
+ReverseStep
    : AXIS_PARENT NodeTest 
    {
       $$ = new PathStep($2, XPath2ExprType.Parent);
@@ -653,31 +650,31 @@ ReverseStep
    }
    | AbbrevReverseStep
    ;
-     
+
 AbbrevReverseStep
    : DOUBLE_PERIOD
    {
       $$ = new PathStep(XPath2ExprType.Parent);
    }
-   ;   
-   
+   ;
+
 NodeTest
    : KindTest
    | NameTest
    ;
-   
-NameTest 
+
+NameTest
    : QName
    {
       XmlQualifiedName qualifiedName = QNameParser.Parse((String)$1, 
-	    context.NamespaceManager, "", context.NameTable);
+        context.NamespaceManager, "", context.NameTable);
       $$ = XmlQualifiedNameTest.New(qualifiedName.Name, qualifiedName.Namespace);
    }
-   | Wildcard 
+   | Wildcard
    ;
-   
+
 Wildcard
-   : '*'  
+   : '*'
    {
       $$ = XmlQualifiedNameTest.New(null, null);
    }
@@ -687,14 +684,14 @@ Wildcard
       string ns = context.NamespaceManager.LookupNamespace(ncname);
       if (ns == null)
         throw new XPath2Exception("XPST0081", Properties.Resources.XPST0081, ncname);
-      $$ = XmlQualifiedNameTest.New(null, ns);      
+      $$ = XmlQualifiedNameTest.New(null, ns);
    }
    | '*' ':' NCName 
    {
       $$ = XmlQualifiedNameTest.New(context.NameTable.Add((String)$3), null);
    }
-   ; 
-    
+   ;
+
 FilterExpr
    : PrimaryExpr
    | PrimaryExpr PredicateList
@@ -702,19 +699,19 @@ FilterExpr
       $$ = new FilterExprNode(context, $1, (List<Object>)$2);
    }
    ;
- 
+
 PredicateList
    : Predicate
    {
       List<Object> nodes = new List<Object>();
-	  nodes.Add($1);
-	  $$ = nodes;
+      nodes.Add($1);
+      $$ = nodes;
    }
    | PredicateList Predicate
    {
       List<Object> nodes = (List<Object>)$1;
-	  nodes.Add($2);
-	  $$ = nodes;
+      nodes.Add($2);
+      $$ = nodes;
    }
    ;
 
@@ -723,31 +720,31 @@ Predicate
    {
       $$ = $2;
    }
-   ;   
+   ;
 
 PrimaryExpr
-   : Literal 
-   | VarRef 
+   : Literal
+   | VarRef
    {
       $$ = new VarRefNode(context, (Tokenizer.VarName)$1);
    }
-   | ParenthesizedExpr 
-   | ContextItemExpr 
+   | ParenthesizedExpr
+   | ContextItemExpr
    {
       $$ = new ContextItemNode(context);
    }
-   | FunctionCall 
+   | FunctionCall
    ;
-   
+
 Literal
-   : NumericLiteral 
-   | StringLiteral   
+   : NumericLiteral
+   | StringLiteral
    ;
-   
-NumericLiteral	   
-   : IntegerLiteral 
-   | DecimalLiteral 
-   | DoubleLiteral   
+
+NumericLiteral
+   : IntegerLiteral
+   | DecimalLiteral
+   | DoubleLiteral
    ;
    
 VarRef
@@ -755,7 +752,7 @@ VarRef
    {
       $$ = $2;
    }
-   ;   
+   ;
 
 
 ParenthesizedExpr
@@ -763,21 +760,21 @@ ParenthesizedExpr
    {
       $$ = new ValueNode(context, Undefined.Value);
    }
-   | '(' Expr ')'   
+   | '(' Expr ')'
    {
       $$ = $2;
-   }   
+   }
    ;
-   
+
 ContextItemExpr
    : '.'
    ; 
 
 FunctionCall
-   : QName '(' ')'  
+   : QName '(' ')'
    {
       XmlQualifiedName identity = QNameParser.Parse((string)$1, context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       string ns = identity.Namespace;
       if (identity.Namespace == String.Empty)            
           ns = XmlReservedNs.NsXQueryFunc;
@@ -786,14 +783,14 @@ FunctionCall
    | QName '(' Args ')'
    {
       XmlQualifiedName identity = QNameParser.Parse((string)$1, context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       string ns = identity.Namespace;
       if (identity.Namespace == String.Empty)            
           ns = XmlReservedNs.NsXQueryFunc;
       List<Object> args = (List<Object>)$3;
-	  XmlSchemaObject schemaType;
-	  if (args.Count == 1 && CoreFuncs.TryProcessTypeName(context, 
-	       new XmlQualifiedName(identity.Name, ns), false, out schemaType))
+      XmlSchemaObject schemaType;
+      if (args.Count == 1 && CoreFuncs.TryProcessTypeName(context, 
+           new XmlQualifiedName(identity.Name, ns), false, out schemaType))
          {
             SequenceType seqtype =
                new SequenceType((XmlSchemaSimpleType)schemaType, XmlTypeCardinality.One, null);
@@ -802,65 +799,65 @@ FunctionCall
             if (seqtype.TypeCode == XmlTypeCode.Notation)
                throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "NOTATION");
             $$ = new UnaryOperatorNode(context, (provider, arg) => 
-			   CoreFuncs.CastToItem(context, arg, seqtype), args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
+               CoreFuncs.CastToItem(context, arg, seqtype), args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
           }
-	  else
+      else
          $$ = new FuncNode(context, identity.Name, ns, (List<Object>)$3);
    }
    ;
-   
+
 Args
    : ExprSingle
    {
       List<Object> list = new List<Object>();
-	  list.Add($1);
-	  $$ = list;
+      list.Add($1);
+      $$ = list;
    }
    | Args ',' ExprSingle
    {
       List<Object> list = (List<Object>)$1;
-	  list.Add($3);
-	  $$ = list;
+      list.Add($3);
+      $$ = list;
    }
-   ;      
+   ;
 
 SingleType
    : AtomicType
    | AtomicType '?'
    {
       SequenceType type = (SequenceType)$1;
-	  type.Cardinality = XmlTypeCardinality.ZeroOrOne;
-	  $$ = type;
+      type.Cardinality = XmlTypeCardinality.ZeroOrOne;
+      $$ = type;
    }
    ;
-    
+
 SequenceType
    : ItemType  
    | ItemType Indicator1
    {
       SequenceType type = (SequenceType)$1;
-	  type.Cardinality = XmlTypeCardinality.ZeroOrMore; 
-	  $$ = type;
+      type.Cardinality = XmlTypeCardinality.ZeroOrMore; 
+      $$ = type;
    }
    | ItemType Indicator2
    {
       SequenceType type = (SequenceType)$1;
-	  type.Cardinality = XmlTypeCardinality.OneOrMore;
-	  $$ = type;
+      type.Cardinality = XmlTypeCardinality.OneOrMore;
+      $$ = type;
    }
    | ItemType Indicator3
    {
       SequenceType type = (SequenceType)$1;
-	  type.Cardinality = XmlTypeCardinality.ZeroOrOne;
-	  $$ = type;
+      type.Cardinality = XmlTypeCardinality.ZeroOrOne;
+      $$ = type;
    }
    | EMPTY_SEQUENCE
    {
       $$ = SequenceType.Void;
    }
-   ;   
-   
-ItemType	   
+   ;
+
+ItemType
    : AtomicType 
    | KindTest 
    | ITEM
@@ -873,11 +870,11 @@ AtomicType
    : QName
    {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)$1, true, out xmlType);
-	  $$ = new SequenceType((XmlSchemaType)xmlType, XmlTypeCardinality.One, null);
+      CoreFuncs.TryProcessTypeName(context, (string)$1, true, out xmlType);
+      $$ = new SequenceType((XmlSchemaType)xmlType, XmlTypeCardinality.One, null);
    }
    ;
-   
+
 KindTest
    : DocumentTest
    | ElementTest
@@ -886,17 +883,17 @@ KindTest
    | SchemaAttributeTest
    | PITest
    | CommentTest
-   | TextTest   
-   | AnyKindTest   
+   | TextTest
+   | AnyKindTest
    ;
-     
-AnyKindTest	   
+
+AnyKindTest
    : NODE '(' ')'
    {
       $$ = SequenceType.Node;
    }
    ;
-   
+
 DocumentTest
    : DOCUMENT_NODE '(' ')'
    {
@@ -905,29 +902,29 @@ DocumentTest
    | DOCUMENT_NODE '(' ElementTest ')'
    {
       SequenceType type = (SequenceType)$3;
-	  type.TypeCode = XmlTypeCode.Document;
+      type.TypeCode = XmlTypeCode.Document;
    }
    | DOCUMENT_NODE '(' SchemaElementTest ')'
    {
       SequenceType type = (SequenceType)$3;
-	  type.TypeCode = XmlTypeCode.Document;
+      type.TypeCode = XmlTypeCode.Document;
    }
-   ; 
-   
+   ;
+
 TextTest
    : TEXT '(' ')'
    {
       $$ = SequenceType.Text;
    }
    ;
-   
+
 CommentTest
    : COMMENT '(' ')'
    {
       $$ = SequenceType.Comment;
    }
    ;
-   
+
 PITest
    : PROCESSING_INSTRUCTION '(' ')'
    {
@@ -936,15 +933,15 @@ PITest
    | PROCESSING_INSTRUCTION '(' NCName ')'
    {
       XmlQualifiedNameTest nameTest = XmlQualifiedNameTest.New((String)$3, null);
-	  $$ = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
+      $$ = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
    }
    | PROCESSING_INSTRUCTION '(' StringLiteral ')'
    {
       XmlQualifiedNameTest nameTest = XmlQualifiedNameTest.New((String)$3, null);
-	  $$ = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
+      $$ = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
    }
    ;
-      
+
 ElementTest
    : ELEMENT '(' ')'
    {
@@ -957,29 +954,29 @@ ElementTest
    | ELEMENT '(' ElementNameOrWildcard ',' TypeName ')'   
    {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
-	  $$ = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType, false);      
+      CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
+      $$ = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType, false);      
    }
    | ELEMENT '(' ElementNameOrWildcard ',' TypeName '?' ')'   
    {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
-	  $$ = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType, true);      
+      CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
+      $$ = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType, true);      
    }
    ;
-   
+
 ElementNameOrWildcard
    : ElementName
    {
       $$ = XmlQualifiedNameTest.New((XmlQualifiedName)QNameParser.Parse((string)$1, 
-	     context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
+         context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
    }
    | '*'
    {
       $$ = XmlQualifiedNameTest.New(null, null);
    }
-   ;   
-   
+   ;
+
 AttributeTest
    : ATTRIBUTE '(' ')'
    {
@@ -992,32 +989,32 @@ AttributeTest
    | ATTRIBUTE '(' AttributeOrWildcard ',' TypeName ')'
    {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
-	  $$ = new SequenceType(XmlTypeCode.Attribute, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType);      
+      CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
+      $$ = new SequenceType(XmlTypeCode.Attribute, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType);      
    }
    ;
-         
+
 AttributeOrWildcard
    : AttributeName
    {
       $$ = XmlQualifiedNameTest.New((XmlQualifiedName)QNameParser.Parse((string)$1, 
-	     context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
+         context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
    }
    | '*'
    {
       $$ = XmlQualifiedNameTest.New(null, null);
    }
-   ;    
+   ;
    
 SchemaElementTest
    : SCHEMA_ELEMENT '(' ElementName ')'   
    {
       XmlQualifiedName qname = QNameParser.Parse((string)$3, context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       XmlSchemaElement schemaElement = (XmlSchemaElement)context.SchemaSet.GlobalElements[qname];
       if (schemaElement == null)
           throw new XPath2Exception("XPST0008", Properties.Resources.XPST0008, qname);
-      $$ = new SequenceType(schemaElement);      
+      $$ = new SequenceType(schemaElement);
    } 
    ;
     
@@ -1025,24 +1022,24 @@ SchemaAttributeTest
    : SCHEMA_ATTRIBUTE '(' AttributeName ')'
    {
       XmlQualifiedName qname = QNameParser.Parse((string)$3, context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       XmlSchemaAttribute schemaAttribute = (XmlSchemaAttribute)context.SchemaSet.GlobalAttributes[qname];
       if (schemaAttribute == null)
           throw new XPath2Exception("XPST0008", Properties.Resources.XPST0008, qname);
-      $$ = new SequenceType(schemaAttribute);      
-   } 
-   ;    
+      $$ = new SequenceType(schemaAttribute);
+   }
+   ;
     
-AttributeName	   
+AttributeName
    : QName
    ;
 
-ElementName	   
+ElementName
    : QName
    ;
     
-TypeName	   
-   : QName    
+TypeName
+   : QName
    ;
 
 %%

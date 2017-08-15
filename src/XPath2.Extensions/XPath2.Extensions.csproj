@@ -4,13 +4,13 @@
     <Description>Non-official extensions for XPath2.dll</Description>
     <Copyright>Stef Heyenrath</Copyright>
     <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
-    <VersionPrefix>1.0.5.0</VersionPrefix>
+    <VersionPrefix>1.0.5.1</VersionPrefix>
     <Authors>Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40;netstandard20</TargetFrameworks>
+    <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
     <AssemblyName>XPath2.Extensions</AssemblyName>
     <PackageId>XPath2.Extensions</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS;Extensions</PackageTags>
-    <PackageReleaseNotes>Added netstandard2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed netstandard2.0</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>
@@ -21,12 +21,17 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <RootNamespace>Wmhelp.XPath2.Extensions</RootNamespace>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   
   <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+    <!-- <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride> -->
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,7 +54,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard20' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 

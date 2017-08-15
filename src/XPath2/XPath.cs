@@ -19,42 +19,42 @@ using Wmhelp.XPath2.MS;
 
 namespace Wmhelp.XPath2
 {
-	internal class YYParser
-	{	     
-		private XPath2Context context;
+    internal class YYParser
+    {         
+        private XPath2Context context;
 
-		public YYParser(XPath2Context context)
-		{
-		    errorText = new StringWriter();	    	 
-		    this.context = context;
-		}
+        public YYParser(XPath2Context context)
+        {
+            errorText = new StringWriter();
+            this.context = context;
+        }
 
-		public object yyparseSafe (Tokenizer tok)
-		{
-			return yyparseSafe (tok, null);
-		}
+        public object yyparseSafe(Tokenizer tok)
+        {
+            return yyparseSafe(tok, null);
+        }
 
-		public object yyparseSafe (Tokenizer tok, object yyDebug)
-		{ 
-		    try
-			{
-			   return yyparse (tok, yyDebug);    
-			}
+        public object yyparseSafe(Tokenizer tok, object yyDebug)
+        { 
+            try
+            {
+                return yyparse(tok, yyDebug);
+            }
             catch (XPath2Exception)
-			{
-				throw;
-			}
-			catch (Exception)   
-			{
-				throw new XPath2Exception ("XPST0003", "{2} at line {1} pos {0}", tok.ColNo, tok.LineNo, errorText.ToString());
-			}
-		}
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new XPath2Exception("XPST0003", "{2} at line {1} pos {0}", tok.ColNo, tok.LineNo, errorText.ToString());
+            }
+        }
 
-		public object yyparseDebug (Tokenizer tok)
-		{
-			return yyparseSafe (tok, new yydebug.yyDebugSimple ());
-		}	
-		
+        public object yyparseDebug (Tokenizer tok)
+        {
+            return yyparseSafe(tok, new yydebug.yyDebugSimple());
+        }
+    
 #line default
   /** error text **/
   public readonly TextWriter errorText = null;
@@ -473,304 +473,304 @@ namespace Wmhelp.XPath2
         yyVal = yyDefault(yyV > yyTop ? null : yyVals[yyV]);
         switch (yyN) {
 case 1:
-#line 138 "Xpath.y"
+#line 136 "Xpath.y"
   {
      yyVal = AbstractNode.Create(context, yyVals[0+yyTop]);
   }
   break;
 case 2:
-#line 142 "Xpath.y"
+#line 140 "Xpath.y"
   {
      ExprNode expr = yyVals[-2+yyTop] as ExprNode;
-	 if (expr == null)
-	     expr = new ExprNode(context, yyVals[-2+yyTop]);
-	 expr.Add(yyVals[0+yyTop]);
-	 yyVal = expr;
+     if (expr == null)
+         expr = new ExprNode(context, yyVals[-2+yyTop]);
+     expr.Add(yyVals[0+yyTop]);
+     yyVal = expr;
   }
   break;
 case 7:
-#line 161 "Xpath.y"
+#line 159 "Xpath.y"
   {
      ForNode node = (ForNode)yyVals[-2+yyTop];
-	 node.AddTail(yyVals[0+yyTop]);
-	 yyVal = node;
+     node.AddTail(yyVals[0+yyTop]);
+     yyVal = node;
   }
   break;
 case 8:
-#line 170 "Xpath.y"
+#line 168 "Xpath.y"
   {
      yyVal = yyVals[0+yyTop];
   }
   break;
 case 10:
-#line 178 "Xpath.y"
+#line 176 "Xpath.y"
   {
-	 ((ForNode)yyVals[-2+yyTop]).Add(yyVals[0+yyTop]);
-	 yyVal = yyVals[-2+yyTop];
+     ((ForNode)yyVals[-2+yyTop]).Add(yyVals[0+yyTop]);
+     yyVal = yyVals[-2+yyTop];
   }
   break;
 case 11:
-#line 186 "Xpath.y"
+#line 184 "Xpath.y"
   {
       yyVal = new ForNode(context, (Tokenizer.VarName)yyVals[-2+yyTop], yyVals[0+yyTop]);
   }
   break;
 case 12:
-#line 193 "Xpath.y"
+#line 191 "Xpath.y"
   {
      ForNode node = (ForNode)yyVals[-2+yyTop];
-	 node.AddTail(yyVals[0+yyTop]);     
-	 yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Some(arg), node, XPath2ResultType.Boolean);
+     node.AddTail(yyVals[0+yyTop]);
+     yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Some(arg), node, XPath2ResultType.Boolean);
   }
   break;
 case 13:
-#line 199 "Xpath.y"
+#line 197 "Xpath.y"
   {
      ForNode node = (ForNode)yyVals[-2+yyTop];
-	 node.AddTail(yyVals[0+yyTop]);     
-	 yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Every(arg), node, XPath2ResultType.Boolean);
+     node.AddTail(yyVals[0+yyTop]);
+     yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Every(arg), node, XPath2ResultType.Boolean);
   }
   break;
 case 15:
-#line 209 "Xpath.y"
+#line 207 "Xpath.y"
   {
-	 ((ForNode)yyVals[-2+yyTop]).Add(yyVals[0+yyTop]);
-	 yyVal = yyVals[-2+yyTop];      
+     ((ForNode)yyVals[-2+yyTop]).Add(yyVals[0+yyTop]);
+     yyVal = yyVals[-2+yyTop];
   }
   break;
 case 16:
-#line 217 "Xpath.y"
+#line 215 "Xpath.y"
   {
      yyVal = new ForNode(context, (Tokenizer.VarName)yyVals[-2+yyTop], yyVals[0+yyTop]);
   }
   break;
 case 17:
-#line 224 "Xpath.y"
+#line 222 "Xpath.y"
   {
      yyVal = new IfNode(context, yyVals[-5+yyTop], yyVals[-2+yyTop], yyVals[0+yyTop]);
   }
   break;
 case 19:
-#line 232 "Xpath.y"
+#line 230 "Xpath.y"
   {
      yyVal = new OrExprNode(context, yyVals[-2+yyTop], yyVals[0+yyTop]);
   }
   break;
 case 21:
-#line 240 "Xpath.y"
+#line 238 "Xpath.y"
   {
      yyVal = new AndExprNode(context, yyVals[-2+yyTop], yyVals[0+yyTop]);
   }
   break;
 case 26:
-#line 254 "Xpath.y"
+#line 252 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralEQ(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralEQ(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 27:
-#line 259 "Xpath.y"
+#line 257 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralNE(context, arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralNE(context, arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 28:
-#line 264 "Xpath.y"
+#line 262 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralLT(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralLT(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 29:
-#line 269 "Xpath.y"
+#line 267 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralLE(context, arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralLE(context, arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 30:
-#line 274 "Xpath.y"
+#line 272 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralGT(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralGT(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 31:
-#line 279 "Xpath.y"
+#line 277 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.GeneralGE(context, arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.GeneralGE(context, arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 32:
-#line 287 "Xpath.y"
+#line 285 "Xpath.y"
   {
      yyVal = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorEq(arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorEq(arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 33:
-#line 292 "Xpath.y"
+#line 290 "Xpath.y"
   {
      yyVal = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.Not(CoreFuncs.OperatorEq(arg1, arg2)), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.Not(CoreFuncs.OperatorEq(arg1, arg2)), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 34:
-#line 297 "Xpath.y"
+#line 295 "Xpath.y"
   {
      yyVal = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 35:
-#line 302 "Xpath.y"
+#line 300 "Xpath.y"
   {
      yyVal = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1) == CoreFuncs.True ||
-	      CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg2, arg1) == CoreFuncs.True ||
+          CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 36:
-#line 308 "Xpath.y"
+#line 306 "Xpath.y"
   {
      yyVal = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 37:
-#line 313 "Xpath.y"
+#line 311 "Xpath.y"
   {
      yyVal = new AtomizedBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2) == CoreFuncs.True ||
-	      CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.OperatorGt(arg1, arg2) == CoreFuncs.True ||
+          CoreFuncs.OperatorEq(arg1, arg2) == CoreFuncs.True ? CoreFuncs.True : CoreFuncs.False, yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 38:
-#line 322 "Xpath.y"
+#line 320 "Xpath.y"
   {
      yyVal = new SingletonBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.SameNode(arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.SameNode(arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 39:
-#line 327 "Xpath.y"
+#line 325 "Xpath.y"
   {
      yyVal = new SingletonBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.PrecedingNode(arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.PrecedingNode(arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 40:
-#line 332 "Xpath.y"
+#line 330 "Xpath.y"
   {
      yyVal = new SingletonBinaryOperatorNode(context, 
-	   (provider, arg1, arg2) => CoreFuncs.FollowingNode(arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
+       (provider, arg1, arg2) => CoreFuncs.FollowingNode(arg1, arg2), yyVals[-3+yyTop], yyVals[0+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 42:
-#line 342 "Xpath.y"
+#line 339 "Xpath.y"
   {
       yyVal = new RangeNode(context, yyVals[-2+yyTop], yyVals[0+yyTop]);
   }
   break;
 case 44:
-#line 350 "Xpath.y"
+#line 347 "Xpath.y"
   {
      yyVal = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) + ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
-			ArithmeticBinaryOperatorNode.AdditionResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) + ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
+            ArithmeticBinaryOperatorNode.AdditionResult);
   }
   break;
 case 45:
-#line 356 "Xpath.y"
+#line 353 "Xpath.y"
   {
      yyVal = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) - ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
-			ArithmeticBinaryOperatorNode.SubstractionResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) - ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
+            ArithmeticBinaryOperatorNode.SubstractionResult);
   }
   break;
 case 47:
-#line 366 "Xpath.y"
+#line 363 "Xpath.y"
   {
      yyVal = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) * ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
-			ArithmeticBinaryOperatorNode.MultiplyResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) * ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
+            ArithmeticBinaryOperatorNode.MultiplyResult);
   }
   break;
 case 48:
-#line 372 "Xpath.y"
+#line 369 "Xpath.y"
   {
      yyVal = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) / ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
-			ArithmeticBinaryOperatorNode.DivisionResult);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) / ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], 
+            ArithmeticBinaryOperatorNode.DivisionResult);
   }
   break;
 case 49:
-#line 378 "Xpath.y"
+#line 375 "Xpath.y"
   {
      yyVal = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.op_IntegerDivide(ValueProxy.New(arg1), ValueProxy.New(arg2)), yyVals[-2+yyTop], yyVals[0+yyTop], null);
+        (provider, arg1, arg2) => ValueProxy.op_IntegerDivide(ValueProxy.New(arg1), ValueProxy.New(arg2)), yyVals[-2+yyTop], yyVals[0+yyTop], null);
   }
   break;
 case 50:
-#line 383 "Xpath.y"
+#line 380 "Xpath.y"
   {
      yyVal = new ArithmeticBinaryOperatorNode(context,
-	    (provider, arg1, arg2) => ValueProxy.New(arg1) % ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], null);
+        (provider, arg1, arg2) => ValueProxy.New(arg1) % ValueProxy.New(arg2), yyVals[-2+yyTop], yyVals[0+yyTop], null);
   }
   break;
 case 52:
-#line 392 "Xpath.y"
+#line 389 "Xpath.y"
   {
      yyVal = new OrderedBinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
   }
   break;
 case 53:
-#line 397 "Xpath.y"
+#line 394 "Xpath.y"
   {
      yyVal = new OrderedBinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Union(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
   }
   break;
 case 55:
-#line 406 "Xpath.y"
+#line 403 "Xpath.y"
   {
      yyVal = new OrderedBinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Intersect(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Intersect(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
   }
   break;
 case 56:
-#line 411 "Xpath.y"
+#line 408 "Xpath.y"
   {
      yyVal = new BinaryOperatorNode(context, 
-	    (provider, arg1, arg2) => CoreFuncs.Except(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
+        (provider, arg1, arg2) => CoreFuncs.Except(context, arg1, arg2), yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
   }
   break;
 case 58:
-#line 420 "Xpath.y"
+#line 417 "Xpath.y"
   {
      SequenceType destType = (SequenceType)yyVals[0+yyTop];
      yyVal = new UnaryOperatorNode(context, 
-	    (provider, arg) => CoreFuncs.InstanceOf(context, arg, destType), yyVals[-2+yyTop], XPath2ResultType.Boolean);
+        (provider, arg) => CoreFuncs.InstanceOf(context, arg, destType), yyVals[-2+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 60:
-#line 430 "Xpath.y"
+#line 427 "Xpath.y"
   {
      SequenceType destType = (SequenceType)yyVals[0+yyTop];
      yyVal = new UnaryOperatorNode(context, 
-	    (provider, arg) => CoreFuncs.TreatAs(context, arg, destType), yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
+        (provider, arg) => CoreFuncs.TreatAs(context, arg, destType), yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
   }
   break;
 case 62:
-#line 440 "Xpath.y"
+#line 437 "Xpath.y"
   {     
      SequenceType destType = (SequenceType)yyVals[0+yyTop];
-	 ValueNode value = yyVals[-2+yyTop] as ValueNode;
-	 bool isString = yyVals[-2+yyTop] is String || (value != null && value.Content is String);
+     ValueNode value = yyVals[-2+yyTop] as ValueNode;
+     bool isString = yyVals[-2+yyTop] is String || (value != null && value.Content is String);
      if (destType == null)
          throw new XPath2Exception("XPST0051",Properties.Resources.XPST0051, "xs:untyped");
      if (destType.SchemaType == SequenceType.XmlSchema.AnyType)
@@ -787,11 +787,11 @@ case 62:
   }
   break;
 case 64:
-#line 463 "Xpath.y"
+#line 460 "Xpath.y"
   {
      SequenceType destType = (SequenceType)yyVals[0+yyTop];
-	 ValueNode value = yyVals[-2+yyTop] as ValueNode;
-	 bool isString = yyVals[-2+yyTop] is String || (value != null && value.Content is String);
+     ValueNode value = yyVals[-2+yyTop] as ValueNode;
+     bool isString = yyVals[-2+yyTop] is String || (value != null && value.Content is String);
      if (destType == null)
          throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "xs:untyped");
      if (destType.SchemaType == SequenceType.XmlSchema.AnyType)
@@ -805,297 +805,297 @@ case 64:
      if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore || destType.Cardinality == XmlTypeCardinality.OneOrMore)
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
      yyVal = new UnaryOperatorNode(context, (provider, arg) => 
-		CoreFuncs.CastTo(context, arg, destType, isString), yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
+        CoreFuncs.CastTo(context, arg, destType, isString), yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
   }
   break;
 case 65:
-#line 486 "Xpath.y"
+#line 483 "Xpath.y"
   {
      if (yyVals[-1+yyTop] != null)
-	 {
-	   if (yyVals[-1+yyTop] == CoreFuncs.True)
-		  yyVal = new AtomizedUnaryOperatorNode(context, (provider, arg) => -ValueProxy.New(arg), yyVals[0+yyTop], XPath2ResultType.Number);
-	    else
-	      yyVal = new AtomizedUnaryOperatorNode(context, (provider, arg) => 0 + ValueProxy.New(arg), yyVals[0+yyTop], XPath2ResultType.Number);
+     {
+       if (yyVals[-1+yyTop] == CoreFuncs.True)
+          yyVal = new AtomizedUnaryOperatorNode(context, (provider, arg) => -ValueProxy.New(arg), yyVals[0+yyTop], XPath2ResultType.Number);
+        else
+          yyVal = new AtomizedUnaryOperatorNode(context, (provider, arg) => 0 + ValueProxy.New(arg), yyVals[0+yyTop], XPath2ResultType.Number);
      }
-	 else
-	    yyVal = yyVals[0+yyTop];
+     else
+        yyVal = yyVals[0+yyTop];
   }
   break;
 case 66:
-#line 501 "Xpath.y"
+#line 498 "Xpath.y"
   {
      yyVal = null;
   }
   break;
 case 67:
-#line 505 "Xpath.y"
+#line 502 "Xpath.y"
   {
      if (yyVals[0+yyTop] == null)
-	   yyVal = CoreFuncs.False;
-	 else
-		yyVal = yyVals[0+yyTop];
+       yyVal = CoreFuncs.False;
+     else
+        yyVal = yyVals[0+yyTop];
   }
   break;
 case 68:
-#line 512 "Xpath.y"
+#line 509 "Xpath.y"
   {
      if (yyVals[0+yyTop] == null || yyVals[0+yyTop] == CoreFuncs.False)
-	     yyVal = CoreFuncs.True;
+         yyVal = CoreFuncs.True;
      else
-	     yyVal = CoreFuncs.False;
+         yyVal = CoreFuncs.False;
   }
   break;
 case 70:
-#line 526 "Xpath.y"
+#line 523 "Xpath.y"
   {
      yyVal = new UnaryOperatorNode(context, (provider, arg) => 
-		XPath2NodeIterator.Create(CoreFuncs.GetRoot(arg)), new ContextItemNode(context), XPath2ResultType.NodeSet);
+        XPath2NodeIterator.Create(CoreFuncs.GetRoot(arg)), new ContextItemNode(context), XPath2ResultType.NodeSet);
   }
   break;
 case 71:
-#line 531 "Xpath.y"
+#line 528 "Xpath.y"
   { 
      yyVal = yyVals[0+yyTop] is PathStep 
-	   ? new PathExprNode(context, (PathStep)yyVals[0+yyTop]) : yyVals[0+yyTop];
+       ? new PathExprNode(context, (PathStep)yyVals[0+yyTop]) : yyVals[0+yyTop];
   }
   break;
 case 72:
-#line 536 "Xpath.y"
+#line 533 "Xpath.y"
   {
-	 PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
+     PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
         XPath2ExprType.DescendantOrSelf);
-	 descendantOrSelf.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
+     descendantOrSelf.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
      yyVal = new PathExprNode(context, descendantOrSelf);
   }
   break;
 case 73:
-#line 543 "Xpath.y"
+#line 540 "Xpath.y"
   {
      yyVal = yyVals[0+yyTop] is PathStep 
-	   ? new PathExprNode(context, (PathStep)yyVals[0+yyTop]) : yyVals[0+yyTop];
+       ? new PathExprNode(context, (PathStep)yyVals[0+yyTop]) : yyVals[0+yyTop];
   }
   break;
 case 75:
-#line 552 "Xpath.y"
+#line 549 "Xpath.y"
   {
      PathStep relativePathExpr = PathStep.Create(context, yyVals[-2+yyTop]);
-	 relativePathExpr.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
-	 yyVal = relativePathExpr;
+     relativePathExpr.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
+     yyVal = relativePathExpr;
   }
   break;
 case 76:
-#line 558 "Xpath.y"
+#line 555 "Xpath.y"
   {
      PathStep relativePathExpr = PathStep.Create(context, yyVals[-2+yyTop]);
      PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
         XPath2ExprType.DescendantOrSelf);
-	 relativePathExpr.AddLast(descendantOrSelf);
-	 relativePathExpr.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
-	 yyVal = relativePathExpr;
+     relativePathExpr.AddLast(descendantOrSelf);
+     relativePathExpr.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
+     yyVal = relativePathExpr;
   }
   break;
 case 80:
-#line 576 "Xpath.y"
+#line 573 "Xpath.y"
   {
-	 yyVal = PathStep.CreateFilter(context, yyVals[-1+yyTop], (List<Object>)yyVals[0+yyTop]);
+     yyVal = PathStep.CreateFilter(context, yyVals[-1+yyTop], (List<Object>)yyVals[0+yyTop]);
   }
   break;
 case 82:
-#line 581 "Xpath.y"
+#line 578 "Xpath.y"
   {
      yyVal = PathStep.CreateFilter(context, yyVals[-1+yyTop], (List<Object>)yyVals[0+yyTop]);
   }
   break;
 case 83:
-#line 588 "Xpath.y"
+#line 585 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Child);
    }
   break;
 case 84:
-#line 592 "Xpath.y"
+#line 589 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Descendant);
    }
   break;
 case 85:
-#line 596 "Xpath.y"
+#line 593 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Attribute);
    }
   break;
 case 86:
-#line 600 "Xpath.y"
+#line 597 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Self);
    }
   break;
 case 87:
-#line 604 "Xpath.y"
+#line 601 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.DescendantOrSelf);
    }
   break;
 case 88:
-#line 608 "Xpath.y"
+#line 605 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.FollowingSibling);
    }
   break;
 case 89:
-#line 612 "Xpath.y"
+#line 609 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Following);
    }
   break;
 case 90:
-#line 616 "Xpath.y"
+#line 613 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Namespace);
    }
   break;
 case 92:
-#line 624 "Xpath.y"
+#line 621 "Xpath.y"
   {
        yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Attribute);
    }
   break;
 case 93:
-#line 628 "Xpath.y"
+#line 625 "Xpath.y"
   {
        yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Child);
    }
   break;
 case 94:
-#line 635 "Xpath.y"
+#line 632 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Parent);
    }
   break;
 case 95:
-#line 639 "Xpath.y"
+#line 636 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Ancestor);
    }
   break;
 case 96:
-#line 643 "Xpath.y"
+#line 640 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.PrecedingSibling);
    }
   break;
 case 97:
-#line 647 "Xpath.y"
+#line 644 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.Preceding);
    }
   break;
 case 98:
-#line 651 "Xpath.y"
+#line 648 "Xpath.y"
   {
       yyVal = new PathStep(yyVals[0+yyTop], XPath2ExprType.AncestorOrSelf);
    }
   break;
 case 100:
-#line 659 "Xpath.y"
+#line 656 "Xpath.y"
   {
       yyVal = new PathStep(XPath2ExprType.Parent);
    }
   break;
 case 103:
-#line 671 "Xpath.y"
+#line 668 "Xpath.y"
   {
       XmlQualifiedName qualifiedName = QNameParser.Parse((String)yyVals[0+yyTop], 
-	    context.NamespaceManager, "", context.NameTable);
+        context.NamespaceManager, "", context.NameTable);
       yyVal = XmlQualifiedNameTest.New(qualifiedName.Name, qualifiedName.Namespace);
    }
   break;
 case 105:
-#line 681 "Xpath.y"
+#line 678 "Xpath.y"
   {
       yyVal = XmlQualifiedNameTest.New(null, null);
    }
   break;
 case 106:
-#line 685 "Xpath.y"
+#line 682 "Xpath.y"
   {
       string ncname = (String)yyVals[-2+yyTop];
       string ns = context.NamespaceManager.LookupNamespace(ncname);
       if (ns == null)
         throw new XPath2Exception("XPST0081", Properties.Resources.XPST0081, ncname);
-      yyVal = XmlQualifiedNameTest.New(null, ns);      
+      yyVal = XmlQualifiedNameTest.New(null, ns);
    }
   break;
 case 107:
-#line 693 "Xpath.y"
+#line 690 "Xpath.y"
   {
       yyVal = XmlQualifiedNameTest.New(context.NameTable.Add((String)yyVals[0+yyTop]), null);
    }
   break;
 case 109:
-#line 701 "Xpath.y"
+#line 698 "Xpath.y"
   {
       yyVal = new FilterExprNode(context, yyVals[-1+yyTop], (List<Object>)yyVals[0+yyTop]);
    }
   break;
 case 110:
-#line 708 "Xpath.y"
+#line 705 "Xpath.y"
   {
       List<Object> nodes = new List<Object>();
-	  nodes.Add(yyVals[0+yyTop]);
-	  yyVal = nodes;
+      nodes.Add(yyVals[0+yyTop]);
+      yyVal = nodes;
    }
   break;
 case 111:
-#line 714 "Xpath.y"
+#line 711 "Xpath.y"
   {
       List<Object> nodes = (List<Object>)yyVals[-1+yyTop];
-	  nodes.Add(yyVals[0+yyTop]);
-	  yyVal = nodes;
+      nodes.Add(yyVals[0+yyTop]);
+      yyVal = nodes;
    }
   break;
 case 112:
-#line 723 "Xpath.y"
+#line 720 "Xpath.y"
   {
       yyVal = yyVals[-1+yyTop];
    }
   break;
 case 114:
-#line 731 "Xpath.y"
+#line 728 "Xpath.y"
   {
       yyVal = new VarRefNode(context, (Tokenizer.VarName)yyVals[0+yyTop]);
    }
   break;
 case 116:
-#line 736 "Xpath.y"
+#line 733 "Xpath.y"
   {
       yyVal = new ContextItemNode(context);
    }
   break;
 case 123:
-#line 755 "Xpath.y"
+#line 752 "Xpath.y"
   {
       yyVal = yyVals[0+yyTop];
    }
   break;
 case 124:
-#line 763 "Xpath.y"
+#line 760 "Xpath.y"
   {
       yyVal = new ValueNode(context, Undefined.Value);
    }
   break;
 case 125:
-#line 767 "Xpath.y"
+#line 764 "Xpath.y"
   {
       yyVal = yyVals[-1+yyTop];
    }
   break;
 case 127:
-#line 778 "Xpath.y"
+#line 775 "Xpath.y"
   {
       XmlQualifiedName identity = QNameParser.Parse((string)yyVals[-2+yyTop], context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       string ns = identity.Namespace;
       if (identity.Namespace == String.Empty)            
           ns = XmlReservedNs.NsXQueryFunc;
@@ -1103,17 +1103,17 @@ case 127:
    }
   break;
 case 128:
-#line 787 "Xpath.y"
+#line 784 "Xpath.y"
   {
       XmlQualifiedName identity = QNameParser.Parse((string)yyVals[-3+yyTop], context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       string ns = identity.Namespace;
       if (identity.Namespace == String.Empty)            
           ns = XmlReservedNs.NsXQueryFunc;
       List<Object> args = (List<Object>)yyVals[-1+yyTop];
-	  XmlSchemaObject schemaType;
-	  if (args.Count == 1 && CoreFuncs.TryProcessTypeName(context, 
-	       new XmlQualifiedName(identity.Name, ns), false, out schemaType))
+      XmlSchemaObject schemaType;
+      if (args.Count == 1 && CoreFuncs.TryProcessTypeName(context, 
+           new XmlQualifiedName(identity.Name, ns), false, out schemaType))
          {
             SequenceType seqtype =
                new SequenceType((XmlSchemaSimpleType)schemaType, XmlTypeCardinality.One, null);
@@ -1122,232 +1122,232 @@ case 128:
             if (seqtype.TypeCode == XmlTypeCode.Notation)
                throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "NOTATION");
             yyVal = new UnaryOperatorNode(context, (provider, arg) => 
-			   CoreFuncs.CastToItem(context, arg, seqtype), args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
+               CoreFuncs.CastToItem(context, arg, seqtype), args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
           }
-	  else
+      else
          yyVal = new FuncNode(context, identity.Name, ns, (List<Object>)yyVals[-1+yyTop]);
    }
   break;
 case 129:
-#line 814 "Xpath.y"
+#line 811 "Xpath.y"
   {
       List<Object> list = new List<Object>();
-	  list.Add(yyVals[0+yyTop]);
-	  yyVal = list;
+      list.Add(yyVals[0+yyTop]);
+      yyVal = list;
    }
   break;
 case 130:
-#line 820 "Xpath.y"
+#line 817 "Xpath.y"
   {
       List<Object> list = (List<Object>)yyVals[-2+yyTop];
-	  list.Add(yyVals[0+yyTop]);
-	  yyVal = list;
+      list.Add(yyVals[0+yyTop]);
+      yyVal = list;
    }
   break;
 case 132:
-#line 830 "Xpath.y"
+#line 827 "Xpath.y"
   {
       SequenceType type = (SequenceType)yyVals[-1+yyTop];
-	  type.Cardinality = XmlTypeCardinality.ZeroOrOne;
-	  yyVal = type;
+      type.Cardinality = XmlTypeCardinality.ZeroOrOne;
+      yyVal = type;
    }
   break;
 case 134:
-#line 840 "Xpath.y"
+#line 837 "Xpath.y"
   {
       SequenceType type = (SequenceType)yyVals[-1+yyTop];
-	  type.Cardinality = XmlTypeCardinality.ZeroOrMore; 
-	  yyVal = type;
+      type.Cardinality = XmlTypeCardinality.ZeroOrMore; 
+      yyVal = type;
    }
   break;
 case 135:
-#line 846 "Xpath.y"
+#line 843 "Xpath.y"
   {
       SequenceType type = (SequenceType)yyVals[-1+yyTop];
-	  type.Cardinality = XmlTypeCardinality.OneOrMore;
-	  yyVal = type;
+      type.Cardinality = XmlTypeCardinality.OneOrMore;
+      yyVal = type;
    }
   break;
 case 136:
-#line 852 "Xpath.y"
+#line 849 "Xpath.y"
   {
       SequenceType type = (SequenceType)yyVals[-1+yyTop];
-	  type.Cardinality = XmlTypeCardinality.ZeroOrOne;
-	  yyVal = type;
+      type.Cardinality = XmlTypeCardinality.ZeroOrOne;
+      yyVal = type;
    }
   break;
 case 137:
-#line 858 "Xpath.y"
+#line 855 "Xpath.y"
   {
       yyVal = SequenceType.Void;
    }
   break;
 case 140:
-#line 867 "Xpath.y"
+#line 864 "Xpath.y"
   {
       yyVal = new SequenceType(XmlTypeCode.Item);
    }
   break;
 case 141:
-#line 874 "Xpath.y"
+#line 871 "Xpath.y"
   {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)yyVals[0+yyTop], true, out xmlType);
-	  yyVal = new SequenceType((XmlSchemaType)xmlType, XmlTypeCardinality.One, null);
+      CoreFuncs.TryProcessTypeName(context, (string)yyVals[0+yyTop], true, out xmlType);
+      yyVal = new SequenceType((XmlSchemaType)xmlType, XmlTypeCardinality.One, null);
    }
   break;
 case 151:
-#line 895 "Xpath.y"
+#line 892 "Xpath.y"
   {
       yyVal = SequenceType.Node;
    }
   break;
 case 152:
-#line 902 "Xpath.y"
+#line 899 "Xpath.y"
   {
       yyVal = SequenceType.Document;
    }
   break;
 case 153:
-#line 906 "Xpath.y"
+#line 903 "Xpath.y"
   {
       SequenceType type = (SequenceType)yyVals[-1+yyTop];
-	  type.TypeCode = XmlTypeCode.Document;
+      type.TypeCode = XmlTypeCode.Document;
    }
   break;
 case 154:
-#line 911 "Xpath.y"
+#line 908 "Xpath.y"
   {
       SequenceType type = (SequenceType)yyVals[-1+yyTop];
-	  type.TypeCode = XmlTypeCode.Document;
+      type.TypeCode = XmlTypeCode.Document;
    }
   break;
 case 155:
-#line 919 "Xpath.y"
+#line 916 "Xpath.y"
   {
       yyVal = SequenceType.Text;
    }
   break;
 case 156:
-#line 926 "Xpath.y"
+#line 923 "Xpath.y"
   {
       yyVal = SequenceType.Comment;
    }
   break;
 case 157:
-#line 933 "Xpath.y"
+#line 930 "Xpath.y"
   {
       yyVal = SequenceType.ProcessingInstruction;
    }
   break;
 case 158:
-#line 937 "Xpath.y"
+#line 934 "Xpath.y"
   {
       XmlQualifiedNameTest nameTest = XmlQualifiedNameTest.New((String)yyVals[-1+yyTop], null);
-	  yyVal = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
+      yyVal = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
    }
   break;
 case 159:
-#line 942 "Xpath.y"
+#line 939 "Xpath.y"
   {
       XmlQualifiedNameTest nameTest = XmlQualifiedNameTest.New((String)yyVals[-1+yyTop], null);
-	  yyVal = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
+      yyVal = new SequenceType(XmlTypeCode.ProcessingInstruction, nameTest);
    }
   break;
 case 160:
-#line 950 "Xpath.y"
+#line 947 "Xpath.y"
   {
       yyVal = SequenceType.Element;
    }
   break;
 case 161:
-#line 954 "Xpath.y"
+#line 951 "Xpath.y"
   {
       yyVal = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)yyVals[-1+yyTop]);
    }
   break;
 case 162:
-#line 958 "Xpath.y"
+#line 955 "Xpath.y"
   {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)yyVals[-1+yyTop], true, out xmlType);
-	  yyVal = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)yyVals[-3+yyTop], (XmlSchemaType)xmlType, false);      
+      CoreFuncs.TryProcessTypeName(context, (string)yyVals[-1+yyTop], true, out xmlType);
+      yyVal = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)yyVals[-3+yyTop], (XmlSchemaType)xmlType, false);      
    }
   break;
 case 163:
-#line 964 "Xpath.y"
+#line 961 "Xpath.y"
   {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)yyVals[-2+yyTop], true, out xmlType);
-	  yyVal = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)yyVals[-4+yyTop], (XmlSchemaType)xmlType, true);      
+      CoreFuncs.TryProcessTypeName(context, (string)yyVals[-2+yyTop], true, out xmlType);
+      yyVal = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)yyVals[-4+yyTop], (XmlSchemaType)xmlType, true);      
    }
   break;
 case 164:
-#line 973 "Xpath.y"
+#line 970 "Xpath.y"
   {
       yyVal = XmlQualifiedNameTest.New((XmlQualifiedName)QNameParser.Parse((string)yyVals[0+yyTop], 
-	     context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
+         context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
    }
   break;
 case 165:
-#line 978 "Xpath.y"
+#line 975 "Xpath.y"
   {
       yyVal = XmlQualifiedNameTest.New(null, null);
    }
   break;
 case 166:
-#line 985 "Xpath.y"
+#line 982 "Xpath.y"
   {
       yyVal = SequenceType.Attribute;
    }
   break;
 case 167:
-#line 989 "Xpath.y"
+#line 986 "Xpath.y"
   {
       yyVal = new SequenceType(XmlTypeCode.Attribute, (XmlQualifiedNameTest)yyVals[-1+yyTop]);
    }
   break;
 case 168:
-#line 993 "Xpath.y"
+#line 990 "Xpath.y"
   {
       XmlSchemaObject xmlType;
-	  CoreFuncs.TryProcessTypeName(context, (string)yyVals[-1+yyTop], true, out xmlType);
-	  yyVal = new SequenceType(XmlTypeCode.Attribute, (XmlQualifiedNameTest)yyVals[-3+yyTop], (XmlSchemaType)xmlType);      
+      CoreFuncs.TryProcessTypeName(context, (string)yyVals[-1+yyTop], true, out xmlType);
+      yyVal = new SequenceType(XmlTypeCode.Attribute, (XmlQualifiedNameTest)yyVals[-3+yyTop], (XmlSchemaType)xmlType);      
    }
   break;
 case 169:
-#line 1002 "Xpath.y"
+#line 999 "Xpath.y"
   {
       yyVal = XmlQualifiedNameTest.New((XmlQualifiedName)QNameParser.Parse((string)yyVals[0+yyTop], 
-	     context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
+         context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable));
    }
   break;
 case 170:
-#line 1007 "Xpath.y"
+#line 1004 "Xpath.y"
   {
       yyVal = XmlQualifiedNameTest.New(null, null);
    }
   break;
 case 171:
-#line 1014 "Xpath.y"
+#line 1011 "Xpath.y"
   {
       XmlQualifiedName qname = QNameParser.Parse((string)yyVals[-1+yyTop], context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       XmlSchemaElement schemaElement = (XmlSchemaElement)context.SchemaSet.GlobalElements[qname];
       if (schemaElement == null)
           throw new XPath2Exception("XPST0008", Properties.Resources.XPST0008, qname);
-      yyVal = new SequenceType(schemaElement);      
+      yyVal = new SequenceType(schemaElement);
    }
   break;
 case 172:
-#line 1026 "Xpath.y"
+#line 1023 "Xpath.y"
   {
       XmlQualifiedName qname = QNameParser.Parse((string)yyVals[-1+yyTop], context.NamespaceManager, 
-	     context.NamespaceManager.DefaultNamespace, context.NameTable);
+         context.NamespaceManager.DefaultNamespace, context.NameTable);
       XmlSchemaAttribute schemaAttribute = (XmlSchemaAttribute)context.SchemaSet.GlobalAttributes[qname];
       if (schemaAttribute == null)
           throw new XPath2Exception("XPST0008", Properties.Resources.XPST0008, qname);
-      yyVal = new SequenceType(schemaAttribute);      
+      yyVal = new SequenceType(schemaAttribute);
    }
   break;
 #line default
@@ -2027,7 +2027,7 @@ case 172:
    -1,   -1,  321,  322,  323,
   };
 
-#line 1049 "Xpath.y"
+#line 1046 "Xpath.y"
 }
 #line default
 namespace yydebug {

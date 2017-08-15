@@ -4,13 +4,13 @@
     <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
-    <VersionPrefix>1.0.5.0</VersionPrefix>
+    <VersionPrefix>1.0.5.1</VersionPrefix>
     <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40;netstandard20</TargetFrameworks>
+    <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
     <AssemblyName>XPath2</AssemblyName>
     <PackageId>XPath2</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS</PackageTags>
-    <PackageReleaseNotes>Added netstandard2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed netstandard2.0</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>
@@ -24,16 +24,21 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <DefaultLanguage>en-us</DefaultLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <RootNamespace>Wmhelp.XPath2</RootNamespace>
   </PropertyGroup>
   
   <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+    <!-- <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride> -->
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard20' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   
@@ -48,21 +53,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard20' ">
-    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
-    <PackageReference Include="System.Globalization" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Numerics" Version="4.3.0" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
-    <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.0" />
-    <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
-    <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
-    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
-    <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <!-- <PackageReference Include="System.Xml.XPath" Version="4.3.0" /> -->
   </ItemGroup>
 
 </Project>
