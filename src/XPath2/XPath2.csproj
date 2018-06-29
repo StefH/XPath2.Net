@@ -4,13 +4,13 @@
     <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
-    <VersionPrefix>1.0.5.1</VersionPrefix>
+    <VersionPrefix>1.0.6.0</VersionPrefix>
     <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
     <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
     <AssemblyName>XPath2</AssemblyName>
     <PackageId>XPath2</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS</PackageTags>
-    <PackageReleaseNotes>Fixed netstandard2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Sign Assembly</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>
@@ -26,6 +26,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <DebugType>portable</DebugType>
     <RootNamespace>Wmhelp.XPath2</RootNamespace>
+    <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   
   <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
