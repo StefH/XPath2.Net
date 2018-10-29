@@ -1,7 +1,6 @@
 # XPath2.Net : Lightweight XPath2 for .NET
 
-[![Build status](https://ci.appveyor.com/api/projects/status/kwow5frjv8nl42oy?svg=true)](https://ci.appveyor.com/project/StefH/xpath2-net)
-[![codecov](https://codecov.io/gh/StefH/XPath2.Net/branch/master/graph/badge.svg)](https://codecov.io/gh/StefH/XPath2.Net)
+[![Build Status](https://stef.visualstudio.com/XPath2.Net/_apis/build/status/StefH.XPath2.Net)](https://stef.visualstudio.com/XPath2.Net/_build/latest?definitionId=14)
 [![Coverage Status](https://coveralls.io/repos/github/StefH/XPath2.Net/badge.svg)](https://coveralls.io/github/StefH/XPath2.Net)
 
 | Project | NuGet |
