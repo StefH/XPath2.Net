@@ -1394,15 +1394,35 @@ namespace Wmhelp.XPath2
 
         public static double Number(XPath2Context context, object value)
         {
-            string stringValue = StringValue(context, value);
-            if (string.IsNullOrWhiteSpace(stringValue))
+            if (value == Undefined.Value)
             {
                 return double.NaN;
             }
 
+            if (value is IXmlConvertable xmlConvertableValue)
+            {
+                try
+                {
+                    return (double) xmlConvertableValue.ValueAs(SequenceType.Double, context.NamespaceManager);
+                } 
+                catch (InvalidCastException e)
+                {
+                    return double.NaN;
+                }
+            }
+            if (!(value is IConvertible))
+            {
+                var stringValue = StringValue(context, value);
+                if (string.IsNullOrWhiteSpace(stringValue))
+                {
+                    return double.NaN;
+                }
+                value = stringValue.Trim();
+            }
+
             try
             {
-                return (double)Convert.ChangeType(stringValue.Trim(), TypeCode.Double, context.RunningContext.DefaultCulture);
+                return (double)Convert.ChangeType(value, TypeCode.Double, context.RunningContext.DefaultCulture);
             }
             catch (FormatException)
             {
