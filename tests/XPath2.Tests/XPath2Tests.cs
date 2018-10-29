@@ -112,16 +112,14 @@ namespace XPath2.Tests
             var xml = new XmlDocument
             {
                 InnerXml = @"
-                    <root num='134'>
-                        <numeric>456</numeric>
+                    <root num=' 123 '>
+                        <numeric>456.78
+                        </numeric>
                     </root>"
             };
 
-            Assert.Equal((double)134, xml.XPath2Evaluate("number(string(/root/@num))"));
-            Assert.Equal((double)456, xml.XPath2Evaluate("number(string(/root/numeric))"));
-
-            Assert.Equal((double)134, xml.XPath2Evaluate("number(/root/@num)"));
-            Assert.Equal((double)456, xml.XPath2Evaluate("number(/root/numeric)"));
+            Assert.Equal(123.0, xml.XPath2Evaluate("number(/root/@num)"));
+            Assert.Equal(456.78, xml.XPath2Evaluate("number(/root/numeric)"));
         }
     }
 }

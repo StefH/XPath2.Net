@@ -1396,9 +1396,9 @@ namespace Wmhelp.XPath2
         {
             string stringValue = StringValue(context, value);
             if (string.IsNullOrWhiteSpace(stringValue))
-{
-    return double.NaN;
-}
+            {
+                return double.NaN;
+            }
 
             try
             {
