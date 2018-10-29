@@ -4,7 +4,7 @@ using System.Xml.XPath;
 using Wmhelp.XPath2;
 using Wmhelp.XPath2.Extensions;
 
-namespace XPath2.Extensions.Tests
+namespace XPath2.Tests.Extensions
 {
     public class XPath2TestFixture : IDisposable
     {

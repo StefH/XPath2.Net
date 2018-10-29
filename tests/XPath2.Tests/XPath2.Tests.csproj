@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\XPath2.Extensions\XPath2.Extensions.csproj" />
     <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
   </ItemGroup>
 

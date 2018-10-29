@@ -1,7 +1,7 @@
 ﻿using Wmhelp.XPath2;
 using Xunit;
 
-namespace XPath2.Extensions.Tests
+namespace XPath2.Tests.Extensions
 {
     [Collection("xpath2 extensions collection")]
     public class XPath2ExtensionsTests

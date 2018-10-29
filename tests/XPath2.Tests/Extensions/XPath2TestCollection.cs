@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace XPath2.Extensions.Tests
+namespace XPath2.Tests.Extensions
 {
     [CollectionDefinition("xpath2 extensions collection")]
     public class XPath2TestCollection : ICollectionFixture<XPath2TestFixture>

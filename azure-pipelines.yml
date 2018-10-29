@@ -40,8 +40,6 @@ steps:
 - script: |
     dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net452
     dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework netcoreapp2.1 --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    dotnet test ./tests/XPath2.Extensions.Tests/XPath2.Extensions.Tests.csproj --configuration Debug --framework net452
-    dotnet test ./tests/XPath2.Extensions.Tests/XPath2.Extensions.Tests.csproj --configuration Debug --framework netcoreapp2.1 --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   displayName: 'Build tests and run tests for net452 and netcoreapp2.1 (with coverage)'
 
 # End SonarScanner
