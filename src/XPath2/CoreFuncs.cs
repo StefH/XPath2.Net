@@ -1394,12 +1394,13 @@ namespace Wmhelp.XPath2
 
         public static double Number(XPath2Context context, object value)
         {
-            if (value == Undefined.Value || !(value is IConvertible))
+            string stringValue = StringValue(context, value);
+            if (string.IsNullOrWhiteSpace(stringValue))
                 return double.NaN;
 
             try
             {
-                return (double)Convert.ChangeType(value, TypeCode.Double, context.RunningContext.DefaultCulture);
+                return (double)Convert.ChangeType(stringValue.Trim(), TypeCode.Double, context.RunningContext.DefaultCulture);
             }
             catch (FormatException)
             {
@@ -1410,7 +1411,6 @@ namespace Wmhelp.XPath2
                 return double.NaN;
             }
         }
-
         public static object CastToNumber1(XPath2Context context, object value)
         {
             try
