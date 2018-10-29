@@ -6,6 +6,7 @@ variables:
   buildType: 'azure-pipelines-ci'
   buildId: "$(Build.BuildId)"
   buildProjects: '**/src/**/+(XPath2|XPath2.Extensions).csproj'
+  testProjects: '**/tests/**/+(XPath2.Tests|XPath2.Extensions.Tests).csproj'
 
 steps:
 # Print buildId
@@ -53,12 +54,12 @@ steps:
     testResultsFiles: '**/*.trx'
 
 # Based on https://whereslou.com/2018/09/versioning-and-publishing-nuget-packages-automatically-using-azure-devops-pipelines/
-#- task: DotNetCoreCLI@2
-#  displayName: Build Projects in Release configuration
-#  inputs:
-#    command: 'build'
-#    arguments: /p:Configuration=Release # https://github.com/MicrosoftDocs/vsts-docs/issues/1976
-#    projects: $(buildProjects)
+- task: DotNetCoreCLI@2
+  displayName: Build Projects in Release configuration
+  inputs:
+    command: 'build'
+    arguments: /p:Configuration=Release # https://github.com/MicrosoftDocs/vsts-docs/issues/1976
+    projects: $(buildProjects)
 
 #- task: DotNetCoreCLI@2
 #  displayName: Pack

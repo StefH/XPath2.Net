@@ -4,7 +4,6 @@
     <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
-    <VersionPrefix>1.0.6.0</VersionPrefix>
     <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
     <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
     <AssemblyName>XPath2</AssemblyName>
@@ -23,11 +22,17 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <DefaultLanguage>en-us</DefaultLanguage>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <DebugType>portable</DebugType>
+    <DebugType>full</DebugType>
     <RootNamespace>Wmhelp.XPath2</RootNamespace>
     <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   
   <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
@@ -55,10 +60,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <!-- <PackageReference Include="System.Xml.XPath" Version="4.3.0" /> -->
   </ItemGroup>
 
 </Project>
