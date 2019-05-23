@@ -1,17 +1,18 @@
 ﻿using System.Xml;
+using System.Xml.XPath;
 using Wmhelp.XPath2;
 using Xunit;
 
 namespace XPath2.Tests
 {
-    [Collection("xpath2 collection")]
-    public class XPath2Tests
+    public class XPathNavigatorTests
     {
-        private readonly XPath2TestFixture _fixture;
+        private readonly XPathNavigator _navigator;
 
-        public XPath2Tests(XPath2TestFixture fixture)
+        public XPathNavigatorTests()
         {
-            _fixture = fixture;
+            var doc = new XmlDocument();
+            _navigator = doc.CreateNavigator();
         }
 
         private XmlDocument GetTodoListDoc()
@@ -27,37 +28,21 @@ namespace XPath2.Tests
             };
         }
 
-        private XmlDocument GetOrders()
-        {
-            return new XmlDocument
-            {
-                InnerXml = @"
-                    <order num='00299432' date='2015-09-15' cust='0221A'>
-                        <item dept='WMN' num='557' quantity='1' color='navy'/>
-                        <item dept='ACC' num='563' quantity='1'/>
-                        <item dept='ACC' num='443' quantity='2'/>
-                        <item dept='MEN' num='784' quantity='1' color='white'/>
-                        <item dept='MEN' num='784' quantity='1' color='gray'/>
-                        <item dept='WMN' num='557' quantity='1' color='black'/>
-                    </order>"
-            };
-        }
-
-        public void O()
-        {
-            string q = @"
-                for $d in distinct-values(doc(""order.xml"")//item/@dept)
-                let $items := doc(""order.xml"")//item[@dept = $d]
-                order by $d
-                return <department code=""{$d}"">{
-                         for $i in $items
-                         order by $i/@num
-                         return $i
-                       }</department>";
-        }
+        //public void O()
+        //{
+        //    string q = @"
+        //        for $d in distinct-values(doc(""order.xml"")//item/@dept)
+        //        let $items := doc(""order.xml"")//item[@dept = $d]
+        //        order by $d
+        //        return <department code=""{$d}"">{
+        //                 for $i in $items
+        //                 order by $i/@num
+        //                 return $i
+        //               }</department>";
+        //}
 
         [Fact]
-        public void XPath2_Evaluate_true()
+        public void XPath2Evaluate_true()
         {
             var nav = GetTodoListDoc().CreateNavigator();
             var result = nav.XPath2Evaluate("boolean(/todo-list[count(todo-item) = 3])");
@@ -66,7 +51,7 @@ namespace XPath2.Tests
         }
 
         [Fact]
-        public void XPath2_Evaluate_false()
+        public void XPath2Evaluate_false()
         {
             var nav = GetTodoListDoc().CreateNavigator();
             var result = nav.XPath2Evaluate("boolean(/todo-list[count(todo-item) = 4])");
@@ -75,39 +60,39 @@ namespace XPath2.Tests
         }
 
         [Fact]
-        public void XPath2_matches_true()
+        public void XPath2Evaluate_matches_true()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"bra\")");
+            var result = _navigator.XPath2Evaluate("matches(\"abracadabra\", \"bra\")");
 
             Assert.Equal(true, result);
         }
 
         [Fact]
-        public void XPath2_matches_IgnoreCase_true()
+        public void XPath2Evaluate_matches_IgnoreCase_true()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"BRa\", \"i\")");
+            var result = _navigator.XPath2Evaluate("matches(\"abracadabra\", \"BRa\", \"i\")");
 
             Assert.Equal(true, result);
         }
 
         [Fact]
-        public void XPath2_matches_false()
+        public void XPath2Evaluate_matches_false()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"test\")");
+            var result = _navigator.XPath2Evaluate("matches(\"abracadabra\", \"test\")");
 
             Assert.Equal(false, result);
         }
 
         [Fact]
-        public void XPath2_substring()
+        public void XPath2Evaluate_substring()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("substring(null, 2)");
+            var result = _navigator.XPath2Evaluate("substring(null, 2)");
 
             Assert.Equal("", result);
         }
 
         [Fact]
-        public void XPath2_number()
+        public void XPath2Evaluate_number()
         {
             var xml = new XmlDocument
             {
@@ -123,7 +108,7 @@ namespace XPath2.Tests
         }
 
         [Fact]
-        public void XPath2_Arithmetic_With_DecimalConversion()
+        public void XPath2Evaluate_Arithmetic_With_DecimalConversion()
         {
             var xml1 = new XmlDocument { InnerXml = "<total taxableAmount=\"1.23\" taxAmount=\"7.89\" netAmountIncTax=\"9.12\" />" };
             var xml2 = new XmlDocument { InnerXml = "<total taxableAmount=\"1441.64\" taxAmount=\"273.91\" netAmountIncTax=\"1715.55\" />" };

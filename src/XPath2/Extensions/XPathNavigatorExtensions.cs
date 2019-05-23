@@ -53,7 +53,7 @@ namespace Wmhelp.XPath2
 
         public static XPath2NodeIterator XPath2Select(this XPathNavigator nav, XPath2Expression expr, object arg)
         {
-            return XPath2NodeIterator.Create(XPath2Evaluate(nav, expr));
+            return XPath2NodeIterator.Create(XPath2Evaluate(nav, expr, arg));
         }
 
         public static XPathNodeIterator XPath2SelectNodes(this XPathNavigator nav, string xpath)

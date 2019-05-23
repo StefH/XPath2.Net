@@ -1,22 +1,30 @@
-﻿using Wmhelp.XPath2;
+﻿using System.Xml;
+using System.Xml.XPath;
+using Wmhelp.XPath2;
+using Wmhelp.XPath2.Extensions;
 using Xunit;
 
 namespace XPath2.Tests.Extensions
 {
-    [Collection("xpath2 extensions collection")]
     public class XPath2ExtensionsTests
     {
-        private readonly XPath2TestFixture _fixture;
+        private readonly XPathNavigator _navigator;
 
-        public XPath2ExtensionsTests(XPath2TestFixture fixture)
+        public XPath2ExtensionsTests()
         {
-            _fixture = fixture;
+            var doc = new XmlDocument();
+            _navigator = doc.CreateNavigator();
+
+            FunctionTable.Inst.AddAllExtensions();
+
+            // Adding the extensions again should not throw exception
+            FunctionTable.Inst.AddAllExtensions();
         }
 
         [Fact]
         public void XPathExtensions_base64encode()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("base64encode('stef')");
+            var result = _navigator.XPath2Evaluate("base64encode('stef')");
 
             Assert.Equal("c3RlZg==", result);
         }
@@ -26,7 +34,7 @@ namespace XPath2.Tests.Extensions
         {
             foreach (string e in new[] { "'utf-8'", "'ascii'" })
             {
-                var result = _fixture.Navigator.XPath2Evaluate($"base64encode('stef', {e})");
+                var result = _navigator.XPath2Evaluate($"base64encode('stef', {e})");
 
                 Assert.Equal("c3RlZg==", result);
             }
@@ -35,7 +43,7 @@ namespace XPath2.Tests.Extensions
         [Fact]
         public void XPathExtensions_base64encode_invalid_encoding()
         {
-            var exception = Record.Exception(() => _fixture.Navigator.XPath2Evaluate("base64encode('stef', 'x')"));
+            var exception = Record.Exception(() => _navigator.XPath2Evaluate("base64encode('stef', 'x')"));
             Assert.NotNull(exception);
             Assert.IsType<XPath2Exception>(exception);
             Assert.Equal("The value '\"x\"' is an invalid argument for constructor/cast Encoding.GetEncoding()", exception.Message);
@@ -44,7 +52,7 @@ namespace XPath2.Tests.Extensions
         [Fact]
         public void XPathExtensions_base64decode()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("base64decode('c3RlZg==')");
+            var result = _navigator.XPath2Evaluate("base64decode('c3RlZg==')");
 
             Assert.Equal("stef", result);
         }
@@ -54,7 +62,7 @@ namespace XPath2.Tests.Extensions
         {
             foreach (string b in new[] { "'true'", "true()" })
             {
-                var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg', {b})");
+                var result = _navigator.XPath2Evaluate($"base64decode('c3RlZg', {b})");
 
                 Assert.Equal("stef", result);
             }
@@ -65,7 +73,7 @@ namespace XPath2.Tests.Extensions
         {
             foreach (string e in new[] { "'utf-8'", "'ascii'" })
             {
-                var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg==', {e})");
+                var result = _navigator.XPath2Evaluate($"base64decode('c3RlZg==', {e})");
 
                 Assert.Equal("stef", result);
             }
@@ -80,7 +88,7 @@ namespace XPath2.Tests.Extensions
                 {
                     foreach (string str in new[] { "c3RlZg", "=c3RlZg=", "c3RlZg=======" })
                     {
-                        var result = _fixture.Navigator.XPath2Evaluate($"base64decode('{str}', '{e}', {b})");
+                        var result = _navigator.XPath2Evaluate($"base64decode('{str}', '{e}', {b})");
 
                         Assert.Equal("stef", result);
                     }
@@ -95,7 +103,7 @@ namespace XPath2.Tests.Extensions
             {
                 foreach (string b in new[] { "'false'", "false()" })
                 {
-                    var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg==', {e}, {b})");
+                    var result = _navigator.XPath2Evaluate($"base64decode('c3RlZg==', {e}, {b})");
 
                     Assert.Equal("stef", result);
                 }
@@ -105,7 +113,7 @@ namespace XPath2.Tests.Extensions
         [Fact]
         public void XPathExtensions_base64decode_invalid_data_length()
         {
-            var result = _fixture.Navigator.XPath2Evaluate("base64decode('c3RlZg')");
+            var result = _navigator.XPath2Evaluate("base64decode('c3RlZg')");
 
             Assert.Equal("stef", result);
         }
@@ -113,7 +121,7 @@ namespace XPath2.Tests.Extensions
         [Fact]
         public void XPathExtensions_json_to_xml()
         {
-            var result = _fixture.Navigator.XPath2Evaluate(@"string(json-to-xml('{ ""id"": 42, ""hello"": ""world"" }', 'r')/r/id)");
+            var result = _navigator.XPath2Evaluate(@"string(json-to-xml('{ ""id"": 42, ""hello"": ""world"" }', 'r')/r/id)");
 
             Assert.Equal("42", result);
         }
@@ -121,7 +129,7 @@ namespace XPath2.Tests.Extensions
         [Fact]
         public void XPathExtensions_json_to_xmlstring()
         {
-            var result = _fixture.Navigator.XPath2Evaluate(@"json-to-xmlstring('{ ""id"": 42, ""hello"": ""world"" }', 'r')");
+            var result = _navigator.XPath2Evaluate(@"json-to-xmlstring('{ ""id"": 42, ""hello"": ""world"" }', 'r')");
 
             Assert.Equal("<r>\r\n  <id>42</id>\r\n  <hello>world</hello>\r\n</r>", result);
         }
