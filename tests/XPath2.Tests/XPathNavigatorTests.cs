@@ -92,14 +92,56 @@ namespace XPath2.Tests
         }
 
         [Fact]
+        public void XPath2Evaluate_string_With_0_Arguments()
+        {
+            var result = _navigator.XPath2Evaluate("string()");
+
+            Assert.Equal("", result);
+        }
+
+        [Fact]
+        public void XPath2Evaluate_string_With_1_StringArgument()
+        {
+            var result = _navigator.XPath2Evaluate("string(\"x\")");
+
+            Assert.Equal("x", result);
+        }
+
+        [Fact]
+        public void XPath2Evaluate_string_With_1_IntegerArgument()
+        {
+            var result = _navigator.XPath2Evaluate("string(1)");
+
+            Assert.Equal("1", result);
+        }
+
+        [Fact]
+        public void XPath2Evaluate_string_On_Context_Node()
+        {
+            var doc = new XmlDocument { InnerXml = "<root>foo</root>" };
+
+            string result = doc.XPath2Evaluate("string(root/string())") as string;
+            Assert.Equal("foo", result);
+        }
+
+        [Fact]
+        public void XPath2Evaluate_string_join_On_string_sequence()
+        {
+            var doc = new XmlDocument { InnerXml = "<root><item>a</item><item>b</item><item>c</item></root>" };
+
+            string result = doc.XPath2Evaluate("string-join(root/item/string(), ',')") as string;
+
+            Assert.Equal("a,b,c", result);
+        }
+
+        [Fact]
         public void XPath2Evaluate_number()
         {
             var xml = new XmlDocument
             {
                 InnerXml = @"
                     <root num=' 123 '>
-                        <numeric>456.78
-                        </numeric>
+                        <numeric>456.78</numeric>
                     </root>"
             };
 

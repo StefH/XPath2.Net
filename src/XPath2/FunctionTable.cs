@@ -386,6 +386,8 @@ namespace Wmhelp.XPath2
             Add(XmlReservedNs.NsXQueryFunc, "false", 0, XPath2ResultType.Boolean, (context, provider, args) => CoreFuncs.False);
             Add(XmlReservedNs.NsXQueryFunc, "not", 1, XPath2ResultType.Boolean, (context, provider, args) =>
                 CoreFuncs.Not(args[0]));
+            Add(XmlReservedNs.NsXQueryFunc, "string", 0, XPath2ResultType.String, (context, provider, args) =>
+                CoreFuncs.StringValue(context, provider));
             Add(XmlReservedNs.NsXQueryFunc, "string", 1, XPath2ResultType.String, (context, provider, args) =>
                 CoreFuncs.StringValue(context, args[0]));
             Add(XmlReservedNs.NsXQueryFunc, "number", 0, XPath2ResultType.Number, (context, provider, args) =>
