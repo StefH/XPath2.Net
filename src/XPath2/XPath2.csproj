@@ -26,6 +26,7 @@
     <RootNamespace>Wmhelp.XPath2</RootNamespace>
     <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <ProjectGuid>{D3804228-91F4-4502-9595-39584EAA0000}</ProjectGuid>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
