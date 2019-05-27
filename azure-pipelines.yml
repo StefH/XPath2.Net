@@ -24,9 +24,9 @@ steps:
 # - https://github.com/dotnet/cli/issues/8368
 # - https://github.com/Microsoft/vsts-tasks/issues/8291
 #
-#- script: |
-#    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner begin /k:"system.linq.dynamic.core" /d:sonar.organization="stefh-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(SONAR_TOKEN)" /v:"$(buildId)" /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
-#  displayName: Begin SonarScanner
+- script: |
+    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner begin /k:"StefH_XPath2.Net" /d:sonar.organization="stefh-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(SONAR_TOKEN)" /v:"$(buildId)" /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
+  displayName: Begin SonarScanner
 
 - task: DotNetCoreCLI@2
   displayName: Build Projects in Debug configuration
@@ -43,9 +43,9 @@ steps:
   displayName: 'Build tests and run tests for net452 and netcoreapp2.1 (with coverage)'
 
 # End SonarScanner
-#- script: |
-#    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
-#  displayName: End SonarScanner
+- script: |
+    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
+  displayName: End SonarScanner
 
 - task: PublishTestResults@2
   inputs:
