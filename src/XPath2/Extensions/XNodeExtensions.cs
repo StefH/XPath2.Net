@@ -36,27 +36,22 @@ namespace Wmhelp.XPath2
         public static IEnumerable<T> XPath2Select<T>(this XNode node, XPath2Expression expression, object arg)
             where T : XObject
         {
-            XPathNavigator nav = node.CreateNavigator();
-            XPath2NodeIterator iter = nav.XPath2Select(expression, arg);
-            foreach (XPathItem item in iter)
+            XPathNavigator navigator = node.CreateNavigator();
+            XPath2NodeIterator nodeIterator = navigator.XPath2Select(expression, arg);
+            foreach (XPathItem item in nodeIterator)
                 if (item.IsNode)
                 {
                     XPathNavigator curr = (XPathNavigator)item;
                     XObject o = (XObject)curr.UnderlyingObject;
                     if (!(o is T))
-                        throw new InvalidOperationException(string.Format("Unexpected evaluation {0}", o.GetType()));
+                        throw new InvalidOperationException($"Unexpected evaluation {o.GetType()}");
                     yield return (T)o;
                 }
                 else
-                    throw new InvalidOperationException(string.Format("Unexpected evaluation {0}", item.TypedValue.GetType()));
+                    throw new InvalidOperationException($"Unexpected evaluation {item.TypedValue.GetType()}");
         }
 
-        public static IEnumerable<object> XPath2Select(this XNode node, string xpath)
-        {
-            return XPath2Select(node, xpath, null);
-        }
-
-        public static IEnumerable<object> XPath2Select(this XNode node, string xpath, IXmlNamespaceResolver nsResolver)
+        public static IEnumerable<object> XPath2Select(this XNode node, string xpath, IXmlNamespaceResolver nsResolver = null)
         {
             return XPath2Select(node, xpath, nsResolver, null);
         }
@@ -73,13 +68,13 @@ namespace Wmhelp.XPath2
 
         public static IEnumerable<object> XPath2Select(this XNode node, XPath2Expression expression, object arg)
         {
-            XPathNavigator nav = node.CreateNavigator();
-            XPath2NodeIterator iter = nav.XPath2Select(expression, arg);
-            foreach (XPathItem item in iter)
+            XPathNavigator navigator = node.CreateNavigator();
+            XPath2NodeIterator nodeIterator = navigator.XPath2Select(expression, arg);
+            foreach (XPathItem item in nodeIterator)
                 if (item.IsNode)
                 {
-                    XPathNavigator curr = (XPathNavigator)item;
-                    yield return curr.UnderlyingObject;
+                    XPathNavigator currentNavigator = (XPathNavigator)item;
+                    yield return currentNavigator.UnderlyingObject;
                 }
                 else
                     yield return item.TypedValue;
@@ -115,39 +110,19 @@ namespace Wmhelp.XPath2
             return XPath2Select<T>(node, expression, arg).FirstOrDefault();
         }
 
-        public static object XPath2SelectOne(this XNode node, string xpath)
-        {
-            return XPath2SelectOne(node, xpath, null);
-        }
-
-        public static object XPath2SelectOne(this XNode node, string xpath, IXmlNamespaceResolver nsResolver)
-        {
-            return XPath2SelectOne(node, xpath, nsResolver, null);
-        }
-
         public static object XPath2SelectOne(this XNode node, string xpath, object arg)
         {
             return XPath2SelectOne(node, xpath, null, arg);
         }
 
-        public static object XPath2SelectOne(this XNode node, string xpath, IXmlNamespaceResolver nsResolver, object arg)
+        public static object XPath2SelectOne(this XNode node, string xpath, IXmlNamespaceResolver nsResolver = null, object arg = null)
         {
             return XPath2SelectOne(node, XPath2Expression.Compile(xpath, nsResolver), arg);
         }
 
         public static object XPath2SelectOne(this XNode node, XPath2Expression expression, object arg)
         {
-            return XPath2Select(node, expression, arg).FirstOrDefault<object>();
-        }
-
-        public static IEnumerable<XElement> XPath2SelectElements(this XNode node, string xpath)
-        {
-            return XPath2SelectElements(node, xpath, null);
-        }
-
-        public static IEnumerable<XElement> XPath2SelectElements(this XNode node, string xpath, IXmlNamespaceResolver nsResolver)
-        {
-            return XPath2SelectElements(node, xpath, nsResolver, null);
+            return XPath2Select(node, expression, arg).FirstOrDefault();
         }
 
         public static IEnumerable<XElement> XPath2SelectElements(this XNode node, string xpath, object arg)
@@ -155,7 +130,7 @@ namespace Wmhelp.XPath2
             return XPath2SelectElements(node, xpath, null, arg);
         }
 
-        public static IEnumerable<XElement> XPath2SelectElements(this XNode node, string xpath, IXmlNamespaceResolver nsResolver, object arg)
+        public static IEnumerable<XElement> XPath2SelectElements(this XNode node, string xpath, IXmlNamespaceResolver nsResolver = null, object arg = null)
         {
             return XPath2SelectElements(node, XPath2Expression.Compile(xpath, nsResolver), arg);
         }
@@ -170,22 +145,12 @@ namespace Wmhelp.XPath2
             return XPath2Select<XElement>(node, expression, arg);
         }
 
-        public static XElement XPath2SelectElement(this XNode node, string xpath)
-        {
-            return XPath2SelectElement(node, xpath, null);
-        }
-
-        public static XElement XPath2SelectElement(this XNode node, string xpath, IXmlNamespaceResolver nsResolver)
-        {
-            return XPath2SelectElement(node, xpath, nsResolver, null);
-        }
-
         public static XElement XPath2SelectElement(this XNode node, string xpath, object arg)
         {
             return XPath2SelectElement(node, xpath, null, arg);
         }
 
-        public static XElement XPath2SelectElement(this XNode node, string xpath, IXmlNamespaceResolver nsResolver, object arg)
+        public static XElement XPath2SelectElement(this XNode node, string xpath, IXmlNamespaceResolver nsResolver = null, object arg = null)
         {
             return XPath2SelectElement(node, XPath2Expression.Compile(xpath, nsResolver), arg);
         }
@@ -195,32 +160,17 @@ namespace Wmhelp.XPath2
             return XPath2SelectOne<XElement>(node, expression, arg);
         }
 
-        public static IEnumerable<object> XPath2SelectValues(this XNode node, string xpath)
-        {
-            return XPath2SelectValues(node, xpath, null, null);
-        }
-
-        public static IEnumerable<object> XPath2SelectValues(this XNode node, string xpath, IXmlNamespaceResolver nsResolver)
-        {
-            return XPath2SelectValues(node, xpath, nsResolver, null);
-        }
-
         public static IEnumerable<object> XPath2SelectValues(this XNode node, string xpath, object arg)
         {
             return XPath2SelectValues(node, xpath, null, arg);
         }
 
-        public static IEnumerable<object> XPath2SelectValues(this XNode node, string xpath, IXmlNamespaceResolver nsResolver, object arg)
+        public static IEnumerable<object> XPath2SelectValues(this XNode node, string xpath, IXmlNamespaceResolver nsResolver = null, object arg = null)
         {
             return XPath2SelectValues(node, XPath2Expression.Compile(xpath, nsResolver), arg);
         }
 
-        public static IEnumerable<object> XPath2SelectValues(this XNode node, XPath2Expression expr)
-        {
-            return XPath2SelectValues(node, expr);
-        }
-
-        public static IEnumerable<object> XPath2SelectValues(this XNode node, XPath2Expression expr, object arg)
+        public static IEnumerable<object> XPath2SelectValues(this XNode node, XPath2Expression expr, object arg = null)
         {
             XPathNavigator nav = node.CreateNavigator();
             XPath2NodeIterator iter = XPath2NodeIterator.Create(nav.XPath2Evaluate(expr, arg));

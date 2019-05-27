@@ -1,12 +1,23 @@
 # XPath2.Net : Lightweight XPath2 for .NET
 
-[![Build Status](https://stef.visualstudio.com/XPath2.Net/_apis/build/status/XPath2.Net)](https://stef.visualstudio.com/XPath2.Net/_build/latest?definitionId=14)
-[![Coverage Status](https://coveralls.io/repos/github/StefH/XPath2.Net/badge.svg)](https://coveralls.io/github/StefH/XPath2.Net)
 
-| Project | NuGet |
-| ------- | ----- |
-| XPath2  | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
-| XPath2.Extensions | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
+
+
+
+| | |
+| --- | --- |
+| ***Quality*** | &nbsp; |
+| &nbsp;&nbsp;**Build Azure** | [![Build Status](https://stef.visualstudio.com/XPath2.Net/_apis/build/status/XPath2.Net)](https://stef.visualstudio.com/XPath2.Net/_build/latest?definitionId=14) |
+| &nbsp;&nbsp;**CodeFactor** | [![CodeFactor](https://www.codefactor.io/repository/github/stefh/XPath2.Net/badge)](https://www.codefactor.io/repository/github/stefh/XPath2.Net)
+| &nbsp;&nbsp;**Sonar Quality Gate** | [![Sonar Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=alert_status)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net) |
+| &nbsp;&nbsp;**Sonar Bugs** | [![Sonar Bugs](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=bugs)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net&resolved=false&types=BUG) |
+| &nbsp;&nbsp;**Sonar Code Smells** | [![Sonar Code Smells](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=code_smells)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net&resolved=false&types=CODE_SMELL) |
+| &nbsp;&nbsp;**Sonar Coverage** | [![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=coverage)](https://sonarcloud.io/component_measures?id=StefH_XPath2.Net&metric=coverage) |
+| &nbsp;&nbsp;**Coveralls** | [![Coverage Status](https://coveralls.io/repos/github/StefH/XPath2.Net/badge.svg)](https://coveralls.io/github/StefH/XPath2.Net) |
+| |
+| ***NuGet*** | &nbsp; |
+| &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
+| &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
 
 Project is forked from https://xpath2.codeplex.com/
 
