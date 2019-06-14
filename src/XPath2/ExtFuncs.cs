@@ -1026,143 +1026,213 @@ namespace Wmhelp.XPath2
         public static object GetAbs(object value)
         {
             if (value == Undefined.Value)
+            {
                 return value;
+            }
+
             if (Integer.IsDerivedSubtype(value))
+            {
                 value = Integer.ToInteger(value);
-            if (value is Double)
-                return Math.Abs((double)value);
-            else if (value is Decimal)
-                return Math.Abs((decimal)value);
-            else if (value is Integer)
-                return (Integer)Math.Abs((decimal)(Integer)value);
-            else if (value is Single)
-                return Math.Abs((float)value);
-            else
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                    new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                    "xs:float | xs:double | xs:decimal | xs:integer in fn:abs()");
+            }
+
+            switch (value)
+            {
+                case double valueAsDouble:
+                    return Math.Abs(valueAsDouble);
+
+                case decimal valueAsDecimal:
+                    return Math.Abs(valueAsDecimal);
+
+                case Integer valueAsInteger:
+                    return (Integer)Math.Abs((decimal)valueAsInteger);
+
+                case float valueAsFloat:
+                    return Math.Abs(valueAsFloat);
+            }
+
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
+                "xs:float | xs:double | xs:decimal | xs:integer in fn:abs()");
         }
 
         public static object GetCeiling(object value)
         {
             if (value == Undefined.Value)
+            {
                 return value;
+            }
+
             if (Integer.IsDerivedSubtype(value))
+            {
                 value = Integer.ToInteger(value);
-            if (value is Double)
-                return Math.Ceiling((double)value);
-            else if (value is Decimal)
-                return Math.Ceiling((decimal)value);
-            else if (value is Integer)
-                return (Integer)Math.Ceiling((decimal)(Integer)value);
-            else if (value is Single)
-                return (float)Math.Ceiling((float)value);
-            else
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                    new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                    "xs:float | xs:double | xs:decimal | xs:integer in fn:ceiling()");
+            }
+
+            switch (value)
+            {
+                case double valueAsDouble:
+                    return Math.Ceiling(valueAsDouble);
+
+                case decimal valueAsDecimal:
+                    return Math.Ceiling(valueAsDecimal);
+
+                case Integer valueAsInteger:
+                    return (Integer)Math.Ceiling((decimal)valueAsInteger);
+
+                case float valueAsFloat:
+                    return (float)Math.Ceiling(valueAsFloat);
+            }
+
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
+                "xs:float | xs:double | xs:decimal | xs:integer in fn:ceiling()");
         }
 
         public static object GetFloor(object value)
         {
             if (value == Undefined.Value)
+            {
                 return value;
+            }
+
             if (Integer.IsDerivedSubtype(value))
+            {
                 value = Integer.ToInteger(value);
-            if (value is Double)
-                return Math.Floor((double)value);
-            else if (value is Decimal)
-                return Math.Floor((decimal)value);
-            else if (value is Integer)
-                return (Integer)Math.Floor((decimal)(Integer)value);
-            else if (value is Single)
-                return (float)Math.Floor((float)value);
-            else
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                    new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                    "xs:float | xs:double | xs:decimal | xs:integer in fn:floor()");
+            }
+
+            switch (value)
+            {
+                case double valueAsDouble:
+                    return Math.Floor(valueAsDouble);
+
+                case decimal valueAsDecimal:
+                    return Math.Floor(valueAsDecimal);
+
+                case Integer valueAsInteger:
+                    return (Integer)Math.Floor((decimal)valueAsInteger);
+
+                case float valueAsFloat:
+                    return (float)Math.Floor(valueAsFloat);
+            }
+
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
+                "xs:float | xs:double | xs:decimal | xs:integer in fn:floor()");
         }
 
         public static object GetRound(object value)
         {
             if (value == Undefined.Value)
+            {
                 return value;
+            }
+
             if (Integer.IsDerivedSubtype(value))
+            {
                 value = Integer.ToInteger(value);
-            if (value is Double)
-                return Math.Round((double)value);
-            else if (value is Decimal)
-                return Math.Round((decimal)value);
-            else if (value is Integer)
-                return (Integer)Math.Round((decimal)(Integer)value);
-            else if (value is Single)
-                return (float)Math.Round((float)value);
-            else
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                    new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                    "xs:float | xs:double | xs:decimal | xs:integer in fn:round()");
+            }
+
+            switch (value)
+            {
+                case double valueAsDouble:
+                    return Math.Round(valueAsDouble, valueAsDouble >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+
+                case decimal valueAsDecimal:
+                    return Math.Round(valueAsDecimal, valueAsDecimal >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+
+                case Integer valueAsInteger:
+                    return (Integer)Math.Round((decimal)valueAsInteger, valueAsInteger >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+
+                case float valueAsFloat:
+                    return (float)Math.Round(valueAsFloat, valueAsFloat >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+            }
+
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
+                "xs:float | xs:double | xs:decimal | xs:integer in fn:round()");
         }
 
         public static object GetRoundHalfToEven(object value)
         {
             if (value == Undefined.Value)
+            {
                 return value;
+            }
+
             if (Integer.IsDerivedSubtype(value))
+            {
                 value = Integer.ToInteger(value);
-            if (value is Double)
-                return Math.Round((double)value, MidpointRounding.ToEven);
-            else if (value is Decimal)
-                return Math.Round((decimal)value, MidpointRounding.ToEven);
-            else if (value is Integer)
-                return (Integer)Math.Round((decimal)(Integer)value, MidpointRounding.ToEven);
-            else if (value is Single)
-                return (float)Math.Round((float)value, MidpointRounding.ToEven);
-            else
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                    new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                    "xs:float | xs:double | xs:decimal | xs:integer in fn:round-half-to-even()");
+            }
+
+            switch (value)
+            {
+                case double valueAsDouble:
+                    return Math.Round(valueAsDouble, MidpointRounding.ToEven);
+
+                case decimal valueAsDecimal:
+                    return Math.Round(valueAsDecimal, MidpointRounding.ToEven);
+
+                case Integer valueAsInteger:
+                    return (Integer)Math.Round((decimal)valueAsInteger, MidpointRounding.ToEven);
+
+                case float valueAsFloat:
+                    return (float)Math.Round(valueAsFloat, MidpointRounding.ToEven);
+            }
+
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
+                "xs:float | xs:double | xs:decimal | xs:integer in fn:round-half-to-even()");
         }
 
-        public static object GetRoundHalfToEven(object value, object prec)
+        public static object GetRoundHalfToEven(object value, object precision)
         {
-            if (value == Undefined.Value || prec == Undefined.Value)
+            if (value == Undefined.Value || precision == Undefined.Value)
+            {
                 return Undefined.Value;
+            }
+
             if (Integer.IsDerivedSubtype(value))
+            {
                 value = Integer.ToInteger(value);
-            int p = (int)(Integer)prec;
+            }
+
+            int p = (int)(Integer)precision;
             if (p < 0)
             {
                 int pow = 1;
                 for (int k = 1; k <= -p; k++)
+                {
                     pow = pow * 10;
-                if (value is Double)
-                    return pow * Math.Round((double)value / pow, MidpointRounding.ToEven);
-                else if (value is Decimal)
-                    return pow * Math.Round((decimal)value / pow, MidpointRounding.ToEven);
-                else if (value is Integer)
-                    return pow * (Integer)Math.Round((decimal)(Integer)value / pow, MidpointRounding.ToEven);
-                else if (value is Single)
-                    return pow * Math.Round((float)value / pow, MidpointRounding.ToEven);
-                else
-                    throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                        new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                        "xs:float | xs:double | xs:decimal | xs:integer in fn:round-half-to-even()");
+                }
+
+                switch (value)
+                {
+                    case double valueAsDouble:
+                        return pow * Math.Round(valueAsDouble / pow, MidpointRounding.ToEven);
+
+                    case decimal valueAsDecimal:
+                        return pow * Math.Round(valueAsDecimal / pow, MidpointRounding.ToEven);
+
+                    case Integer valueAsInteger:
+                        return pow * (Integer)Math.Round((decimal)valueAsInteger / pow, MidpointRounding.ToEven);
+
+                    case float valueAsFloat:
+                        return pow * Math.Round(valueAsFloat / pow, MidpointRounding.ToEven);
+                }
             }
-            else
+
+            switch (value)
             {
-                if (value is Double)
-                    return Math.Round((double)value, p, MidpointRounding.ToEven);
-                else if (value is Decimal)
-                    return Math.Round((decimal)value, p, MidpointRounding.ToEven);
-                else if (value is Integer)
-                    return (Integer)Math.Round((decimal)(Integer)value, p, MidpointRounding.ToEven);
-                else if (value is Single)
-                    return Math.Round((float)value, p, MidpointRounding.ToEven);
-                else
-                    throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                        new SequenceType(value.GetType(), XmlTypeCardinality.One),
-                        "xs:float | xs:double | xs:decimal | xs:integer in fn:round-half-to-even()");
+                case double valueAsDouble:
+                    return Math.Round(valueAsDouble, p, MidpointRounding.ToEven);
+
+                case decimal valueAsDecimal:
+                    return Math.Round(valueAsDecimal, p, MidpointRounding.ToEven);
+
+                case Integer valueAsInteger:
+                    return (Integer)Math.Round((decimal)valueAsInteger, p, MidpointRounding.ToEven);
+
+                case float valueAsFloat:
+                    return Math.Round(valueAsFloat, p, MidpointRounding.ToEven);
+
             }
+
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
+                "xs:float | xs:double | xs:decimal | xs:integer in fn:round-half-to-even()");
         }
 
         public static object Compare(XPath2Context context, object a, object b, string collation)

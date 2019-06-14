@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using FluentAssertions;
+using System.Xml;
 using System.Xml.XPath;
 using Wmhelp.XPath2;
 using Xunit;
@@ -166,6 +167,30 @@ namespace XPath2.Tests
 
             Assert.Equal((decimal)1715.55, add2);
             Assert.Equal(true, equal2);
+        }
+
+        // https://www.w3.org/TR/xpath-functions/#func-round
+        [Theory]
+        [InlineData("2.51", 3)]
+        [InlineData("2.5", 3)]
+        [InlineData("2.4999", 2)]
+        [InlineData("0", 0)]
+        [InlineData("-0", 0)]
+        [InlineData("-2.4999", -2)]
+        [InlineData("-2.5", -2)]
+        [InlineData("-2.51", -3)]
+        public void XPath2Evaluate_round(string value, object expected)
+        {
+            // Arrange
+            string xpath = "round(number(value))";
+            var xml = new XmlDocument { InnerXml = $"<value>{value}</value>" };
+            var nav = xml.CreateNavigator();
+
+            // Act
+            var result = nav.XPath2Evaluate(xpath);
+
+            // Assert
+            result.Should().Be(expected);
         }
     }
 }

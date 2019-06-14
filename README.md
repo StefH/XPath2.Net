@@ -29,7 +29,7 @@ Project is forked from https://xpath2.codeplex.com/
 
 ## Info
 
-It conforms for 12952 from 15133 (85.59%) regarding the test-set (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+It conforms for 12953 from 15133 (85.59%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
 
 API used is an anology to the standard one built into the platform: you utilize XPath2Expression instead of the common XPathExpression and a set of extension functions for XNode, XPathNavigator and XmlNode classes.
 

@@ -44,97 +44,97 @@ namespace Wmhelp.XPath2
 
         public static implicit operator Integer(byte value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(sbyte value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(short value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(ushort value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(long value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(ulong value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(int value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static implicit operator Integer(uint value)
         {
-            return (new Integer(value));
+            return new Integer(value);
         }
 
         public static explicit operator SByte(Integer i1)
         {
-            return (SByte) i1._value;
+            return (SByte)i1._value;
         }
 
         public static explicit operator Byte(Integer i1)
         {
-            return (Byte) i1._value;
+            return (Byte)i1._value;
         }
 
         public static explicit operator Char(Integer i1)
         {
-            return (Char) i1._value;
+            return (Char)i1._value;
         }
 
         public static explicit operator Int16(Integer i1)
         {
-            return (Int16) i1._value;
+            return (Int16)i1._value;
         }
 
         public static explicit operator UInt16(Integer i1)
         {
-            return (UInt16) i1._value;
+            return (UInt16)i1._value;
         }
 
         public static explicit operator Int32(Integer i1)
         {
-            return (Int32) i1._value;
+            return (Int32)i1._value;
         }
 
         public static explicit operator UInt32(Integer i1)
         {
-            return (UInt32) i1._value;
+            return (UInt32)i1._value;
         }
 
         public static explicit operator Int64(Integer i1)
         {
-            return (Int64) i1._value;
+            return (Int64)i1._value;
         }
 
         public static explicit operator UInt64(Integer i1)
         {
-            return (UInt64) i1._value;
+            return (UInt64)i1._value;
         }
 
         public static explicit operator Single(Integer i1)
         {
-            return (Single) i1._value;
+            return (Single)i1._value;
         }
 
         public static explicit operator Double(Integer i1)
         {
-            return (Double) i1._value;
+            return (Double)i1._value;
         }
 
         public static explicit operator Decimal(Integer i1)
@@ -159,10 +159,12 @@ namespace Wmhelp.XPath2
 
         public override bool Equals(object obj)
         {
-            if (obj is Integer)
-                return _value.Equals(((Integer) obj)._value);
-            else
-                return false;
+            if (obj is Integer integer)
+            {
+                return _value.Equals(integer._value);
+            }
+
+            return false;
         }
 
         public override int GetHashCode()
@@ -207,17 +209,17 @@ namespace Wmhelp.XPath2
 
         public static Integer operator *(Integer i1, Integer i2)
         {
-            return new Integer(i1._value*i2._value);
+            return new Integer(i1._value * i2._value);
         }
 
         public static Integer operator /(Integer i1, Integer i2)
         {
-            return new Integer(Decimal.Truncate(i1._value/i2._value));
+            return new Integer(Decimal.Truncate(i1._value / i2._value));
         }
 
         public static Integer operator %(Integer i1, Integer i2)
         {
-            return new Integer(i1._value%i2._value);
+            return new Integer(i1._value % i2._value);
         }
 
         public static bool operator ==(Integer i1, Integer i2)
@@ -242,19 +244,22 @@ namespace Wmhelp.XPath2
 
         public static bool operator >=(Integer i1, Integer i2)
         {
-            return (i1 == i2 || i1 > i2);
+            return i1 == i2 || i1 > i2;
         }
 
 
         public static bool operator <=(Integer i1, Integer i2)
         {
-            return (i1 == i2 || i1 < i2);
+            return i1 == i2 || i1 < i2;
         }
 
         public static bool IsDerivedSubtype(object value)
         {
             if (value is Integer)
+            {
                 return true;
+            }
+
             switch (Type.GetTypeCode(value.GetType()))
             {
                 case TypeCode.SByte:
@@ -274,7 +279,7 @@ namespace Wmhelp.XPath2
 
         public static Integer ToInteger(object value)
         {
-            return (Integer) Convert.ToDecimal(value);
+            return (Integer)Convert.ToDecimal(value);
         }
 
         #region IFormattable Members
@@ -292,7 +297,7 @@ namespace Wmhelp.XPath2
         {
             if (!(obj is Integer))
                 throw new ArgumentException("Object type must be a DataEngine.CoreServices.Integer");
-            return _value.CompareTo(((Integer) obj)._value);
+            return _value.CompareTo(((Integer)obj)._value);
         }
 
         #endregion
