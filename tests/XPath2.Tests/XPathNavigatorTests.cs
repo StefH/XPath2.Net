@@ -174,15 +174,35 @@ namespace XPath2.Tests
         [InlineData("2.51", 3)]
         [InlineData("2.5", 3)]
         [InlineData("2.4999", 2)]
+        [InlineData("+0", 0)]
         [InlineData("0", 0)]
         [InlineData("-0", 0)]
         [InlineData("-2.4999", -2)]
         [InlineData("-2.5", -2)]
         [InlineData("-2.51", -3)]
+        [InlineData("-3.5", -3)]
         public void XPath2Evaluate_round(string value, object expected)
         {
             // Arrange
             string xpath = "round(number(value))";
+            var xml = new XmlDocument { InnerXml = $"<value>{value}</value>" };
+            var nav = xml.CreateNavigator();
+
+            // Act
+            var result = nav.XPath2Evaluate(xpath);
+
+            // Assert
+            result.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("INF", double.PositiveInfinity)]
+        [InlineData("-INF", double.NegativeInfinity)]
+        [InlineData("NaN", double.NaN)]
+        public void XPath2Evaluate_round_EdgeCases(string value, object expected)
+        {
+            // Arrange
+            string xpath = "round(xs:double(value))";
             var xml = new XmlDocument { InnerXml = $"<value>{value}</value>" };
             var nav = xml.CreateNavigator();
 

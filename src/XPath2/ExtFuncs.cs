@@ -1131,16 +1131,21 @@ namespace Wmhelp.XPath2
             switch (value)
             {
                 case double valueAsDouble:
-                    return Math.Round(valueAsDouble, valueAsDouble >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+                    double fractionAsDouble = Math.Abs(valueAsDouble - Math.Floor(valueAsDouble));
+                    return fractionAsDouble >= 0.5 ? Math.Ceiling(valueAsDouble) : Math.Floor(valueAsDouble);
 
                 case decimal valueAsDecimal:
-                    return Math.Round(valueAsDecimal, valueAsDecimal >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+                    decimal fractionAsDecimal = Math.Abs(valueAsDecimal - Math.Floor(valueAsDecimal));
+                    return fractionAsDecimal >= 0.5m ? Math.Ceiling(valueAsDecimal) : Math.Floor(valueAsDecimal);
 
                 case Integer valueAsInteger:
-                    return (Integer)Math.Round((decimal)valueAsInteger, valueAsInteger >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+                    decimal valueCastToDecimal = (decimal)valueAsInteger;
+                    decimal fractionAsInteger = Math.Abs(valueCastToDecimal - Math.Floor(valueCastToDecimal));
+                    return (Integer)(fractionAsInteger >= 0.5m ? Math.Ceiling(valueCastToDecimal) : Math.Floor(valueCastToDecimal));
 
                 case float valueAsFloat:
-                    return (float)Math.Round(valueAsFloat, valueAsFloat >= 0 ? MidpointRounding.AwayFromZero : MidpointRounding.ToEven);
+                    var fractionAsFloat = Math.Abs(valueAsFloat - Math.Floor(valueAsFloat));
+                    return (float)(fractionAsFloat >= 0.5 ? Math.Ceiling(valueAsFloat) : Math.Floor(valueAsFloat));
             }
 
             throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(value.GetType(), XmlTypeCardinality.One),
