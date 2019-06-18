@@ -1125,7 +1125,7 @@ namespace Wmhelp.XPath2
 
             if (Integer.IsDerivedSubtype(value))
             {
-                value = Integer.ToInteger(value);
+                return Integer.ToInteger(value);
             }
 
             switch (value)
@@ -1137,11 +1137,6 @@ namespace Wmhelp.XPath2
                 case decimal valueAsDecimal:
                     decimal fractionAsDecimal = Math.Abs(valueAsDecimal - Math.Floor(valueAsDecimal));
                     return fractionAsDecimal >= 0.5m ? Math.Ceiling(valueAsDecimal) : Math.Floor(valueAsDecimal);
-
-                case Integer valueAsInteger:
-                    decimal valueCastToDecimal = (decimal)valueAsInteger;
-                    decimal fractionAsInteger = Math.Abs(valueCastToDecimal - Math.Floor(valueCastToDecimal));
-                    return (Integer)(fractionAsInteger >= 0.5m ? Math.Ceiling(valueCastToDecimal) : Math.Floor(valueCastToDecimal));
 
                 case float valueAsFloat:
                     var fractionAsFloat = Math.Abs(valueAsFloat - Math.Floor(valueAsFloat));
