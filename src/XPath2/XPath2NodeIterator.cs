@@ -56,7 +56,7 @@ namespace Wmhelp.XPath2
 
 
     [DebuggerDisplay("{curr}")]
-    [DebuggerTypeProxy(typeof (XPath2NodeIteratorDebugView))]
+    [DebuggerTypeProxy(typeof(XPath2NodeIteratorDebugView))]
     public abstract class XPath2NodeIterator : IEnumerable, IEnumerable<XPathItem>
 #if !NETSTANDARD
         , ICloneable
@@ -176,16 +176,15 @@ namespace Wmhelp.XPath2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var node in ToList())
             {
-                sb.Append(node.ToString());
+                sb.Append(node);
                 sb.Append(", ");
             }
-            String s = sb.ToString();
-            if (String.IsNullOrEmpty(s))
-                return "<empty>";
-            return s;
+
+            string s = sb.ToString();
+            return string.IsNullOrEmpty(s) ? "<empty>" : s;
         }
 
         protected virtual void Init()
@@ -197,13 +196,20 @@ namespace Wmhelp.XPath2
         public static XPath2NodeIterator Create(object value)
         {
             if (value == Undefined.Value)
+            {
                 return EmptyIterator.Shared;
-            XPath2NodeIterator iter = value as XPath2NodeIterator;
-            if (iter != null)
+            }
+
+            if (value is XPath2NodeIterator iter)
+            {
                 return iter.Clone();
-            XPathItem item = value as XPathItem;
-            if (item == null)
+            }
+
+            if (!(value is XPathItem item))
+            {
                 item = new XPath2Item(value);
+            }
+
             return new SingleIterator(item);
         }
 

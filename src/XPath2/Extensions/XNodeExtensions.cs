@@ -70,14 +70,19 @@ namespace Wmhelp.XPath2
         {
             XPathNavigator navigator = node.CreateNavigator();
             XPath2NodeIterator nodeIterator = navigator.XPath2Select(expression, arg);
+
             foreach (XPathItem item in nodeIterator)
+            {
                 if (item.IsNode)
                 {
                     XPathNavigator currentNavigator = (XPathNavigator)item;
                     yield return currentNavigator.UnderlyingObject;
                 }
                 else
+                {
                     yield return item.TypedValue;
+                }
+            }
         }
 
         public static T XPath2SelectOne<T>(this XNode node, string xpath)

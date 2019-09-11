@@ -14,44 +14,50 @@ namespace Wmhelp.XPath2.Iterator
     {
         public class NodeTest
         {
-            public XmlQualifiedNameTest nameTest;
-            public SequenceType typeTest;
+            public XmlQualifiedNameTest NameTest;
+            public SequenceType TypeTest;
 
             public NodeTest(object test)
             {
-                if (test is XmlQualifiedNameTest)
-                    nameTest = (XmlQualifiedNameTest) test;
-                else if (test is SequenceType && test != SequenceType.Node)
-                    typeTest = (SequenceType) test;
+                if (test is XmlQualifiedNameTest qualifiedNameTest)
+                {
+                    NameTest = qualifiedNameTest;
+                }
+                else if (test is SequenceType type && !Equals(type, SequenceType.Node))
+                {
+                    TypeTest = type;
+                }
             }
         }
 
-        private readonly XPathNodeType kind;
-        private readonly XPath2Context context;
-        private readonly NodeTest[] nodeTest;
-        private readonly NodeTest lastTest;
-        private readonly XPath2NodeIterator iter;
-        private XPathNavigator curr;
+        private readonly XPathNodeType _kind;
+        private readonly XPath2Context _context;
+        private readonly NodeTest[] _nodeTest;
+        private readonly NodeTest _lastTest;
+        private readonly XPath2NodeIterator _iterator;
+        private XPathNavigator _current;
 
-        public ChildOverDescendantsNodeIterator(XPath2Context context, NodeTest[] nodeTest, XPath2NodeIterator iter)
+        public ChildOverDescendantsNodeIterator(XPath2Context context, NodeTest[] nodeTest, XPath2NodeIterator iterator)
         {
-            this.context = context;
-            this.nodeTest = nodeTest;
-            this.iter = iter;
-            lastTest = nodeTest[nodeTest.Length - 1];
-            kind = XPathNodeType.All;
-            if (lastTest.nameTest != null ||
-                (lastTest.typeTest != null && lastTest.typeTest.GetNodeKind() == XPathNodeType.Element))
-                kind = XPathNodeType.Element;
+            _context = context;
+            _nodeTest = nodeTest;
+            _iterator = iterator;
+            _lastTest = nodeTest[nodeTest.Length - 1];
+            _kind = XPathNodeType.All;
+
+            if (_lastTest.NameTest != null || (_lastTest.TypeTest != null && _lastTest.TypeTest.GetNodeKind() == XPathNodeType.Element))
+            {
+                _kind = XPathNodeType.Element;
+            }
         }
 
         private ChildOverDescendantsNodeIterator(ChildOverDescendantsNodeIterator src)
         {
-            context = src.context;
-            nodeTest = src.nodeTest;
-            iter = src.iter.Clone();
-            lastTest = src.lastTest;
-            kind = src.kind;
+            _context = src._context;
+            _nodeTest = src._nodeTest;
+            _iterator = src._iterator.Clone();
+            _lastTest = src._lastTest;
+            _kind = src._kind;
         }
 
         public override XPath2NodeIterator Clone()
@@ -64,79 +70,116 @@ namespace Wmhelp.XPath2.Iterator
             return new BufferedNodeIterator(Clone());
         }
 
-        private bool TestItem(XPathNavigator nav, NodeTest nodeTest)
+        private bool TestItem(XPathNavigator navigator, NodeTest nodeTest)
         {
-            XmlQualifiedNameTest nameTest = nodeTest.nameTest;
-            SequenceType typeTest = nodeTest.typeTest;
+            XmlQualifiedNameTest nameTest = nodeTest.NameTest;
+            SequenceType typeTest = nodeTest.TypeTest;
             if (nameTest != null)
             {
-                return (nav.NodeType == XPathNodeType.Element || nav.NodeType == XPathNodeType.Attribute) &&
-                       (nameTest.IsNamespaceWildcard || nameTest.Namespace == nav.NamespaceURI) &&
-                       (nameTest.IsNameWildcard || nameTest.Name == nav.LocalName);
+                return (navigator.NodeType == XPathNodeType.Element || navigator.NodeType == XPathNodeType.Attribute) &&
+                       (nameTest.IsNamespaceWildcard || nameTest.Namespace == navigator.NamespaceURI) &&
+                       (nameTest.IsNameWildcard || nameTest.Name == navigator.LocalName);
             }
-            else if (typeTest != null)
-                return typeTest.Match(nav, context);
+
+            if (typeTest != null)
+            {
+                return typeTest.Match(navigator, _context);
+            }
+
             return true;
         }
 
-        private int depth;
-        private bool accept;
-        private XPathNavigator nav;
-        private int sequentialPosition;
+        private int _depth;
+        private bool _accept;
+        private XPathNavigator _navigator;
+        private int _sequentialPosition;
 
         protected override XPathItem NextItem()
         {
             MoveNextIter:
-            if (!accept)
+            if (!_accept)
             {
-                if (!iter.MoveNext())
+                if (!_iterator.MoveNext())
+                {
                     return null;
-                XPathNavigator current = iter.Current as XPathNavigator;
-                if (current == null)
-                    throw new XPath2Exception("XPTY0019", Resources.XPTY0019, iter.Current.Value);
-                if (curr == null || !curr.MoveTo(current))
-                    curr = current.Clone();
-                sequentialPosition = 0;
-                accept = true;
+                }
+
+                if (!(_iterator.Current is XPathNavigator current))
+                {
+                    throw new XPath2Exception("XPTY0019", Resources.XPTY0019, _iterator.Current.Value);
+                }
+
+                if (_current == null || !_current.MoveTo(current))
+                {
+                    _current = current.Clone();
+                }
+
+                _sequentialPosition = 0;
+                _accept = true;
             }
 
             MoveToFirstChild:
-            if (curr.MoveToChild(kind))
+            if (_current.MoveToChild(_kind))
             {
-                depth++;
+                _depth++;
                 goto TestItem;
             }
 
             MoveToNext:
-            if (depth == 0)
+            if (_depth == 0)
             {
-                accept = false;
+                _accept = false;
                 goto MoveNextIter;
             }
-            if (!curr.MoveToNext(kind))
+
+            // https://github.com/StefH/XPath2.Net/issues/27
+            // 'true' if the System.Xml.XPath.XPathNavigator is successful moving to the next sibling node
+            // 'false' if there are no more siblings or if the System.Xml.XPath.XPathNavigator is currently positioned on an attribute node.
+            bool moveToNextIsSuccessful = false;
+            try
             {
-                curr.MoveToParent();
-                depth--;
+                moveToNextIsSuccessful = _current.MoveToNext(_kind);
+            }
+            catch
+            {
+                // Just catch, moveToNextIsSuccessful will be set to 'false'
+            }
+
+            if (!moveToNextIsSuccessful)
+            {
+                _current.MoveToParent();
+                _depth--;
                 goto MoveToNext;
             }
 
             TestItem:
-            if (depth < nodeTest.Length || !TestItem(curr, lastTest))
+            if (_depth < _nodeTest.Length || !TestItem(_current, _lastTest))
+            {
                 goto MoveToFirstChild;
-            if (nav == null || !nav.MoveTo(curr))
-                nav = curr.Clone();
-            for (int k = nodeTest.Length - 2; k >= 0; k--)
-                if (!(nav.MoveToParent() && TestItem(nav, nodeTest[k])))
+            }
+
+            if (_navigator == null || !_navigator.MoveTo(_current))
+            {
+                _navigator = _current.Clone();
+            }
+
+            for (int k = _nodeTest.Length - 2; k >= 0; k--)
+            {
+                if (!(_navigator.MoveToParent() && TestItem(_navigator, _nodeTest[k])))
+                {
                     goto MoveToFirstChild;
-            sequentialPosition++;
-            return curr;
+                }
+            }
+
+            _sequentialPosition++;
+            return _current;
         }
 
-        public override int SequentialPosition => sequentialPosition;
+        public override int SequentialPosition => _sequentialPosition;
 
         public override void ResetSequentialPosition()
         {
-            accept = false;
+            _accept = false;
         }
     }
 }

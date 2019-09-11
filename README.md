@@ -20,6 +20,10 @@ Project is forked from https://xpath2.codeplex.com/
 | ***NuGet*** | &nbsp; |
 | &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
 | &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
+| | |
+| ***MyGet (previews)*** | &nbsp; |
+| &nbsp;&nbsp;**XPath2** | [![MyGet](https://buildstats.info/myget/xpath2/XPath2)](https://www.myget.org/feed/xpath2/package/nuget/XPath2) |
+| &nbsp;&nbsp;**XPath2.Extensions** | [![MyGet](https://buildstats.info/myget/xpath2/XPath2.Extensions)](https://www.myget.org/feed/xpath2/package/nuget/XPath2.Extensions) |
 
 ## Supported frameworks
 - .NET 3.5
