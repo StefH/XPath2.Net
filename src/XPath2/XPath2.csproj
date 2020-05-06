@@ -1,18 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <PropertyGroup>
-    <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.</Description>
+    <Version>1.0.11.0</Version>
+    <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
     <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net35;net40;netstandard2.0;netstandard2.1</TargetFrameworks>
     <AssemblyName>XPath2</AssemblyName>
     <PackageId>XPath2</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS</PackageTags>
     <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>
+    <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StefH/XPath2.Net</RepositoryUrl>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -27,14 +28,16 @@
     <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <ProjectGuid>{D3804228-91F4-4502-9595-39584EAA0000}</ProjectGuid>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
-    <PathMap>$(MSBuildProjectDirectory)=/</PathMap>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
   
   <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
@@ -46,7 +49,7 @@
     <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1' ">
     <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
   </PropertyGroup>
   

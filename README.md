@@ -28,7 +28,7 @@ Project is forked from https://xpath2.codeplex.com/
 ## Supported frameworks
 - .NET 3.5
 - .NET 4.0 and up
-- .NET Standard 2.0
+- .NET Standard 2.0 & 2.1
 
 
 ## Info

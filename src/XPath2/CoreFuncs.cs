@@ -1405,7 +1405,7 @@ namespace Wmhelp.XPath2
                 {
                     return (double) xmlConvertableValue.ValueAs(SequenceType.Double, context.NamespaceManager);
                 } 
-                catch (InvalidCastException e)
+                catch (InvalidCastException)
                 {
                     return double.NaN;
                 }

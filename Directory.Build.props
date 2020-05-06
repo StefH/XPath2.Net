@@ -3,9 +3,9 @@
     <MsBuildAllProjects>$(MsBuildAllProjects);$(MsBuildThisFileFullPath)</MsBuildAllProjects>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <VersionPrefix>1.0.10.0</VersionPrefix>
-  </PropertyGroup>
+  <!--<PropertyGroup>
+    <VersionPrefix>1.0.11.0</VersionPrefix>
+  </PropertyGroup>-->
 
   <Choose>
     <!-- The environment variable `Prerelease` is set in the azure-pipelines.yml file. -->
