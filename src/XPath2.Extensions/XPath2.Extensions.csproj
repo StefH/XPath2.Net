@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.11.0</Version>
+    <Version>1.0.12.0</Version>
     <Description>Non-official extensions for XPath2.dll</Description>
     <Copyright>Stef Heyenrath</Copyright>
     <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>

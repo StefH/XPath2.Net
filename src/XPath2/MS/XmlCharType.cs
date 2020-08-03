@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Xml;
+using Wmhelp.XPath2.Compatibility;
 
 namespace Wmhelp.XPath2.MS
 {
@@ -321,8 +322,7 @@ namespace Wmhelp.XPath2.MS
         private static volatile byte[] s_CharProperties;
         internal byte[] charProperties;
 
-#if NETSTANDARD
-        static void InitInstance()
+        static void InitInstanceNetStandardAndMono()
         {
             lock (StaticLock)
             {
@@ -355,20 +355,37 @@ namespace Wmhelp.XPath2.MS
                 }
             }
         }
-#else
-        private static void InitInstance()
+
+        static void InitInstanceOther()
         {
             lock (StaticLock)
             {
                 if (s_CharProperties != null)
+                {
                     return;
+                }
 
-                Stream memStream = Assembly.GetAssembly(typeof(XmlNode)).GetManifestResourceStream("XmlCharType.bin");
+                var memStream = Assembly.GetAssembly(typeof(XmlNode)).GetManifestResourceStream("XmlCharType.bin");
                 s_CharProperties = new byte[CharPropertiesSize];
                 memStream.Read(s_CharProperties, 0, (int)CharPropertiesSize);
             }
         }
+
+        static void InitInstance()
+        {
+#if NETSTANDARD
+            InitInstanceNetStandardAndMono();
+#else
+            if (PlatformHelper.IsRunningOnMono())
+            {
+                InitInstanceNetStandardAndMono();
+            }
+            else
+            {
+                InitInstanceOther();
+            }
 #endif
+        }
 
         private XmlCharType(byte[] charProperties)
         {
