@@ -31,15 +31,19 @@
 .    {
 .      return;
 .    }
-.
-.    errorText.Write(message);
 .    
 .    if (expected?.Length > 0)
 .    {
-.      errorText.Write(", expecting " + string.Join(" ", expected));
+.      errorText.Write(message + ", expecting");
+.      for (int n = 0; n < expected.Length; ++n)
+.      {
+.        errorText.WriteLine(" " + expected[n]);
+.      }
 .    }
-.    
-.    errorText.WriteLine();
+.    else
+.    {
+.      errorText.WriteLine(message);
+.    }
 .  }
 .
 .  /** debugging support, requires the package jay.yydebug.
