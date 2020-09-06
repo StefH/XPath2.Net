@@ -25,14 +25,21 @@
 .      @param message text to be displayed.
 .      @param expected vector of acceptable tokens, if available.
 .    */
-.  public void yyerror (string message, string[] expected) {
-.    if ((errorText != null) && (expected != null) && (expected.Length  > 0)) {
-.      errorText.Write (message+", expecting");
-.      for (int n = 0; n < expected.Length; ++ n)
-.        errorText.Write (" "+expected[n]);
-.        errorText.WriteLine ();
-.    } else
-.      errorText.WriteLine (message);
+.  public void yyerror (string message, string[] expected)
+.  {
+.    if (errorText == null)
+.    {
+.      return;
+.    }
+.
+.    errorText.Write(message);
+.    
+.    if (expected?.Length > 0)
+.    {
+.      errorText.Write(", expecting " + string.Join(" ", expected));
+.    }
+.    
+.    errorText.WriteLine();
 .  }
 .
 .  /** debugging support, requires the package jay.yydebug.
