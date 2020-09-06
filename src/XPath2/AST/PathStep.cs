@@ -30,7 +30,10 @@ namespace Wmhelp.XPath2.AST
         Expr
     };
 
-    class PathStep
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class PathStep
     {
         public readonly object nodeTest;
         public readonly XPath2ExprType type;

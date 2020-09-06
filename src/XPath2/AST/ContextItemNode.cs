@@ -6,7 +6,10 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class ContextItemNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class ContextItemNode : AbstractNode
     {
         public ContextItemNode(XPath2Context context)
             : base(context)

@@ -15,7 +15,10 @@ using Wmhelp.XPath2.yyParser;
 
 namespace Wmhelp.XPath2
 {
-    internal class Tokenizer : yyInput
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class Tokenizer : yyInput
     {
         private readonly TextReader m_reader;
         private int m_position;
@@ -25,19 +28,19 @@ namespace Wmhelp.XPath2
         private readonly Stack<LexerState> m_states = new Stack<LexerState>();
         private readonly Queue<CurrentToken> m_token = new Queue<CurrentToken>();
 
-        public Tokenizer()
+        internal Tokenizer()
         {
             LineNo = ColNo = 1;
             m_bookmark = new int[5];
         }
 
-        public Tokenizer(string strInput)
+        internal Tokenizer(string strInput)
             : this()
         {
             m_reader = new StringReader(strInput);
         }
 
-        public Tokenizer(TextReader reader)
+        internal Tokenizer(TextReader reader)
             : this()
         {
             m_reader = reader;

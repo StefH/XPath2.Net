@@ -18,20 +18,20 @@ namespace Wmhelp.XPath2
     public class XPath2Expression
     {
         private readonly string expr;
-        private readonly AbstractNode exprTree;
         private readonly XPath2Context context;
         private XPath2ResultType? resultType;
+        public AbstractNode ExpressionTree { get; }
 
         private XPath2Expression(string expr, AbstractNode exprTree, XPath2Context context)
         {
             this.expr = expr;
-            this.exprTree = exprTree;
+            this.ExpressionTree = exprTree;
             this.context = context;
         }
 
         public XPath2Expression Clone()
         {
-            return new XPath2Expression(expr, exprTree, context);
+            return new XPath2Expression(expr, ExpressionTree, context);
         }
 
         private IEnumerable<XPathItem> CreateIterator(IEnumerable<XNode> en)
@@ -177,7 +177,7 @@ namespace Wmhelp.XPath2
                 }
             }
             context.RunningContext = runningContext;
-            exprTree.Bind();
+            ExpressionTree.Bind();
             object[] dataPool = new object[runningContext.NameBinder.Length];
             if (vars != null)
                 for (int k = 0; k < variables.Length; k++)
@@ -187,7 +187,7 @@ namespace Wmhelp.XPath2
 
         public object Evaluate(IContextProvider provider, IDictionary<XmlQualifiedName, object> vars)
         {
-            object res = exprTree.Execute(provider, BindExpr(vars));
+            object res = ExpressionTree.Execute(provider, BindExpr(vars));
             if (res is XPathItem)
             {
                 XPathItem item = (XPathItem)res;
@@ -225,7 +225,7 @@ namespace Wmhelp.XPath2
         public XPath2ResultType GetResultType(IDictionary<XmlQualifiedName, object> vars)
         {
             if (!resultType.HasValue)
-                resultType = exprTree.GetReturnType(BindExpr(vars));
+                resultType = ExpressionTree.GetReturnType(BindExpr(vars));
             return resultType.Value;
         }
     }

@@ -9,7 +9,10 @@ using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class ExprNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class ExprNode : AbstractNode
     {
         public ExprNode(XPath2Context context, AbstractNode node)
             : base(context)

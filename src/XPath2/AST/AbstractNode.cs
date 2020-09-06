@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal abstract class AbstractNode : IEnumerable<AbstractNode>
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public abstract class AbstractNode : IEnumerable<AbstractNode>
     {
         private AbstractNode _parent = null;
         private List<AbstractNode> _childs = null;

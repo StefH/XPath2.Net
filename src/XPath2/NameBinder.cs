@@ -10,9 +10,15 @@ using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2
 {
-    internal delegate void ChangeValueAction(NameBinder.ReferenceLink sender, object[] dataPool);
+    /// <summary>
+    /// This delegate is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public delegate void ChangeValueAction(NameBinder.ReferenceLink sender, object[] dataPool);
 
-    internal class NameBinder
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class NameBinder
     {
         public class ReferenceLink
         {

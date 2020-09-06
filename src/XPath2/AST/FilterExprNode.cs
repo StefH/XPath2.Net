@@ -13,7 +13,10 @@ using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class FilterExprNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class FilterExprNode : AbstractNode
     {
         private bool m_contextSensitive;
 

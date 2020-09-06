@@ -6,7 +6,10 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal class AtomizedUnaryOperatorNode : UnaryOperatorNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class AtomizedUnaryOperatorNode : UnaryOperatorNode
     {
         public AtomizedUnaryOperatorNode(XPath2Context context, UnaryOperator action, object node,
             XPath2ResultType resultType)

@@ -12,7 +12,10 @@ using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class FuncNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class FuncNode : AbstractNode
     {
         private readonly String _name;
         private readonly String _ns;

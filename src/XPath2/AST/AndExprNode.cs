@@ -6,7 +6,10 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class AndExprNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class AndExprNode : AbstractNode
     {
         public AndExprNode(XPath2Context context, object node1, object node2)
             : base(context)

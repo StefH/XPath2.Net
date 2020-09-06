@@ -8,7 +8,10 @@ using System;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal class ArithmeticUnaryOperatorNode : AtomizedUnaryOperatorNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class ArithmeticUnaryOperatorNode : AtomizedUnaryOperatorNode
     {
         public ArithmeticUnaryOperatorNode(XPath2Context context, UnaryOperator action, object node)
             : base(context, action, node, XPath2ResultType.Number)

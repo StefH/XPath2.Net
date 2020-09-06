@@ -6,7 +6,10 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class OrderedBinaryOperatorNode : BinaryOperatorNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class OrderedBinaryOperatorNode : BinaryOperatorNode
     {
         public OrderedBinaryOperatorNode(XPath2Context context, BinaryOperator action, object node1, object node2,
             XPath2ResultType resultType)

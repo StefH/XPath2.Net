@@ -6,9 +6,15 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal delegate object BinaryOperator(IContextProvider provider, object arg1, object arg2);
+    /// <summary>
+    /// This delegate is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public delegate object BinaryOperator(IContextProvider provider, object arg1, object arg2);
 
-    internal class BinaryOperatorNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class BinaryOperatorNode : AbstractNode
     {
         protected BinaryOperator _binaryOper;
         private readonly XPath2ResultType _resultType;

@@ -6,7 +6,10 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal class AtomizedBinaryOperatorNode : BinaryOperatorNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class AtomizedBinaryOperatorNode : BinaryOperatorNode
     {
         public AtomizedBinaryOperatorNode(XPath2Context context, BinaryOperator action, object node1, object node2,
             XPath2ResultType resultType)

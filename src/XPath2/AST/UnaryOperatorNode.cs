@@ -6,9 +6,15 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal delegate object UnaryOperator(IContextProvider provider, object arg);
+    /// <summary>
+    /// This delegate is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public delegate object UnaryOperator(IContextProvider provider, object arg);
 
-    internal class UnaryOperatorNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class UnaryOperatorNode : AbstractNode
     {
         protected UnaryOperator _unaryOper;
         private readonly XPath2ResultType _resultType;

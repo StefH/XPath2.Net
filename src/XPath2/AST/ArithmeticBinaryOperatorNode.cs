@@ -8,9 +8,15 @@ using System;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal delegate XPath2ResultType GetReturnTypeDelegate(XPath2ResultType resType1, XPath2ResultType resType2);
+    /// <summary>
+    /// This delegate is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public delegate XPath2ResultType GetReturnTypeDelegate(XPath2ResultType resType1, XPath2ResultType resType2);
 
-    internal class ArithmeticBinaryOperatorNode : AtomizedBinaryOperatorNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public class ArithmeticBinaryOperatorNode : AtomizedBinaryOperatorNode
     {
         private readonly GetReturnTypeDelegate _returnTypeDelegate;
 

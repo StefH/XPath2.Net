@@ -6,7 +6,10 @@
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class IfNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class IfNode : AbstractNode
     {
         public IfNode(XPath2Context context, object cond, object thenBranch, object elseBranch)
             : base(context)

@@ -9,7 +9,10 @@ using Wmhelp.XPath2.Iterator;
 
 namespace Wmhelp.XPath2.AST
 {
-    internal sealed class PathExprNode : AbstractNode
+    /// <summary>
+    /// This class is used by XPath.Net internally. It isn't intended for use in application code.
+    /// </summary>
+    public sealed class PathExprNode : AbstractNode
     {
         private bool _isOrderedSet;
         private readonly PathStep[] _path;
