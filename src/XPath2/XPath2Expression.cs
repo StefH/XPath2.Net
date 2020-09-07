@@ -20,6 +20,9 @@ namespace Wmhelp.XPath2
         private readonly string expr;
         private readonly XPath2Context context;
         private XPath2ResultType? resultType;
+        /// <summary>
+        /// This property is used by XPath.Net internally. It isn't intended for use in application code.
+        /// </summary>
         public AbstractNode ExpressionTree { get; }
 
         private XPath2Expression(string expr, AbstractNode exprTree, XPath2Context context)
