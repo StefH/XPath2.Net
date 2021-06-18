@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("XPath2.Extensions")]
-[assembly: AssemblyCopyright("Copyright © Stef Heyenrath 2018")]
+[assembly: AssemblyCopyright("Copyright © Stef Heyenrath 2018-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
