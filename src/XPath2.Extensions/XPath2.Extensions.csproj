@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>1.1.0.0</Version>
-    <Description>Non-official extensions for XPath2.dll</Description>
+    <Description>Non-official extensions for XPath2.dll (generate-id, base64encode, base64decode, json-to-xml and json-to-xmlstring)</Description>
     <Copyright>Stef Heyenrath</Copyright>
     <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
     <Authors>Stef Heyenrath</Authors>
@@ -51,6 +51,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\XPath2.Extensions.Core\XPath2.Extensions.Core.csproj" />
+    <ProjectReference Include="..\XPath2.Extensions.NewtonsoftJson\XPath2.Extensions.NewtonsoftJson.csproj" />
     <ProjectReference Include="..\XPath2\XPath2.csproj" />
   </ItemGroup>
 
@@ -61,23 +63,11 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
 </Project>
