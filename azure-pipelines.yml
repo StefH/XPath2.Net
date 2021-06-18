@@ -36,10 +36,10 @@ steps:
     projects: $(buildProjects)
 
 - task: DotNetCoreCLI@2
-  displayName: Build Debug [netcoreapp2.1]
+  displayName: Build Debug [netstandard2.0]
   inputs:
     command: 'build'
-    arguments: /p:Configuration=Debug --framework netcoreapp2.1
+    arguments: /p:Configuration=Debug --framework netstandard2.0
     projects: $(buildProjects)
 
 # Build tests and run tests for net452 and netcoreapp2.1 (with coverage)
