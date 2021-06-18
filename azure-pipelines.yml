@@ -29,10 +29,17 @@ steps:
   displayName: Begin SonarScanner
 
 - task: DotNetCoreCLI@2
-  displayName: Build Projects in Debug configuration
+  displayName: Build Debug [net452]
   inputs:
     command: 'build'
-    arguments: /p:Configuration=Debug --framework net452;netcoreapp2.1
+    arguments: /p:Configuration=Debug --framework net452
+    projects: $(buildProjects)
+
+- task: DotNetCoreCLI@2
+  displayName: Build Debug [netcoreapp2.1]
+  inputs:
+    command: 'build'
+    arguments: /p:Configuration=Debug --framework netcoreapp2.1
     projects: $(buildProjects)
 
 # Build tests and run tests for net452 and netcoreapp2.1 (with coverage)
