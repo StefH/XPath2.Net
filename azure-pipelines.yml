@@ -32,7 +32,7 @@ steps:
   displayName: Build Projects in Debug configuration
   inputs:
     command: 'build'
-    arguments: /p:Configuration=Debug --framework net452|netcoreapp2.1
+    arguments: /p:Configuration=Debug --framework net452;netcoreapp2.1
     projects: $(buildProjects)
 
 # Build tests and run tests for net452 and netcoreapp2.1 (with coverage)
