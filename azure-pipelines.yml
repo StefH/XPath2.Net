@@ -71,7 +71,7 @@ steps:
   displayName: Build Projects in Release configuration
   inputs:
     command: 'build'
-    arguments: /p:Configuration=Release # https://github.com/MicrosoftDocs/vsts-docs/issues/1976
+    arguments: /p:Configuration=Release
     projects: $(buildProjects)
 
 - task: DotNetCoreCLI@2
