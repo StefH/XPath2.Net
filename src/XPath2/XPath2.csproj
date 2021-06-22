@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <PropertyGroup>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>

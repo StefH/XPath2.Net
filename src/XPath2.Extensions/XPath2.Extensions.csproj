@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <Description>Non-official extensions for XPath2.dll (generate-id, base64encode, base64decode, json-to-xml and json-to-xmlstring)</Description>
     <Copyright>Stef Heyenrath</Copyright>
     <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
