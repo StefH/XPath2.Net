@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Linq;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2
@@ -83,7 +83,9 @@ namespace Wmhelp.XPath2
                     count = 0;
                     XPath2NodeIterator iter = Clone();
                     while (iter.MoveNext())
+                    {
                         count++;
+                    }
                 }
                 return count;
             }
@@ -95,7 +97,10 @@ namespace Wmhelp.XPath2
             {
                 XPath2NodeIterator iter = Clone();
                 if (!iter.MoveNext())
+                {
                     return true;
+                }
+
                 return false;
             }
         }
@@ -106,7 +111,10 @@ namespace Wmhelp.XPath2
             {
                 XPath2NodeIterator iter = Clone();
                 if (iter.MoveNext() && !iter.MoveNext())
+                {
                     return true;
+                }
+
                 return false;
             }
         }
@@ -118,7 +126,10 @@ namespace Wmhelp.XPath2
             get
             {
                 if (!iteratorStarted)
+                {
                     throw new InvalidOperationException();
+                }
+
                 return curr;
             }
         }
@@ -128,7 +139,10 @@ namespace Wmhelp.XPath2
             get
             {
                 if (!iteratorStarted)
+                {
                     throw new InvalidOperationException();
+                }
+
                 return pos;
             }
         }
@@ -152,6 +166,7 @@ namespace Wmhelp.XPath2
                 pos = -1;
                 iteratorStarted = true;
             }
+
             XPathItem item = NextItem();
             if (item != null)
             {
@@ -159,6 +174,7 @@ namespace Wmhelp.XPath2
                 curr = item;
                 return true;
             }
+
             iteratorFinished = true;
             return false;
         }
@@ -166,9 +182,13 @@ namespace Wmhelp.XPath2
         public virtual List<XPathItem> ToList()
         {
             XPath2NodeIterator iter = Clone();
-            List<XPathItem> res = new List<XPathItem>();
+
+            var res = new List<XPathItem>();
             while (iter.MoveNext())
+            {
                 res.Add(iter.Current.Clone());
+            }
+
             return res;
         }
 
@@ -176,15 +196,9 @@ namespace Wmhelp.XPath2
 
         public override string ToString()
         {
-            var sb = new StringBuilder();
-            foreach (var node in ToList())
-            {
-                sb.Append(node);
-                sb.Append(", ");
-            }
+            var items = ToList();
 
-            string s = sb.ToString();
-            return string.IsNullOrEmpty(s) ? "<empty>" : s;
+            return items.Any() ? string.Join(", ", items.Select(x => x.ToString()).ToArray()) : "<empty>";
         }
 
         protected virtual void Init()
@@ -256,7 +270,10 @@ namespace Wmhelp.XPath2
                 get
                 {
                     if (!iterationStarted || current == null)
+                    {
                         throw new InvalidOperationException();
+                    }
+
                     return current.Current;
                 }
             }
@@ -269,8 +286,12 @@ namespace Wmhelp.XPath2
                     current = original.Clone();
                     iterationStarted = true;
                 }
+
                 if (current != null && current.MoveNext())
+                {
                     return true;
+                }
+
                 current = null;
                 return false;
             }
@@ -323,7 +344,10 @@ namespace Wmhelp.XPath2
             protected override XPathItem NextItem()
             {
                 if (CurrentPosition == -1)
+                {
                     return _item;
+                }
+
                 return null;
             }
 
@@ -347,13 +371,17 @@ namespace Wmhelp.XPath2
             {
                 get
                 {
-                    List<XPathItem> res = new List<XPathItem>();
+                    var res = new List<XPathItem>();
                     foreach (XPathItem item in iter)
                     {
                         if (res.Count == 10)
+                        {
                             break;
+                        }
+
                         res.Add(item.Clone());
                     }
+
                     return res.ToArray();
                 }
             }
@@ -378,13 +406,17 @@ namespace Wmhelp.XPath2
         {
             get
             {
-                List<XPathItem> res = new List<XPathItem>();
+                var res = new List<XPathItem>();
                 foreach (XPathItem item in iter)
                 {
                     if (res.Count == 10)
+                    {
                         break;
+                    }
+
                     res.Add(item.Clone());
                 }
+
                 return res.ToArray();
             }
         }
