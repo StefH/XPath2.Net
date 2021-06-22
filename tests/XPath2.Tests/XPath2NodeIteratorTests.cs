@@ -28,6 +28,7 @@ namespace XPath2.Tests
                      + "<node1>Value1</node1>"
                      + "<node2>"
                      + "<subnode1>Value2</subnode1>"
+                     + "<subnode2>Value3</subnode2>"
                      + "</node2>"
                      + "</start>";
 
