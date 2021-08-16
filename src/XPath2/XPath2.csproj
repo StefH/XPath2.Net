@@ -77,4 +77,10 @@
     <Reference Include="System" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="Xpath.cs">
+      <DependentUpon>Xpath.y</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
