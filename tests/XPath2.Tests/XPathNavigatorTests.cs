@@ -16,36 +16,6 @@ namespace XPath2.Tests
             _navigator = doc.CreateNavigator();
         }
 
-        private XmlDocument GetTodoListDoc()
-        {
-            return new XmlDocument
-            {
-                InnerXml = @"
-                    <todo-list>
-                        <todo-item id='a1'>abc</todo-item>
-                        <todo-item id='a2'>def</todo-item>
-                        <todo-item id='a3'>xyz</todo-item>
-                    </todo-list>"
-            };
-        }
-
-        private XmlDocument GetXHTMLSampleDoc()
-        {
-            var xhtml = @"<html xmlns='http://www.w3.org/1999/xhtml' lang='en' xml:lang='en'>
-<head>
-  <title>Example</title>
-</head>
-<body>
-  <h1>Example</h1>
-  <p>This is paragraph 1.</p>
-  <p>This is paragraph 2.</p>
-</body>
-</html>";
-            var doc = new XmlDocument();
-            doc.LoadXml(xhtml);
-            return doc;
-        }
-
         //public void O()
         //{
         //    string q = @"
@@ -187,14 +157,49 @@ namespace XPath2.Tests
         }
 
         [Fact]
+        public void FullPathWithAttributeSelection()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result1 = nav.XPath2Evaluate("count(/todo-list/todo-item/@id)");
+            var result2 = nav.XPath2Evaluate("count(/todo-list/todo-item/attribute(id))");
+
+            Assert.Equal(result1, result2);
+        }
+
+        [Fact]
+        public void AttributeSelection()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result1 = nav.XPath2Evaluate("count(//@id)");
+            var result2 = nav.XPath2Evaluate("count(//attribute(*))");
+
+            Assert.Equal(result1, result2);
+            int x = 0;
+        }
+
+        [Fact]
+        public void CommentSelection()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result1 = nav.XPath2Evaluate("//comment()");
+
+            int x = 0;
+        }
+
+        [Fact]
         public void XPath2SelectNodesWithDefaultNamespace()
         {
-            var namespaceManager = new XmlNamespaceManager(new NameTable());
-            namespaceManager.AddNamespace(string.Empty, "http://www.w3.org/1999/xhtml");
+            var nt = new NameTable();
+            nt.Add("xmlns");
+            var namespaceManager = new XmlNamespaceManager(nt);
+            //namespaceManager.AddNamespace("xmlns", "http://www.w3.org/1999/xhtml");
 
-            var nodeList = GetXHTMLSampleDoc().XPath2SelectNodes("//p", namespaceManager);
+            //var nodeListXPath1 = GetXHTMLSampleDoc().SelectNodes("//p", namespaceManager);
 
-            Assert.Equal(2, nodeList.Count);
+            var nodeListXPath2 = GetXHTMLSampleDoc().XPath2SelectNodes("//p", namespaceManager);
+
+            //nodeListXPath1.Should().HaveCount(2);
+            nodeListXPath2.Should().HaveCount(2);
         }
 
         [Fact]
@@ -243,6 +248,28 @@ namespace XPath2.Tests
             Assert.Equal(3, result);
         }
 
+        [Fact]
+        public void BindingEmptyPrefixShouldNotBreakAttributeSelection1()
+        {
+            var namespaceManager = new XmlNamespaceManager(new NameTable());
+            //namespaceManager.AddNamespace(string.Empty, "http://www.w3.org/1999/xhtml");
+
+            var nodeList = GetXHTMLSampleDoc().XPath2SelectNodes("//@lang", namespaceManager);
+
+            Assert.Equal(1, nodeList.Count);
+        }
+
+        [Fact]
+        public void BindingEmptyPrefixShouldNotBreakAttributeSelection2()
+        {
+            var namespaceManager = new XmlNamespaceManager(new NameTable());
+            //namespaceManager.AddNamespace(string.Empty, "http://www.w3.org/1999/xhtml");
+
+            var nodeList = GetXHTMLSampleDoc().XPath2SelectNodes("//@x", namespaceManager);
+
+            nodeList.Should().HaveCount(1);
+        }
+
         // https://www.w3.org/TR/xpath-functions/#func-round
         [Theory]
         [InlineData("2.51", 3)]
@@ -285,6 +312,37 @@ namespace XPath2.Tests
 
             // Assert
             result.Should().Be(expected);
+        }
+
+        private static XmlDocument GetTodoListDoc()
+        {
+            return new XmlDocument
+            {
+                InnerXml = @"
+                    <!-- my comment -->
+                    <todo-list>
+                        <todo-item id='a1'>abc</todo-item>
+                        <todo-item id='a2'>def</todo-item>
+                        <todo-item id='a3'>xyz</todo-item>
+                    </todo-list>"
+            };
+        }
+
+        private static XmlDocument GetXHTMLSampleDoc()
+        {
+            var xhtml = @"<html xmlns='http://www.w3.org/1999/xhtml' lang='en' xml:lang='en'>
+<head x='y'>
+  <title>Example</title>
+</head>
+<body>
+  <h1>Example</h1>
+  <p>This is paragraph 1.</p>
+  <p>This is paragraph 2.</p>
+</body>
+</html>";
+            var doc = new XmlDocument();
+            doc.LoadXml(xhtml);
+            return doc;
         }
     }
 }

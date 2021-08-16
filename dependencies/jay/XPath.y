@@ -666,8 +666,9 @@ NodeTest
 NameTest
    : QName
    {
+      // var dn = context.NamespaceManager.DefaultNamespace == "http://www.w3.org/1999/xhtml" ? context.NamespaceManager.DefaultNamespace : "";
       XmlQualifiedName qualifiedName = QNameParser.Parse((String)$1, 
-        context.NamespaceManager, context.NamespaceManager.DefaultNamespace, context.NameTable);
+        context.NamespaceManager, "", context.NameTable);
       $$ = XmlQualifiedNameTest.New(qualifiedName.Name, qualifiedName.Namespace);
    }
    | Wildcard
