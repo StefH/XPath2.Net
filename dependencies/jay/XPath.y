@@ -962,7 +962,7 @@ ElementTest
    {
       XmlSchemaObject xmlType;
       CoreFuncs.TryProcessTypeName(context, (string)$5, true, out xmlType);
-      $$ = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType, true);      
+      $$ = new SequenceType(XmlTypeCode.Element, (XmlQualifiedNameTest)$3, (XmlSchemaType)xmlType, true);
    }
    ;
 

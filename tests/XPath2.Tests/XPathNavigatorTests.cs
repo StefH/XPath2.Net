@@ -161,7 +161,7 @@ namespace XPath2.Tests
         {
             var nav = GetTodoListDoc().CreateNavigator();
             var result1 = nav.XPath2Evaluate("count(/todo-list/todo-item/@id)");
-            var result2 = nav.XPath2Evaluate("count(/todo-list/todo-item/attribute(id))");
+            var result2 = nav.XPath2Evaluate("count(/todo-list/todo-item/attribute(id, string))");
 
             Assert.Equal(result1, result2);
         }
