@@ -9,6 +9,10 @@
   <ItemGroup>
     <Compile Remove="TreeNodeValue.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ReflectionMagic" Version="4.1.0" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />

@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using FluentAssertions;
 using Wmhelp.XPath2;
-using XPath2.Tests.Utils;
+using XPath2.TestRunner.Utils;
 using Xunit;
 
 namespace XPath2.Tests

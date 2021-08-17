@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
 using Wmhelp.XPath2;
+using XPath2.TestRunner.Utils;
 
 namespace XPath2.TestRunner
 {
@@ -172,15 +173,17 @@ namespace XPath2.TestRunner
                 _module.Add(id, moduleFileName);
             }
 
-
             var rootNode = new TreeNode("Test-suite");
             ReadTestTree(_catalog.DocumentElement, rootNode);
             _out.Write(rootNode);
 
             SelectAll();
-            // SelectSupported();            
+            // SelectSupported();
 
-            return run == RunType.Parallel ? RunParallel() : RunSequential();
+            using (new FakeLocalTimeZone(TimeZoneInfo.Utc))
+            {
+                return run == RunType.Parallel ? RunParallel() : RunSequential();
+            }
         }
 
         private void ReadTestTree(XmlNode node, TreeNode parentNode)

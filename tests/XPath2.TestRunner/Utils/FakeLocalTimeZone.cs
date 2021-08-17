@@ -1,7 +1,7 @@
 using System;
 using ReflectionMagic;
 
-namespace XPath2.Tests.Utils
+namespace XPath2.TestRunner.Utils
 {
     /// <summary>
     /// https://stackoverflow.com/questions/44413407/mock-the-country-timezone-you-are-running-unit-test-from
