@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\XPath2.Extensions\XPath2.Extensions.csproj" />
     <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
+    <ProjectReference Include="..\XPath2.TestRunner\XPath2.TestRunner.csproj" />
   </ItemGroup>
 
   <ItemGroup>
