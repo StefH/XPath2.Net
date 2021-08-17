@@ -3,7 +3,7 @@
 This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.
 The given implementation based on practice of developing XQuery is fully corresponding to the specification demands.
 
-Project is forked from https://xpath2.codeplex.com/
+Project is copied and forked from https://xpath2.codeplex.com/. Original credits go to Semyon A. Chertkov.
 
 ## Build
 | | |
@@ -34,7 +34,7 @@ Project is forked from https://xpath2.codeplex.com/
 
 ## Info
 
-It conforms for 12954 from 15133 (85.60%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+It conforms for 12958 from 15133 (85.63%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
 
 API used is an anology to the standard one built into the platform: you utilize XPath2Expression instead of the common XPathExpression and a set of extension functions for XNode, XPathNavigator and XmlNode classes.
 
