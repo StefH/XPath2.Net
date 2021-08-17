@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -18,7 +18,7 @@ namespace XQTSRun
     public partial class Form1 : Form
     {
         public const String XQTSNamespace = "http://www.w3.org/2005/02/query-test-XQTSCatalog";
-        
+
         public enum TestResult
         {
             Pass,
@@ -44,18 +44,18 @@ namespace XQTSRun
         internal OutputWriter _out;
         internal string _lastFindString = "";
         internal HashSet<String> _ignoredTest;
-        
+
         internal ToolStripProgressBar _progressBar;
         internal ToolStripStatusLabel _statusLabel;
         internal int _total;
         internal int _passed;
         internal int _repeatCount;
 
-        static internal string[] s_ignoredTest = 
+        static internal string[] s_ignoredTest =
         {
-            "nametest-1", "nametest-2", "nametest-5", "nametest-6", 
-            "nametest-7", "nametest-8", "nametest-9", "nametest-10", 
-            "nametest-11", "nametest-12", "nametest-13", "nametest-14", 
+            "nametest-1", "nametest-2", "nametest-5", "nametest-6",
+            "nametest-7", "nametest-8", "nametest-9", "nametest-10",
+            "nametest-11", "nametest-12", "nametest-13", "nametest-14",
             "nametest-15", "nametest-16", "nametest-17", "nametest-18",
             "CastAs660", "CastAs661", "CastAs662", "CastAs663",
             "CastAs664", "CastAs665", "CastAs666", "CastAs667",
@@ -69,7 +69,7 @@ namespace XQTSRun
             "fn-document-uri-17", "fn-document-uri-18", "fn-document-uri-19",
             "fn-prefix-from-qname-8", "boundaryspacedeclerr-1",
             "fn-resolve-uri-2",
-            "ancestor-21", "ancestorself-21", "following-21", 
+            "ancestor-21", "ancestorself-21", "following-21",
             "followingsibling-21", "preceding-21", "preceding-sibling-21"
         };
 
@@ -93,7 +93,7 @@ namespace XQTSRun
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
                 dialog.Filter = "XQTSCatalog file (*.xml)|*.xml|All files (*.*)|*.*";
@@ -122,7 +122,7 @@ namespace XQTSRun
             if (_progressBar != null)
             {
                 _progressBar.Value = _total;
-                _statusLabel.Text = String.Format("{0}/{1}({2} Failed)", _total, 
+                _statusLabel.Text = String.Format("{0}/{1}({2} Failed)", _total,
                     _progressBar.Maximum, _total - _passed);
             }
         }
@@ -272,8 +272,8 @@ namespace XQTSRun
                 dataGridView1.Columns[5].Visible = false;
                 dataGridView1.Columns[6].Width = 300;
                 dataGridView1.Columns[6].ReadOnly = true;
-                testToolStripMenuItem.Visible = 
-                    _testTab.Rows.Count > 0;
+                testToolStripMenuItem.Visible = _testTab.Rows.Count > 0;
+
                 if (node == null)
                 {
                     int sel = 0;
@@ -304,7 +304,7 @@ namespace XQTSRun
                         hs.Remove(child);
                     foreach (XmlNode child in
                         _catalog.SelectNodes(".//ts:test-group[@name='StaticBaseURIFunc']//ts:test-case", _nsmgr))
-                        hs.Remove(child); 
+                        hs.Remove(child);
                     foreach (XmlNode child in
                         _catalog.SelectNodes(".//ts:test-group[@name='FullAxis']//ts:test-case", _nsmgr))
                         hs.Add(child);
@@ -557,7 +557,7 @@ namespace XQTSRun
                 {
                     XmlElement curr = (XmlElement)dr[5];
                     string id = curr.GetAttribute("name");
-                    TextWriter tw = new StringWriter();                   
+                    TextWriter tw = new StringWriter();
                     if (PerformTest(tw, curr, true))
                     {
                         tw.WriteLine("Passed.");
@@ -567,7 +567,7 @@ namespace XQTSRun
                     {
                         tw.WriteLine("Failed.");
                         _out.Write(tw.ToString());
-                    }                    
+                    }
                     //Trace.WriteLine(tw.ToString());
                     Interlocked.Increment(ref _total);
                 }
@@ -598,7 +598,7 @@ namespace XQTSRun
                 {
                     if (ch == literal)
                         isLiteral = false;
-                } 
+                }
                 else
                     switch (ch)
                     {
@@ -703,7 +703,7 @@ namespace XQTSRun
                     if (!_sources.TryGetValue(value, out expandedUri))
                         expandedUri = value;
                     vars.Add(new XmlQualifiedName(var), expandedUri);
-                }                
+                }
             }
             res.expression = XPath2Expression.Compile(xpath, nsMgr);
             res.vars = vars;
@@ -714,7 +714,7 @@ namespace XQTSRun
         {
             try
             {
-                PreparedXPath  preparedXPath;
+                PreparedXPath preparedXPath;
                 XPath2ResultType expectedType;
                 try
                 {
@@ -733,12 +733,12 @@ namespace XQTSRun
                 try
                 {
                     res = preparedXPath.Evalute();
-                    if (res != Undefined.Value && 
+                    if (res != Undefined.Value &&
                         preparedXPath.GetResultType() != expectedType)
                     {
                         if (batchTest)
                             _out.Write("{0}: ", testCase.GetAttribute("name"));
-                        _out.WriteLine("Expected type '{0}' differs the actual type '{1}'", 
+                        _out.WriteLine("Expected type '{0}' differs the actual type '{1}'",
                             expectedType, preparedXPath.GetResultType());
                     }
                 }
@@ -797,14 +797,14 @@ namespace XQTSRun
                         testCase.SelectSingleNode("ts:expected-error", _nsmgr) != null)
                         return true;
                     throw;
-                }                
+                }
             }
             catch (Exception ex)
             {
                 _out.WriteLine();
                 _out.WriteLine(ex);
                 return false;
-            }            
+            }
         }
 
         private void TraceIter(XPath2NodeIterator iter)
@@ -889,18 +889,18 @@ namespace XQTSRun
             }
             else
                 if (value is XPathItem)
-                {
-                    XPathItem item = (XPathItem)value;
-                    if (item.IsNode)
-                        writer.WriteNode((XPathNavigator)item, false);
-                    else
-                        writer.WriteString(item.Value);
-                }
+            {
+                XPathItem item = (XPathItem)value;
+                if (item.IsNode)
+                    writer.WriteNode((XPathNavigator)item, false);
                 else
-                {
-                    if (value != Undefined.Value)
-                        writer.WriteString(XPath2Convert.ToString(value));
-                }
+                    writer.WriteString(item.Value);
+            }
+            else
+            {
+                if (value != Undefined.Value)
+                    writer.WriteString(XPath2Convert.ToString(value));
+            }
             if (!(xmlCompare && isSingle || isExcpt))
                 writer.WriteEndElement();
             writer.Flush();
@@ -974,7 +974,7 @@ namespace XQTSRun
                 }
             }
             form.RowIndex = 0;
-            MessageBox.Show("Passed the end of the table.", "Information", 
+            MessageBox.Show("Passed the end of the table.", "Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
