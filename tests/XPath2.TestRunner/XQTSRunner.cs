@@ -23,6 +23,7 @@ namespace XPath2.TestRunner
         private string _queryFileExtension;
 
         private readonly TextWriter _out;
+        private readonly TextWriter _passedWriter;
         private readonly TextWriter _errorWriter;
 
         private readonly NameTable _nameTable = new NameTable();
@@ -60,9 +61,10 @@ namespace XPath2.TestRunner
             "followingsibling-21", "preceding-21", "preceding-sibling-21"
         };
 
-        public XQTSRunner(TextWriter writer, TextWriter errorWriter = null)
+        public XQTSRunner(TextWriter writer, TextWriter passedWriter = null, TextWriter errorWriter = null)
         {
             _out = writer;
+            _passedWriter = passedWriter;
             _errorWriter = errorWriter;
         }
 
@@ -207,13 +209,15 @@ namespace XPath2.TestRunner
                     var tw = new StringWriter();
                     if (PerformTest(tw, item))
                     {
-                        // tw.WriteLine("Passed.");
+                        if (_passedWriter != null)
+                        {
+                            _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                        }
                         Interlocked.Increment(ref _passed);
                     }
                     else
                     {
                         tw.WriteLine("Failed.");
-                        // _out.Write(tw.ToString());
                     }
                     Interlocked.Increment(ref _total);
                 }
@@ -234,13 +238,15 @@ namespace XPath2.TestRunner
                     var tw = new StringWriter();
                     if (PerformTest(tw, item))
                     {
-                        // tw.WriteLine("Passed.");
+                        if (_passedWriter != null)
+                        {
+                            _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                        }
                         Interlocked.Increment(ref _passed);
                     }
                     else
                     {
                         tw.WriteLine("Failed.");
-                        // _out.Write(tw.ToString());
                     }
                     Interlocked.Increment(ref _total);
                 }

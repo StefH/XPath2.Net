@@ -8,8 +8,9 @@ namespace XQTSRunConsole
     {
         static void Main(string[] args)
         {
-            var errorWriter = args.Length > 1 ? TextWriter.Synchronized(new StreamWriter(args[1])) : null; // Needs to be Synchronized
-            var runner = new XQTSRunner(Console.Out, errorWriter);
+            var passedWriter = args.Length > 1 ? TextWriter.Synchronized(new StreamWriter(args[1])) : null; // Needs to be Synchronized
+            var errorWriter = args.Length > 2 ? TextWriter.Synchronized(new StreamWriter(args[2])) : null; // Needs to be Synchronized
+            var runner = new XQTSRunner(Console.Out, passedWriter, errorWriter);
 
             //var result1 = runner.Run(args[0], RunType.Parallel);
             //Console.WriteLine("{0} / {1} = {2}%", result1.Passed, result1.Total, result1.Percentage);
