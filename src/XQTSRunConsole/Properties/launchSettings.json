@@ -1,8 +1,12 @@
 {
-  "profiles": {
-    "XQTSRunConsole": {
-      "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\XQTSCatalog.xml"
+    "profiles": {
+        "XQTSRunConsole": {
+            "commandName": "Project",
+            "commandLineArgs": "C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\XQTSCatalog.xml"
+        },
+        "XQTSRunConsoleSX79R5": {
+            "commandName": "Project",
+            "commandLineArgs": "C:\\XQTS_1_0_2\\XQTSCatalog.xml C:\\XQTS_1_0_2\\error.txt"
+        }
     }
-  }
 }

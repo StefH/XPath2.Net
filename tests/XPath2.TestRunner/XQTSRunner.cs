@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
@@ -23,12 +23,12 @@ namespace XPath2.TestRunner
         private string _queryFileExtension;
 
         private readonly TextWriter _out;
-        private readonly bool _logErrors;
+        private readonly TextWriter _errorWriter;
 
         private readonly NameTable _nameTable = new NameTable();
         private XmlNamespaceManager _nsmgr;
         private XmlDocument _catalog;
-        private DataTable _testTab;
+        private List<TestItem> _testItems;
         private Dictionary<string, string> _sources;
         private Dictionary<string, string> _module;
         private Dictionary<string, string[]> _collection;
@@ -60,25 +60,18 @@ namespace XPath2.TestRunner
             "followingsibling-21", "preceding-21", "preceding-sibling-21"
         };
 
-        public XQTSRunner(TextWriter writer, bool logErrors = false)
+        public XQTSRunner(TextWriter writer, TextWriter errorWriter = null)
         {
             _out = writer;
-            _logErrors = logErrors;
+            _errorWriter = errorWriter;
         }
 
-        public TestRunResult Run(string fileName)
+        public TestRunResult RunParallel(string fileName)
         {
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
 
-            _testTab = new DataTable();
-            _testTab.Columns.Add("Select", typeof(bool));
-            _testTab.Columns.Add("Name", typeof(string));
-            _testTab.Columns.Add("FilePath", typeof(string));
-            _testTab.Columns.Add("scenario", typeof(string));
-            _testTab.Columns.Add("Creator", typeof(string));
-            _testTab.Columns.Add("Node", typeof(object));
-            _testTab.Columns.Add("Description", typeof(string));
+            _testItems = new List<TestItem>();
 
             _ignoredTests = new HashSet<string>(testsToIgnore);
             _catalog = new XmlDocument(_nameTable);
@@ -205,42 +198,36 @@ namespace XPath2.TestRunner
 
         private TestRunResult RunParallel()
         {
-            var rows = _testTab.Select("");
-
             var sw = new Stopwatch();
             sw.Start();
-            Parallel.ForEach(rows, dr =>
+            Parallel.ForEach(_testItems, item =>
             {
-                if ((bool)dr[0])
+                if (item.Selected)
                 {
-                    XmlElement curr = (XmlElement)dr[5];
                     var tw = new StringWriter();
-                    if (PerformTest(tw, curr))
+                    if (PerformTest(tw, item))
                     {
                         // tw.WriteLine("Passed.");
-                        //Interlocked.Increment(ref _passed);
-                        _passed++;
+                        Interlocked.Increment(ref _passed);
                     }
                     else
                     {
                         tw.WriteLine("Failed.");
                         // _out.Write(tw.ToString());
                     }
-                    //Interlocked.Increment(ref _total);
-                    _total++;
+                    Interlocked.Increment(ref _total);
                 }
             });
             sw.Stop();
             _out.WriteLine("Elapsed {0}", sw.Elapsed);
 
-            // It conforms for 12954 from 15133 (85.60%) regarding the test-set
             decimal total = _total;
             decimal passed = _passed;
             decimal percentage = Math.Round(passed / total * 100, 2);
 
-            // It conforms for 12954 from 15133 (85.60%) regarding the test-set
+            // 15133 executed, 12957 (85,62%) succeeded.
             _out.WriteLine("{0} executed, {1} ({2}%) succeeded.", total, passed, percentage);
-            
+
             return new TestRunResult
             {
                 Total = _total,
@@ -249,12 +236,14 @@ namespace XPath2.TestRunner
             };
         }
 
-        private bool PerformTest(TextWriter tw, XmlElement testCase)
+        private bool PerformTest(TextWriter tw, TestItem item)
         {
+            var testCase = item.Node;
             try
             {
                 PreparedXPath preparedXPath;
                 XPath2ResultType expectedType;
+
                 try
                 {
                     preparedXPath = PrepareXPath(tw, testCase);
@@ -275,10 +264,10 @@ namespace XPath2.TestRunner
                     res = preparedXPath.Evaluate();
                     if (res != Undefined.Value && preparedXPath.GetResultType() != expectedType)
                     {
-                        if (_logErrors)
+                        if (_errorWriter != null)
                         {
-                            _out.Write("{0}: ", testCase.GetAttribute("name"));
-                            _out.WriteLine("Expected type '{0}' differs the actual type '{1}'", expectedType, preparedXPath.GetResultType());
+                            _errorWriter.Write("{0}: ", testCase.GetAttribute("name"));
+                            _errorWriter.WriteLine("Expected type '{0}' differs the actual type '{1}'", expectedType, preparedXPath.GetResultType());
                         }
                     }
                 }
@@ -316,9 +305,9 @@ namespace XPath2.TestRunner
                             }
                             else if (compare == "Inspect")
                             {
-                                if (_logErrors)
+                                if (_errorWriter != null)
                                 {
-                                    _out.WriteLine("{0}: Inspection needed.", testCase.GetAttribute("name"));
+                                    _errorWriter.WriteLine("{0}: Inspection needed.", testCase.GetAttribute("name"));
                                 }
                                 return true;
                             }
@@ -336,9 +325,8 @@ namespace XPath2.TestRunner
                     }
                     else if (testCase.GetAttribute("scenario") == "runtime-error")
                     {
-                        if (res is XPath2NodeIterator)
+                        if (res is XPath2NodeIterator iter)
                         {
-                            var iter = (XPath2NodeIterator)res;
                             while (iter.MoveNext())
                                 ;
                         }
@@ -350,8 +338,7 @@ namespace XPath2.TestRunner
                 }
                 catch (XPath2Exception)
                 {
-                    if (testCase.GetAttribute("scenario") == "runtime-error" ||
-                        testCase.SelectSingleNode("ts:expected-error", _nsmgr) != null)
+                    if (testCase.GetAttribute("scenario") == "runtime-error" || testCase.SelectSingleNode("ts:expected-error", _nsmgr) != null)
                     {
                         return true;
                     }
@@ -360,11 +347,13 @@ namespace XPath2.TestRunner
             }
             catch (Exception ex)
             {
-                if (_logErrors)
+                if (_errorWriter != null)
                 {
-                    _out.WriteLine();
-                    _out.WriteLine(ex);
+                    _errorWriter.WriteLine("Test '{0}{1}.xqx' failed with {2}", item.FilePath, item.Name, ex.Message);
+                    _errorWriter.WriteLine();
+                    _errorWriter.Flush();
                 }
+
                 return false;
             }
         }
@@ -378,25 +367,35 @@ namespace XPath2.TestRunner
                 _out.WriteLine("File {0} not exists.", fileName);
                 throw new ArgumentException();
             }
+
             PreparedXPath res;
             res.provider = null;
-            TextReader textReader = new StreamReader(fileName, true);
+
+            var textReader = new StreamReader(fileName, true);
             string xpath = PrepareQueryText(textReader.ReadToEnd());
             textReader.Close();
-            XmlNamespaceManager nsMgr = new XmlNamespaceManager(_nameTable);
+
+            var nsMgr = new XmlNamespaceManager(_nameTable);
             nsMgr.AddNamespace("foo", "http://example.org");
             nsMgr.AddNamespace("FOO", "http://example.org");
             nsMgr.AddNamespace("atomic", "http://www.w3.org/XQueryTest");
+
             Dictionary<XmlQualifiedName, object> vars = null;
             foreach (XmlNode child in node.ChildNodes)
             {
-                XmlElement curr = child as XmlElement;
+                var curr = child as XmlElement;
                 if (curr == null || curr.NamespaceURI != XQTSNamespace)
+                {
                     continue;
+                }
+
                 if (curr.LocalName == "input-file")
                 {
                     if (vars == null)
+                    {
                         vars = new Dictionary<XmlQualifiedName, object>();
+                    }
+
                     string var = curr.GetAttribute("variable");
                     string id = curr.InnerText;
                     XmlDocument xmldoc = new XmlDocument(_nameTable);
@@ -413,12 +412,17 @@ namespace XPath2.TestRunner
                 else if (curr.LocalName == "input-URI")
                 {
                     if (vars == null)
+                    {
                         vars = new Dictionary<XmlQualifiedName, object>();
+                    }
+
                     string var = curr.GetAttribute("variable");
                     string value = curr.InnerText;
                     string expandedUri;
                     if (!_sources.TryGetValue(value, out expandedUri))
+                    {
                         expandedUri = value;
+                    }
                     vars.Add(new XmlQualifiedName(var), expandedUri);
                 }
             }
@@ -436,7 +440,10 @@ namespace XPath2.TestRunner
                 (id == "fn-union-node-args-009") || (id == "fn-union-node-args-010") ||
                 (id == "fn-union-node-args-011");
             if (id == "ReturnExpr010")
+            {
                 xmlCompare = true;
+            }
+
             if (id != "CondExpr012" && id != "NodeTest006")
             {
                 if (value is XPathItem)
@@ -447,6 +454,7 @@ namespace XPath2.TestRunner
                     isSingle = iter.IsSingleIterator;
                 }
             }
+
             var doc1 = new XmlDocument(_nameTable);
             if (xmlCompare)
             {
@@ -463,13 +471,15 @@ namespace XPath2.TestRunner
                 sb.Append("</root>");
                 doc1.LoadXml(sb.ToString());
             }
-            MemoryStream ms = new MemoryStream();
-            XmlWriter writer = new XmlTextWriter(ms, Encoding.UTF8);
+
+            var ms = new MemoryStream();
+            var writer = new XmlTextWriter(ms, Encoding.UTF8);
             if (!(xmlCompare && isSingle || isExcpt))
             {
                 writer.WriteStartDocument();
                 writer.WriteStartElement(doc1.DocumentElement.Name, "");
             }
+
             if (value is XPath2NodeIterator)
             {
                 bool string_flag = false;
@@ -500,78 +510,52 @@ namespace XPath2.TestRunner
             else if (value is XPathItem)
             {
                 XPathItem item = (XPathItem)value;
+
                 if (item.IsNode)
+                {
                     writer.WriteNode((XPathNavigator)item, false);
+                }
                 else
+                {
                     writer.WriteString(item.Value);
+                }
             }
             else
             {
                 if (value != Undefined.Value)
+                {
                     writer.WriteString(XPath2Convert.ToString(value));
+                }
             }
             if (!(xmlCompare && isSingle || isExcpt))
+            {
                 writer.WriteEndElement();
+            }
             writer.Flush();
             ms.Position = 0;
 
-            XmlDocument doc2 = new XmlDocument(_nameTable);
+            var doc2 = new XmlDocument(_nameTable);
             doc2.Load(ms);
             writer.Close();
 
-            TreeComparer comparer = new TreeComparer();
-            comparer.IgnoreWhitespace = true;
+            var comparer = new TreeComparer
+            {
+                IgnoreWhitespace = true
+            };
+
             return comparer.DeepEqual(doc1.CreateNavigator(), doc2.CreateNavigator());
         }
 
         private void SelectAll()
         {
-            var nodes = _catalog.SelectNodes(".//ts:test-case", _nsmgr);
+            AddToList(_catalog.SelectNodes(".//ts:test-case", _nsmgr), true);
 
-            foreach (XmlElement child in nodes)
-            {
-                var row = _testTab.NewRow();
-                row[0] = true;
-                row[1] = child.GetAttribute("name");
-                row[2] = child.GetAttribute("FilePath");
-                row[3] = child.GetAttribute("scenario");
-                row[4] = child.GetAttribute("Creator");
-                row[5] = child;
-
-                XmlElement desc = (XmlElement)child.SelectSingleNode("ts:description", _nsmgr);
-                if (desc != null)
-                {
-                    row[6] = desc.InnerText;
-                }
-
-                _testTab.Rows.Add(row);
-            }
-
-            _out.WriteLine("{0} test case(s) loaded, {1} selected.", _testTab.Rows.Count, _testTab.Rows.Count);
+            _out.WriteLine("{0} test case(s) loaded, {1} selected.", _testItems.Count, _testItems.Count);
         }
 
         private void SelectSupported()
         {
-            var nodes = _catalog.SelectNodes(".//ts:test-case", _nsmgr);
-
-            foreach (XmlElement child in nodes)
-            {
-                var row = _testTab.NewRow();
-                row[0] = false;
-                row[1] = child.GetAttribute("name");
-                row[2] = child.GetAttribute("FilePath");
-                row[3] = child.GetAttribute("scenario");
-                row[4] = child.GetAttribute("Creator");
-                row[5] = child;
-
-                XmlElement desc = (XmlElement)child.SelectSingleNode("ts:description", _nsmgr);
-                if (desc != null)
-                {
-                    row[6] = desc.InnerText;
-                }
-
-                _testTab.Rows.Add(row);
-            }
+            AddToList(_catalog.SelectNodes(".//ts:test-case", _nsmgr), false);
 
             var hs = new HashSet<XmlNode>();
             foreach (XmlNode child in _catalog.SelectNodes(".//ts:test-group[@name='MinimalConformance']//ts:test-case", _nsmgr))
@@ -615,18 +599,42 @@ namespace XPath2.TestRunner
             }
 
             int sel = 0;
-            foreach (DataRow row in _testTab.Rows)
+            foreach (var item in _testItems)
             {
-                var curr = (XmlElement)row[5];
+                var curr = item.Node;
                 string name = curr.GetAttribute("name");
                 if (hs.Contains(curr) && !_ignoredTests.Contains(name))
                 {
-                    row[0] = true;
+                    item.Selected = true;
                     sel++;
                 }
             }
 
-            _out.WriteLine("{0} test case(s) loaded, {1} supported selected.", _testTab.Rows.Count, sel);
+            _out.WriteLine("{0} test case(s) loaded, {1} supported selected.", _testItems.Count, sel);
+        }
+
+        private void AddToList(XmlNodeList nodes, bool selected)
+        {
+            foreach (XmlElement child in nodes)
+            {
+                var item = new TestItem
+                {
+                    Selected = selected,
+                    Name = child.GetAttribute("name"),
+                    FilePath = child.GetAttribute("FilePath"),
+                    Scenario = child.GetAttribute("scenario"),
+                    Creator = child.GetAttribute("Creator"),
+                    Node = child
+                };
+
+                var desc = (XmlElement)child.SelectSingleNode("ts:description", _nsmgr);
+                if (desc != null)
+                {
+                    item.Description = desc.InnerText;
+                }
+
+                _testItems.Add(item);
+            }
         }
 
         private string PrepareQueryText(string text)
