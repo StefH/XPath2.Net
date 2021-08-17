@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SimpleTreeNode" Version="1.0.0" />
+    <Compile Remove="TreeNodeValue.cs" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
   </ItemGroup>

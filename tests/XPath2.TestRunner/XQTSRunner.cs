@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
-using SimpleTreeNode;
 using Wmhelp.XPath2;
 
 namespace XPath2.TestRunner
@@ -179,7 +178,7 @@ namespace XPath2.TestRunner
             }
 
 
-            var rootNode = new TreeNode<TreeNodeValue>(new TreeNodeValue { Text = "Test-suite" });
+            var rootNode = new TreeNode("Test-suite");
             ReadTestTree(_catalog.DocumentElement, rootNode);
             _out.Write(rootNode);
 
@@ -189,19 +188,14 @@ namespace XPath2.TestRunner
             return RunParallel();
         }
 
-        private void ReadTestTree(XmlNode node, TreeNode<TreeNodeValue> parentNode)
+        private void ReadTestTree(XmlNode node, TreeNode parentNode)
         {
             foreach (XmlNode child in node.ChildNodes)
             {
                 if (child.LocalName == "test-group" && child.NamespaceURI == XQTSNamespace)
                 {
                     var elem = (XmlElement)child;
-
-                    var childNode = new TreeNode<TreeNodeValue>(new TreeNodeValue
-                    {
-                        Text = elem.GetAttribute("name"),
-                        Tag = child
-                    });
+                    var childNode = new TreeNode(elem.GetAttribute("name"), child);
 
                     ReadTestTree(child, childNode);
                     parentNode.ChildNodes.Add(childNode);
