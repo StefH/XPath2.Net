@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -12,29 +12,29 @@ namespace XQTSRunConsole
     {
         public const string XQTSNamespace = "http://www.w3.org/2005/02/query-test-XQTSCatalog";
 
-        internal string _basePath;
-        internal string _queryOffsetPath;
-        internal string _sourceOffsetPath;
-        internal string _resultOffsetPath;
-        internal string _queryFileExtension;
+        private string _basePath;
+        private string _queryOffsetPath;
+        private string _sourceOffsetPath;
+        private string _resultOffsetPath;
+        private string _queryFileExtension;
 
         private TextWriter _out;
-        internal NameTable _nameTable;
-        internal XmlNamespaceManager _nsmgr;
-        internal XmlDocument _catalog;
-        internal DataTable _testTab;
-        internal Dictionary<string, string> _sources;
-        internal Dictionary<string, string> _module;
-        internal Dictionary<string, string[]> _collection;
-        internal Dictionary<string, string[]> _schema;
-        internal string _lastFindString = "";
-        internal HashSet<string> _ignoredTest;
+        private NameTable _nameTable = new NameTable();
+        private XmlNamespaceManager _nsmgr;
+        private XmlDocument _catalog;
+        private DataTable _testTab;
+        private Dictionary<string, string> _sources;
+        private Dictionary<string, string> _module;
+        private Dictionary<string, string[]> _collection;
+        private Dictionary<string, string[]> _schema;
+        private string _lastFindString = "";
+        private HashSet<string> _ignoredTest;
 
-        internal int _total;
-        internal int _passed;
-        internal int _repeatCount;
+        private int _total;
+        private int _passed;
+        private int _repeatCount;
 
-        internal static string[] s_ignoredTest =
+        private static string[] s_ignoredTest =
         {
             "nametest-1", "nametest-2", "nametest-5", "nametest-6",
             "nametest-7", "nametest-8", "nametest-9", "nametest-10",
@@ -59,11 +59,10 @@ namespace XQTSRunConsole
         public XQTSRunner(TextWriter writer)
         {
             _out = writer;
-            
-            _nameTable = new NameTable();
+
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
-            
+
             _testTab = new DataTable();
             _testTab.Columns.Add("Select", typeof(bool));
             _testTab.Columns.Add("Name", typeof(string));
@@ -72,7 +71,7 @@ namespace XQTSRunConsole
             _testTab.Columns.Add("Creator", typeof(string));
             _testTab.Columns.Add("Node", typeof(object));
             _testTab.Columns.Add("Description", typeof(string));
-            
+
             _ignoredTest = new HashSet<string>(s_ignoredTest);
         }
 
@@ -143,7 +142,6 @@ namespace XQTSRunConsole
                 {
                     _out.WriteLine("Source file {0} does not exists", sourceFileName);
                 }
-
                 _sources.Add(id, sourceFileName);
             }
 
@@ -172,7 +170,6 @@ namespace XQTSRunConsole
                 {
                     _out.WriteLine("Module file {0} does not exists", moduleFileName);
                 }
-
                 _module.Add(id, moduleFileName);
             }
 
