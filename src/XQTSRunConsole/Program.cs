@@ -14,7 +14,9 @@ namespace XQTSRunConsole
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var runner = new XQTSRunner(Console.Out);
+
+            runner.OpenCatalog(@"C:\Users\azurestef\Downloads\XQTS_1_0_2\XQTSCatalog.xml");
         }
 
         

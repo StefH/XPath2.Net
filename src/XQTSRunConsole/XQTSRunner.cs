@@ -10,7 +10,7 @@ namespace XQTSRunConsole
 {
     public class XQTSRunner
     {
-        public const String XQTSNamespace = "http://www.w3.org/2005/02/query-test-XQTSCatalog";
+        public const string XQTSNamespace = "http://www.w3.org/2005/02/query-test-XQTSCatalog";
 
         internal string _basePath;
         internal string _queryOffsetPath;
@@ -18,6 +18,7 @@ namespace XQTSRunConsole
         internal string _resultOffsetPath;
         internal string _queryFileExtension;
 
+        private TextWriter _out;
         internal NameTable _nameTable;
         internal XmlNamespaceManager _nsmgr;
         internal XmlDocument _catalog;
@@ -27,7 +28,7 @@ namespace XQTSRunConsole
         internal Dictionary<string, string[]> _collection;
         internal Dictionary<string, string[]> _schema;
         internal string _lastFindString = "";
-        internal HashSet<String> _ignoredTest;
+        internal HashSet<string> _ignoredTest;
 
         internal int _total;
         internal int _passed;
@@ -55,7 +56,27 @@ namespace XQTSRunConsole
             "followingsibling-21", "preceding-21", "preceding-sibling-21"
         };
 
-        private void OpenCatalog(string fileName)
+        public XQTSRunner(TextWriter writer)
+        {
+            _out = writer;
+            
+            _nameTable = new NameTable();
+            _nsmgr = new XmlNamespaceManager(_nameTable);
+            _nsmgr.AddNamespace("ts", XQTSNamespace);
+            
+            _testTab = new DataTable();
+            _testTab.Columns.Add("Select", typeof(bool));
+            _testTab.Columns.Add("Name", typeof(string));
+            _testTab.Columns.Add("FilePath", typeof(string));
+            _testTab.Columns.Add("scenario", typeof(string));
+            _testTab.Columns.Add("Creator", typeof(string));
+            _testTab.Columns.Add("Node", typeof(object));
+            _testTab.Columns.Add("Description", typeof(string));
+            
+            _ignoredTest = new HashSet<string>(s_ignoredTest);
+        }
+
+        public void OpenCatalog(string fileName)
         {
             _catalog = new XmlDocument(_nameTable);
 
@@ -106,6 +127,11 @@ namespace XQTSRunConsole
                 string id = node.GetAttribute("ID");
                 string targetNs = node.GetAttribute("uri");
                 string schemaFileName = Path.Combine(_basePath, node.GetAttribute("FileName").Replace('/', '\\'));
+                if (!File.Exists(schemaFileName))
+                {
+                    _out.WriteLine("Schema file {0} does not exists", schemaFileName);
+                }
+
                 _schema.Add(id, new[] { targetNs, schemaFileName });
             }
 
@@ -113,6 +139,11 @@ namespace XQTSRunConsole
             {
                 string id = node.GetAttribute("ID");
                 string sourceFileName = Path.Combine(_basePath, node.GetAttribute("FileName").Replace('/', '\\'));
+                if (!File.Exists(sourceFileName))
+                {
+                    _out.WriteLine("Source file {0} does not exists", sourceFileName);
+                }
+
                 _sources.Add(id, sourceFileName);
             }
 
@@ -120,10 +151,14 @@ namespace XQTSRunConsole
             {
                 string id = node.GetAttribute("ID");
                 XmlNodeList nodes = node.SelectNodes("ts:input-document", _nsmgr);
-                String[] items = new String[nodes.Count];
+                string[] items = new string[nodes.Count];
                 int k = 0;
                 foreach (XmlElement curr in nodes)
                 {
+                    if (!_sources.ContainsKey(curr.InnerText))
+                    {
+                        _out.WriteLine("Referenced source ID {0} in collection {1} not exists", curr.InnerText, id);
+                    }
                     items[k++] = curr.InnerText;
                 }
                 _collection.Add(id, items);
@@ -133,6 +168,11 @@ namespace XQTSRunConsole
             {
                 string id = node.GetAttribute("ID");
                 string moduleFileName = Path.Combine(_basePath, node.GetAttribute("FileName").Replace('/', '\\') + _queryFileExtension);
+                if (!File.Exists(moduleFileName))
+                {
+                    _out.WriteLine("Module file {0} does not exists", moduleFileName);
+                }
+
                 _module.Add(id, moduleFileName);
             }
 
