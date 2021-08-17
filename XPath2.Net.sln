@@ -52,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure Pipeline", "Azure Pip
 		azure-pipelines.yml = azure-pipelines.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPath2.TestRunner", "tests\XPath2.TestRunner\XPath2.TestRunner.csproj", "{E9295DC7-5DD7-4443-8BC8-8E6DBF4AE070}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9295DC7-5DD7-4443-8BC8-8E6DBF4AE070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9295DC7-5DD7-4443-8BC8-8E6DBF4AE070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9295DC7-5DD7-4443-8BC8-8E6DBF4AE070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9295DC7-5DD7-4443-8BC8-8E6DBF4AE070}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{31DC2EF8-C3FE-467D-84BE-FB5D956E6100} = {E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}
 		{3BF58F7D-31BA-488C-A732-94BDA5A6F3D9} = {09DD64B0-16A6-4710-A86F-EDCABDAB2BB4}
 		{D65D6550-9A2A-4B63-B201-D770008492C7} = {09DD64B0-16A6-4710-A86F-EDCABDAB2BB4}
+		{E9295DC7-5DD7-4443-8BC8-8E6DBF4AE070} = {E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {66C0CAE3-D093-4276-BCAC-BC3749408CE9}

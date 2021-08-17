@@ -5,14 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>XQTSRunConsole.Program</StartupObject>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="SimpleTreeNode" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\XPath2.Extensions\XPath2.Extensions.csproj" />
-    <ProjectReference Include="..\XPath2\XPath2.csproj" />
+    <ProjectReference Include="..\..\tests\XPath2.TestRunner\XPath2.TestRunner.csproj" />
   </ItemGroup>
 
 </Project>

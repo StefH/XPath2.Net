@@ -1,6 +1,6 @@
 using System.Xml;
 
-namespace XQTSRunConsole
+namespace XPath2.TestRunner
 {
     internal class TreeNodeValue
     {

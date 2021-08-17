@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Xml;
 using Wmhelp.XPath2;
 
-namespace XQTSRunConsole
+namespace XPath2.TestRunner
 {
-    struct PreparedXPath
+    internal struct PreparedXPath
     {
         public XPath2Expression expression;
         public IContextProvider provider;

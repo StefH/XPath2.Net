@@ -12,7 +12,7 @@ using System.Xml.XPath;
 using SimpleTreeNode;
 using Wmhelp.XPath2;
 
-namespace XQTSRunConsole
+namespace XPath2.TestRunner
 {
     public class XQTSRunner
     {
@@ -26,7 +26,7 @@ namespace XQTSRunConsole
         private readonly TextWriter _out;
         private readonly bool _logErrors;
 
-        private NameTable _nameTable = new NameTable();
+        private readonly NameTable _nameTable = new NameTable();
         private XmlNamespaceManager _nsmgr;
         private XmlDocument _catalog;
         private DataTable _testTab;
@@ -34,12 +34,12 @@ namespace XQTSRunConsole
         private Dictionary<string, string> _module;
         private Dictionary<string, string[]> _collection;
         private Dictionary<string, string[]> _schema;
-        private HashSet<string> _ignoredTest;
+        private HashSet<string> _ignoredTests;
 
         private int _total;
         private int _passed;
 
-        private static string[] s_ignoredTest =
+        private static readonly string[] testsToIgnore =
         {
             "nametest-1", "nametest-2", "nametest-5", "nametest-6",
             "nametest-7", "nametest-8", "nametest-9", "nametest-10",
@@ -65,7 +65,10 @@ namespace XQTSRunConsole
         {
             _out = writer;
             _logErrors = logErrors;
+        }
 
+        public TestRunResult Run(string fileName)
+        {
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
 
@@ -78,11 +81,7 @@ namespace XQTSRunConsole
             _testTab.Columns.Add("Node", typeof(object));
             _testTab.Columns.Add("Description", typeof(string));
 
-            _ignoredTest = new HashSet<string>(s_ignoredTest);
-        }
-
-        public void Run(string fileName)
-        {
+            _ignoredTests = new HashSet<string>(testsToIgnore);
             _catalog = new XmlDocument(_nameTable);
 
             var schemaSet = new XmlSchemaSet();
@@ -187,7 +186,7 @@ namespace XQTSRunConsole
             SelectAll();
             // SelectSupported();            
 
-            RunParallel();
+            return RunParallel();
         }
 
         private void ReadTestTree(XmlNode node, TreeNode<TreeNodeValue> parentNode)
@@ -210,7 +209,7 @@ namespace XQTSRunConsole
             }
         }
 
-        private void RunParallel()
+        private TestRunResult RunParallel()
         {
             var rows = _testTab.Select("");
 
@@ -240,14 +239,20 @@ namespace XQTSRunConsole
             sw.Stop();
             _out.WriteLine("Elapsed {0}", sw.Elapsed);
 
-            if (_total > 0)
-            {
-                decimal total = _total;
-                decimal passed = _passed;
+            // It conforms for 12954 from 15133 (85.60%) regarding the test-set
+            decimal total = _total;
+            decimal passed = _passed;
+            decimal percentage = Math.Round(passed / total * 100, 2);
 
-                // It conforms for 12954 from 15133 (85.60%) regarding the test-set
-                _out.WriteLine("{0} executed, {1} ({2}%) succeeded.", total, passed, Math.Round(passed / total * 100, 2));
-            }
+            // It conforms for 12954 from 15133 (85.60%) regarding the test-set
+            _out.WriteLine("{0} executed, {1} ({2}%) succeeded.", total, passed, percentage);
+            
+            return new TestRunResult
+            {
+                Total = _total,
+                Passed = _passed,
+                Percentage = percentage
+            };
         }
 
         private bool PerformTest(TextWriter tw, XmlElement testCase)
@@ -620,7 +625,7 @@ namespace XQTSRunConsole
             {
                 var curr = (XmlElement)row[5];
                 string name = curr.GetAttribute("name");
-                if (hs.Contains(curr) && !_ignoredTest.Contains(name))
+                if (hs.Contains(curr) && !_ignoredTests.Contains(name))
                 {
                     row[0] = true;
                     sel++;

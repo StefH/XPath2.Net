@@ -1,4 +1,5 @@
 using System;
+using XPath2.TestRunner;
 
 namespace XQTSRunConsole
 {
@@ -8,7 +9,8 @@ namespace XQTSRunConsole
         {
             var runner = new XQTSRunner(Console.Out);
 
-            runner.Run(args[0]);
+            var result = runner.Run(args[0]);
+            Console.WriteLine("{0} / {1} = {2}%", result.Passed, result.Total, result.Percentage);
         }
     }
 }
