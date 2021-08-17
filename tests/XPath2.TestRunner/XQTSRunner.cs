@@ -66,7 +66,7 @@ namespace XPath2.TestRunner
             _errorWriter = errorWriter;
         }
 
-        public TestRunResult RunParallel(string fileName)
+        public TestRunResult Run(string fileName, RunType run)
         {
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
@@ -178,7 +178,7 @@ namespace XPath2.TestRunner
             SelectAll();
             // SelectSupported();            
 
-            return RunParallel();
+            return run == RunType.Parallel ? RunParallel() : RunSequential();
         }
 
         private void ReadTestTree(XmlNode node, TreeNode parentNode)
@@ -220,7 +220,39 @@ namespace XPath2.TestRunner
             });
             sw.Stop();
             _out.WriteLine("Elapsed {0}", sw.Elapsed);
+            return TestRunResult();
+        }
 
+        private TestRunResult RunSequential()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            foreach (var item in _testItems)
+            {
+                if (item.Selected)
+                {
+                    var tw = new StringWriter();
+                    if (PerformTest(tw, item))
+                    {
+                        // tw.WriteLine("Passed.");
+                        Interlocked.Increment(ref _passed);
+                    }
+                    else
+                    {
+                        tw.WriteLine("Failed.");
+                        // _out.Write(tw.ToString());
+                    }
+                    Interlocked.Increment(ref _total);
+                }
+            };
+            sw.Stop();
+            _out.WriteLine("Elapsed {0}", sw.Elapsed);
+
+            return TestRunResult();
+        }
+
+        private TestRunResult TestRunResult()
+        {
             decimal total = _total;
             decimal passed = _passed;
             decimal percentage = Math.Round(passed / total * 100, 2);
