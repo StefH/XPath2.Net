@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Xml;
@@ -6,12 +7,12 @@ namespace XPath2.TestRunner.FileResolvers
 {
     public class OnlineFileResolver : FileResolverBase, IFileResolver
     {
-        private readonly HttpClient _http = new HttpClient();
         private readonly string _basePath;
+        private readonly HttpClient _http = new HttpClient();
 
         public OnlineFileResolver(TextWriter tw, string uri, XmlNamespaceManager namespaceManager) : base(tw, uri, namespaceManager)
         {
-            _basePath = uri;
+            _basePath = new Uri(new Uri(uri), ".").OriginalString;
         }
 
         public string ResolveFileName(string nodeFilename, string type)
@@ -26,7 +27,7 @@ namespace XPath2.TestRunner.FileResolvers
 
         public string GetResultAsString(XmlElement node, string fileName)
         {
-            var path = $"{_basePath}/{_resultOffsetPath + node.GetAttribute("FilePath")}{fileName})";
+            var path = $"{_basePath}{_resultOffsetPath + node.GetAttribute("FilePath")}{fileName})";
 
             return ReadAsString(path);
         }
@@ -34,7 +35,7 @@ namespace XPath2.TestRunner.FileResolvers
         public string ReadAsString(XmlElement node)
         {
             var queryName = node.SelectSingleNode("ts:query/@name", _namespaceManager);
-            var path = $"{_basePath}/{_queryOffsetPath}{node.GetAttribute("FilePath")}{queryName.Value}{_queryFileExtension}";
+            var path = $"{_basePath}{_queryOffsetPath}{node.GetAttribute("FilePath")}{queryName.Value}{_queryFileExtension}";
 
             return ReadAsString(path);
         }

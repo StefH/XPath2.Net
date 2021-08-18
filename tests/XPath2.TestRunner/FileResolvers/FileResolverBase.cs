@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -13,8 +12,7 @@ namespace XPath2.TestRunner.FileResolvers
         protected readonly string _resultOffsetPath;
         protected readonly string _queryFileExtension;
         protected readonly XmlNamespaceManager _namespaceManager;
-        // protected readonly string _basePath;
-
+        
         public XmlDocument Catalog { get; }
 
         public FileResolverBase(TextWriter tw, string uri, XmlNamespaceManager namespaceManager)
@@ -48,7 +46,7 @@ namespace XPath2.TestRunner.FileResolvers
 
             _queryOffsetPath = Catalog.DocumentElement.GetAttribute("XQueryQueryOffsetPath");
             _resultOffsetPath = Catalog.DocumentElement.GetAttribute("ResultOffsetPath");
-            _queryFileExtension = Catalog.DocumentElement.GetAttribute("XQueryFileExtension");
+            _queryFileExtension = Catalog.DocumentElement.GetAttribute("XQueryFileExtension");            
         }
     }
 }
