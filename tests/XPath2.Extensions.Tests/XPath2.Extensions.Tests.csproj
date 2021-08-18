@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Authors>Stef Heyenrath</Authors>
     <TargetFrameworks>net452;net5.0</TargetFrameworks>
-    <AssemblyName>XPath2.Tests</AssemblyName>
-    <PackageId>XPath2.Tests</PackageId>
+    <AssemblyName>XPath2.Extensions.Tests</AssemblyName>
+    <PackageId>XPath2.Extensions.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <DebugType>full</DebugType>
-    <ProjectGuid>{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}</ProjectGuid>
+    <ProjectGuid>{159ADA46-48CF-4571-9F1B-D5AE5F115611}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
-    <ProjectReference Include="..\XPath2.TestRunner\XPath2.TestRunner.csproj" />
+    <ProjectReference Include="..\..\src\XPath2.Extensions\XPath2.Extensions.csproj" />
+    <!--<ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +23,6 @@
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="OpenCover" Version="4.7.922" />
-    <!--<PackageReference Include="ReflectionMagic" Version="4.1.0" />-->
     <PackageReference Include="ReportGenerator" Version="4.5.8" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
