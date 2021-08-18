@@ -18,7 +18,6 @@ namespace XPath2.Tests
             var passedWriter = TextWriter.Synchronized(new StreamWriter(Path.Combine(Environment.CurrentDirectory, "passed.txt")));
             var errorWriter = TextWriter.Synchronized(new StreamWriter(Path.Combine(Environment.CurrentDirectory, "error.txt")));
 
-            var error = Path.Combine(Environment.CurrentDirectory, "error.txt");
             _runner = new XQTSRunner(Console.Out, passedWriter, errorWriter);
         }
 
