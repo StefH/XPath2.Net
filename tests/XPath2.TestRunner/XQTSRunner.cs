@@ -210,7 +210,7 @@ namespace XPath2.TestRunner
             var sw = new Stopwatch();
             sw.Start();
 
-            foreach (var item in _testItems)
+            foreach (var item in _testItems) // .Where(i => i.Name == "caselessmatch04")
             {
                 if (item.Selected)
                 {

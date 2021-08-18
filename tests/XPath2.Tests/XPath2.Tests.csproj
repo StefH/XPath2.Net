@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Authors>Stef Heyenrath</Authors>
-    <TargetFrameworks>net452;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net452;net5.0</TargetFrameworks>
     <AssemblyName>XPath2.Tests</AssemblyName>
     <PackageId>XPath2.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -26,7 +26,7 @@
     <PackageReference Include="OpenCover" Version="4.7.922" />
     <PackageReference Include="ReflectionMagic" Version="4.1.0" />
     <PackageReference Include="ReportGenerator" Version="4.5.8" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -40,9 +40,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+    <!--<Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />-->
 
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
