@@ -10,12 +10,21 @@
         },
         "XQTSRunConsole-zip": {
             "commandName": "Project",
-            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
+            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
         },
 
         "XQTSRunConsoleSX79R5": {
             "commandName": "Project",
             "commandLineArgs": "C:\\XQTS_1_0_2\\XQTSCatalog.xml C:\\XQTS_1_0_2\\passed.txt C:\\XQTS_1_0_2\\error.txt"
+        },
+
+        "XQTSRunConsoleLaptop": {
+            "commandName": "Project",
+            "commandLineArgs": "C:\\dev\\XQTS_1_0_2\\XQTSCatalog.xml C:\\dev\\XQTS_1_0_2\\passed.txt C:\\dev\\XQTS_1_0_2\\error.txt"
+        },
+        "XQTSRunConsoleLaptop-zip": {
+            "commandName": "Project",
+            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true|C:\\tmp C:\\tmp\\passed.txt C:\\tmp\\error.txt"
         }
     }
 }

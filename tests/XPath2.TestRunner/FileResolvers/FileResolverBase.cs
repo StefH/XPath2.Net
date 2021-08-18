@@ -15,7 +15,7 @@ namespace XPath2.TestRunner.FileResolvers
         
         public XmlDocument Catalog { get; }
 
-        public FileResolverBase(TextWriter tw, string uri, XmlNamespaceManager namespaceManager)
+        protected FileResolverBase(TextWriter tw, string uri, XmlNamespaceManager namespaceManager)
         {
             _out = tw;
             _namespaceManager = namespaceManager;

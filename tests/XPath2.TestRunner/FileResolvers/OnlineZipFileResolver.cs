@@ -1,18 +1,61 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Xml;
+using Ionic.Zip;
 
 namespace XPath2.TestRunner.FileResolvers
 {
     public class OnlineZipFileResolver : FileResolverBase, IFileResolver
     {
-        private readonly HttpClient _http = new HttpClient();
+        private static readonly HttpClient HttpClient = new HttpClient();
         private readonly string _basePath;
 
-        public OnlineZipFileResolver(TextWriter tw, string uri, XmlNamespaceManager namespaceManager) : base(tw, uri, namespaceManager)
+        public OnlineZipFileResolver(TextWriter tw, string zipUriWithTempFolder, XmlNamespaceManager namespaceManager) : base(tw, DownloadAndUnzip(tw, zipUriWithTempFolder), namespaceManager)
         {
-            _basePath = Path.GetDirectoryName(uri);
+            var parts = zipUriWithTempFolder.Split('|');
+            _basePath = Path.Combine(parts[1], "XQTS_1_0_2");
+        }
+
+        private static string DownloadAndUnzip(TextWriter tw, string zipUriWithTempFolder)
+        {
+            var parts = zipUriWithTempFolder.Split('|');
+            var zipFile = Path.Combine(parts[1], "XQTS_1_0_2.zip");
+            var extractLocation = Path.Combine(parts[1], "XQTS_1_0_2");
+            var xmlFile = Path.Combine(extractLocation, "XQTSCatalog.xml");
+
+            if (File.Exists(zipFile))
+            {
+                return xmlFile;
+            }
+
+            var sw = new Stopwatch();
+            sw.Start();
+            tw.WriteLine("DownloadFileFromInternet");
+            DownloadFileFromInternet(parts[0], zipFile);
+            sw.Stop();
+            tw.WriteLine(sw.Elapsed);
+
+            tw.WriteLine("ExtractToDirectory");
+            sw.Start();
+            using (var zip = ZipFile.Read(zipFile))
+            {
+                zip.ExtractAll(extractLocation, ExtractExistingFileAction.DoNotOverwrite);
+            }
+            sw.Stop();
+            tw.WriteLine(sw.Elapsed);
+
+            return xmlFile;
+        }
+
+        private static void DownloadFileFromInternet(string uri, string path)
+        {
+            using (Stream contentStream = HttpClient.GetAsync(uri).GetAwaiter().GetResult().Content.ReadAsStreamAsync().GetAwaiter().GetResult(),
+                        stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                contentStream.CopyTo(stream);
+            }
         }
 
         public string ResolveFileName(string nodeFilename, string type)

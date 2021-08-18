@@ -73,7 +73,7 @@ namespace XPath2.TestRunner
 
             if (XQTSCatalogFile.StartsWith("http"))
             {
-                if (XQTSCatalogFile.EndsWith(".zip"))
+                if (XQTSCatalogFile.Contains(".zip"))
                 {
                     _fileResolver = new OnlineZipFileResolver(_out, XQTSCatalogFile, _nsmgr);
                 }
@@ -210,7 +210,7 @@ namespace XPath2.TestRunner
             var sw = new Stopwatch();
             sw.Start();
 
-            foreach (var item in _testItems.Take(1000))
+            foreach (var item in _testItems)
             {
                 if (item.Selected)
                 {
