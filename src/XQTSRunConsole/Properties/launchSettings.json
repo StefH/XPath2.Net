@@ -8,6 +8,10 @@
             "commandName": "Project",
             "commandLineArgs": "https://raw.githubusercontent.com/StefH/XML-Query-Test-Suite-1.0/main/XQTS_1_0_2/XQTSCatalog.xml C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
         },
+        "XQTSRunConsole-zip": {
+            "commandName": "Project",
+            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
+        },
 
         "XQTSRunConsoleSX79R5": {
             "commandName": "Project",

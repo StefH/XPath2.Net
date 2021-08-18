@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNetZip" Version="1.15.0" />
         <PackageReference Include="ReflectionMagic" Version="4.1.0" />
     </ItemGroup>
 

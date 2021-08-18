@@ -71,9 +71,21 @@ namespace XPath2.TestRunner
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
 
-            _fileResolver = XQTSCatalogFile.StartsWith("http") ?
-                (IFileResolver)new OnlineFileResolver(_out, XQTSCatalogFile, _nsmgr) :
-                (IFileResolver)new LocalFileResolver(_out, XQTSCatalogFile, _nsmgr);
+            if (XQTSCatalogFile.StartsWith("http"))
+            {
+                if (XQTSCatalogFile.EndsWith(".zip"))
+                {
+                    _fileResolver = new OnlineZipFileResolver(_out, XQTSCatalogFile, _nsmgr);
+                }
+                else
+                {
+                    _fileResolver = new OnlineFileResolver(_out, XQTSCatalogFile, _nsmgr);
+                }
+            }
+            else
+            {
+                _fileResolver = new LocalFileResolver(_out, XQTSCatalogFile, _nsmgr);
+            }
 
             _testItems = new List<TestItem>();
 
