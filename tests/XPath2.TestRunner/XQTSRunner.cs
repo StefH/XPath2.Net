@@ -70,9 +70,11 @@ namespace XPath2.TestRunner
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
 
-            _fileResolver = new LocalFileResolver(_out, XQTSCatalogFile, _nsmgr);
+            _fileResolver = XQTSCatalogFile.StartsWith("http") ?
+                (IFileResolver)new OnlineFileResolver(_out, XQTSCatalogFile, _nsmgr) :
+                (IFileResolver)new LocalFileResolver(_out, XQTSCatalogFile, _nsmgr);
 
-            _testItems = new List<TestItem>();            
+            _testItems = new List<TestItem>();
 
             if (!(_fileResolver.Catalog.DocumentElement.NamespaceURI == XQTSNamespace && _fileResolver.Catalog.DocumentElement.LocalName == "test-suite"))
             {

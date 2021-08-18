@@ -1,58 +1,15 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Xml;
-using System.Xml.Schema;
 
 namespace XPath2.TestRunner.FileResolvers
 {
-    public class LocalFileResolver : IFileResolver
+    public class LocalFileResolver : FileResolverBase, IFileResolver
     {
-        private readonly TextWriter _out;
-        private readonly string _queryOffsetPath;
-        private readonly string _resultOffsetPath;
-        private readonly string _queryFileExtension;
-        private readonly XmlNamespaceManager _namespaceManager;
         private readonly string _basePath;
 
-        public XmlDocument Catalog { get; }
-
-        public LocalFileResolver(
-            TextWriter tw,
-            string fileName,
-            XmlNamespaceManager namespaceManager)
+        public LocalFileResolver(TextWriter tw, string fileName, XmlNamespaceManager namespaceManager) : base(tw, fileName, namespaceManager)
         {
-            _out = tw;
-            _namespaceManager = namespaceManager;
-
-            var schemaSet = new XmlSchemaSet();
-            var settings = new XmlReaderSettings
-            {
-                Schemas = schemaSet,
-                DtdProcessing = DtdProcessing.Ignore
-            };
-            var resolver = new XmlUrlResolver
-            {
-                Credentials = CredentialCache.DefaultCredentials
-            };
-
-            settings.XmlResolver = resolver;
-            settings.NameTable = namespaceManager.NameTable;
-            settings.ValidationFlags = XmlSchemaValidationFlags.ProcessSchemaLocation | XmlSchemaValidationFlags.ProcessInlineSchema;
-            settings.ValidationType = ValidationType.Schema;
-
-            Catalog = new XmlDocument(namespaceManager.NameTable);
-
-            using (var reader = XmlReader.Create(fileName, settings))
-            {
-                Catalog.Load(reader);
-                reader.Close();
-            }
-
-            _queryOffsetPath = Catalog.DocumentElement.GetAttribute("XQueryQueryOffsetPath");
-            _resultOffsetPath = Catalog.DocumentElement.GetAttribute("ResultOffsetPath");
-            _queryFileExtension = Catalog.DocumentElement.GetAttribute("XQueryFileExtension");
-
             _basePath = Path.GetDirectoryName(fileName);
         }
 
