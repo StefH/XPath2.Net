@@ -6,6 +6,7 @@ using Xunit;
 
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XPathNavigatorTests
     {
         private readonly XPathNavigator _navigator;

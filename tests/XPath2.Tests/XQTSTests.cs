@@ -8,6 +8,7 @@ using Xunit;
 
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XQTSTests
     {
         /// <summary>

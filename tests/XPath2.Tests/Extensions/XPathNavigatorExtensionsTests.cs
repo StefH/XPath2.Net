@@ -1,9 +1,10 @@
-﻿using System.Xml;
+using System.Xml;
 using Wmhelp.XPath2;
 using Xunit;
 
 namespace XPath2.Tests.Extensions
 {
+    [Collection("Sequential")]
     public class XPathNavigatorExtensionsTests
     {
         private XmlDocument GetOrders()

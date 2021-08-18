@@ -2,11 +2,13 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Wmhelp.XPath2;
 using XPath2.TestRunner;
 using Xunit;
 
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XQTSRunnerTests
     {
         const string uri = "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true";
@@ -24,6 +26,10 @@ namespace XPath2.Tests
         [Fact]
         public void Run()
         {
+            // 1. CLear FunctionTable else the XPath2.Extensions tests will mess up this test (e.g. Expressions/PrimaryExpr/FunctionCallExpr/K-FunctionCallExpr-25.xqx)
+            // 2. Also force all tests to run sequential ([Collection("Sequential")])
+            FunctionTable.Clear();
+
             // Arrange
             var parameter = $"{uri}|{Environment.CurrentDirectory}";
 
