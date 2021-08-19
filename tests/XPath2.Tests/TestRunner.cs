@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 using FluentAssertions;
 using Wmhelp.XPath2;
 using XPath2.TestRunner;
@@ -17,7 +17,7 @@ namespace XPath2.Tests
         const string uri = "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true";
 
         private readonly string _passedPath = Path.Combine(Environment.CurrentDirectory, "passed.txt");
-        private readonly List<string> _passed = new List<string>();
+        private readonly List<string> _expectedPassed = new List<string>();
 
         public XQTSRunnerTests()
         {
@@ -27,7 +27,7 @@ namespace XPath2.Tests
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                _passed.Add(line);
+                _expectedPassed.Add(line);
             }
         }
 
@@ -59,8 +59,8 @@ namespace XPath2.Tests
             result.Total.Should().Be(15133);
             // result.Passed.Should().Be(12958);
 
-            var passed = File.ReadAllLines(_passedPath);
-            _passed.Should().BeEquivalentTo(passed);
+            var passed = File.ReadAllLines(_passedPath).Where(line => !string.IsNullOrEmpty(line));
+            passed.Should().BeEquivalentTo(_expectedPassed);
         }
     }
 }
