@@ -25,24 +25,6 @@ namespace XPath2.Tests
                 result.Should().Be(true);
             }
         }
-
-        /// <summary>
-        /// Call of matches() with "i" flag and Kelvin sign.
-        /// 
-        /// A character range (production charRange in the XSD 1.0 grammar, replaced by productions charRange and singleChar in XSD 1.1) represents the set containing all the characters that it would match in the absence of the "i" flag, together with their case-variants. For example, the regular expression "[A-Z]" will match all the letters A-Z and all the letters a-z. It will also match certain other characters such as #x212A (KELVIN SIGN), since fn:lower-case("#x212A") is "k".
-        /// This rule applies also to a character range used in a character class subtraction (charClassSub): thus[A - Z -[IO]] will match characters such as "A", "B", "a", and "b", but will not match "I", "O", "i", or "o".
-        /// </summary>
-        [Fact]
-        public void XPath2Evaluate_Functions_AllStringFunc_MatchStringFunc_MatchesFunc_caselessmatch04()
-        {
-            using (new FakeLocalTimeZone(TimeZoneInfo.Utc))
-            {
-                var nav = new XmlDocument().CreateNavigator();
-                var result = nav.XPath2Evaluate("matches('&#x212A;', '[A-Z]', 'i') (: Kelvin sign :)");
-
-                result.Should().Be(true);
-            }
-        }
     }
 }
 #endif
