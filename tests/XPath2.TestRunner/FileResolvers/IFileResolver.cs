@@ -8,8 +8,6 @@ namespace XPath2.TestRunner.FileResolvers
 
         string ReadAsString(XmlElement node);
 
-        // string GetResultPath(XmlElement node, string fileName);
-
         string GetResultAsString(XmlElement node, string fileName);
 
         string ResolveFileName(string nodeFilename, string type);

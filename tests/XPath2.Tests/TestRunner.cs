@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using FluentAssertions;
 using Wmhelp.XPath2;
 using XPath2.TestRunner;
@@ -29,6 +30,9 @@ namespace XPath2.Tests
             {
                 _expectedPassed.Add(line);
             }
+
+            Console.WriteLine("CurrentCulture   = {0}", Thread.CurrentThread.CurrentCulture);
+            Console.WriteLine("CurrentUICulture = {0}", Thread.CurrentThread.CurrentUICulture);
         }
 
         [Fact]
@@ -60,9 +64,8 @@ namespace XPath2.Tests
             // result.Passed.Should().Be(12958);
 
             var passed = File.ReadAllLines(_passedPath).Where(line => !string.IsNullOrEmpty(line));
-            var e = _expectedPassed.Except(passed);
-            e.Should().BeEmpty();
-            //passed.Should().BeEquivalentTo(_expectedPassed);
+            var differences = _expectedPassed.Except(passed);
+            differences.Should().BeEmpty();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using XPath2.TestRunner;
 
 namespace XQTSRunConsole
@@ -8,6 +9,9 @@ namespace XQTSRunConsole
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("CurrentCulture   = {0}", Thread.CurrentThread.CurrentCulture);
+            Console.WriteLine("CurrentUICulture = {0}", Thread.CurrentThread.CurrentUICulture);
+
             var passedWriter = args.Length > 1 ? TextWriter.Synchronized(new StreamWriter(args[1])) : null; // Needs to be Synchronized
             var errorWriter = args.Length > 2 ? TextWriter.Synchronized(new StreamWriter(args[2])) : null; // Needs to be Synchronized
             var runner = new XQTSRunner(Console.Out, passedWriter, errorWriter);
