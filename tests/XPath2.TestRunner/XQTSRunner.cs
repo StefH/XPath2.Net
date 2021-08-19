@@ -59,6 +59,12 @@ namespace XPath2.TestRunner
             "followingsibling-21", "preceding-21", "preceding-sibling-21"
         };
 
+        // https://stackoverflow.com/questions/68848852/tolowerinvariant-from-a-kelvin-sign-%e2%84%aa-in-c-sharp-has-different-results
+        private static readonly string[] testsToIgnoreBecauseOfNls =
+        {
+            "caselessmatch04", "caselessmatch05", "caselessmatch06", "caselessmatch07"
+        };
+
         public XQTSRunner(TextWriter writer, TextWriter passedWriter = null, TextWriter errorWriter = null)
         {
             _out = writer;
@@ -87,6 +93,13 @@ namespace XPath2.TestRunner
         public TestRunResult Run(string XQTSCatalogFile, RunType run)
         {
             _ignoredTests = new HashSet<string>(testsToIgnore);
+            if (GlobalizationUtils.UseNls())
+            {
+                foreach (var test in testsToIgnoreBecauseOfNls)
+                {
+                    _ignoredTests.Add(test);
+                }
+            }
 
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
@@ -265,7 +278,6 @@ namespace XPath2.TestRunner
             decimal passed = _passed;
             decimal percentage = Math.Round(passed / total * 100, 2);
 
-            // 15133 executed, 12958 (85.63%) succeeded.
             _out.WriteLine("{0} executed, {1} ({2}%) succeeded.", total, passed, percentage);
 
             return new TestRunResult

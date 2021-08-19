@@ -11,6 +11,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Remove="Results\passed.txt" />
         <EmbeddedResource Include="Results\passed.txt" />
     </ItemGroup>

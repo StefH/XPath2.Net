@@ -1,14 +1,13 @@
 #if NET5_0_OR_GREATER
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using FluentAssertions;
 using Wmhelp.XPath2;
 using XPath2.TestRunner;
+using XPath2.TestRunner.Utils;
 using Xunit;
 
 namespace XPath2.Tests
@@ -30,7 +29,7 @@ namespace XPath2.Tests
             while ((line = reader.ReadLine()) != null)
             {
                 _expectedPassed.Add(line);
-            }            
+            }
         }
 
         [Fact]
@@ -59,11 +58,19 @@ namespace XPath2.Tests
 
             // Assert
             result.Total.Should().Be(15133);
-            // result.Passed.Should().Be(12958);
 
             var passed = File.ReadAllLines(_passedPath).Where(line => !string.IsNullOrEmpty(line));
             var differences = _expectedPassed.Except(passed);
-            differences.Should().BeEmpty();
+
+            if (GlobalizationUtils.UseNls())
+            {
+                // https://stackoverflow.com/questions/68848852/tolowerinvariant-from-a-kelvin-sign-%e2%84%aa-in-c-sharp-has-different-results
+                differences.Should().BeEquivalentTo("caselessmatch04", "caselessmatch05", "caselessmatch06", "caselessmatch07");
+            }
+            else
+            {
+                differences.Should().BeEmpty();
+            }
         }
     }
 }
