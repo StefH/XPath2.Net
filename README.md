@@ -34,7 +34,9 @@ Project is copied and forked from https://xpath2.codeplex.com/. Original credits
 
 ## Info
 
-It conforms for 12958 from 15133 (85.63%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+It conforms for 12954 <sup>*</sup> from 15133 (85.60%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+
+<sup>*</sup> Note that depending on your system, you can get 12958 to work. This is because of some tests which test the lowercase functionality from the Kelvin-sign. More details see this [question](https://stackoverflow.com/questions/68848852/tolowerinvariant-from-a-kelvin-sign-%e2%84%aa-in-c-sharp-has-different-results).
 
 API used is an anology to the standard one built into the platform: you utilize XPath2Expression instead of the common XPathExpression and a set of extension functions for XNode, XPathNavigator and XmlNode classes.
 
