@@ -10,14 +10,9 @@
         <ProjectGuid>{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}</ProjectGuid>
     </PropertyGroup>
 
-
     <ItemGroup>
         <None Remove="Results\passed.txt" />
         <EmbeddedResource Include="Results\passed.txt" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
     </ItemGroup>
 
     <ItemGroup>
@@ -31,7 +26,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="OpenCover" Version="4.7.922" />
         <PackageReference Include="ReportGenerator" Version="4.5.8" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
