@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -1170,40 +1170,40 @@ namespace Wmhelp.XPath2
 
         public static class XmlSchema
         {
-            public static XmlSchemaType AnySimpleType =
+            public readonly static XmlSchemaType AnySimpleType =
                 XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("anySimpleType", XmlReservedNs.NsXs));
 
-            public static XmlSchemaType AnyType =
+            public readonly static XmlSchemaType AnyType =
                 XmlSchemaType.GetBuiltInComplexType(new XmlQualifiedName("anyType", XmlReservedNs.NsXs));
 
-            public static XmlSchemaType AnyAtomicType = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.AnyAtomicType);
-            public static XmlSchemaType UntypedAtomic = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.UntypedAtomic);
-            public static XmlSchemaType Integer = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Integer);
-            public static XmlSchemaType DateTime = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.DateTime);
-            public static XmlSchemaType Date = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Date);
-            public static XmlSchemaType Time = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Time);
-            public static XmlSchemaType Duration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Duration);
+            public readonly static XmlSchemaType AnyAtomicType = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.AnyAtomicType);
+            public readonly static XmlSchemaType UntypedAtomic = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.UntypedAtomic);
+            public readonly static XmlSchemaType Integer = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Integer);
+            public readonly static XmlSchemaType DateTime = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.DateTime);
+            public readonly static XmlSchemaType Date = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Date);
+            public readonly static XmlSchemaType Time = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Time);
+            public readonly static XmlSchemaType Duration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Duration);
 
-            public static XmlSchemaType YearMonthDuration =
+            public readonly static XmlSchemaType YearMonthDuration =
                 XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.YearMonthDuration);
 
-            public static XmlSchemaType DayTimeDuration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.DayTimeDuration);
-            public static XmlSchemaType GYearMonth = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GYearMonth);
-            public static XmlSchemaType GYear = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GYear);
-            public static XmlSchemaType GDay = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GDay);
-            public static XmlSchemaType GMonth = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GMonth);
-            public static XmlSchemaType GMonthDay = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GMonthDay);
-            public static XmlSchemaType QName = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.QName);
-            public static XmlSchemaType HexBinary = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.HexBinary);
-            public static XmlSchemaType Base64Binary = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Base64Binary);
+            public readonly static XmlSchemaType DayTimeDuration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.DayTimeDuration);
+            public readonly static XmlSchemaType GYearMonth = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GYearMonth);
+            public readonly static XmlSchemaType GYear = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GYear);
+            public readonly static XmlSchemaType GDay = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GDay);
+            public readonly static XmlSchemaType GMonth = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GMonth);
+            public readonly static XmlSchemaType GMonthDay = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GMonthDay);
+            public readonly static XmlSchemaType QName = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.QName);
+            public readonly static XmlSchemaType HexBinary = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.HexBinary);
+            public readonly static XmlSchemaType Base64Binary = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Base64Binary);
 
-            public static XmlSchemaType IDREFS =
+            public readonly static XmlSchemaType IDREFS =
                 XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("IDREFS", XmlReservedNs.NsXs));
 
-            public static XmlSchemaType NMTOKENS =
+            public readonly static XmlSchemaType NMTOKENS =
                 XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("NMTOKENS", XmlReservedNs.NsXs));
 
-            public static XmlSchemaType ENTITIES =
+            public readonly static XmlSchemaType ENTITIES =
                 XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("ENTITIES", XmlReservedNs.NsXs));
         }
 
