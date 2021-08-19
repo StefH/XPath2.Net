@@ -1,10 +1,11 @@
-﻿using System.Xml;
+using System.Xml;
 using FluentAssertions;
 using Wmhelp.XPath2;
 using Xunit;
 
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XPath2NodeIteratorTests
     {
         [Fact]

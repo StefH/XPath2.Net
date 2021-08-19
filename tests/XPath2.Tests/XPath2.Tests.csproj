@@ -1,48 +1,59 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Authors>Stef Heyenrath</Authors>
-    <TargetFrameworks>net452;netcoreapp2.1</TargetFrameworks>
-    <AssemblyName>XPath2.Tests</AssemblyName>
-    <PackageId>XPath2.Tests</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <DebugType>full</DebugType>
-    <ProjectGuid>{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}</ProjectGuid>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Authors>Stef Heyenrath</Authors>
+        <TargetFrameworks>net452;net5.0</TargetFrameworks>
+        <AssemblyName>XPath2.Tests</AssemblyName>
+        <PackageId>XPath2.Tests</PackageId>
+        <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+        <DebugType>full</DebugType>
+        <ProjectGuid>{31DC2EF8-C3FE-467D-84BE-FB5D956E6100}</ProjectGuid>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\XPath2.Extensions\XPath2.Extensions.csproj" />
-    <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
-  </ItemGroup>
+    <!--<ItemGroup>
+        <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
+    </ItemGroup>-->
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.msbuild" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="OpenCover" Version="4.7.922" />
-    <PackageReference Include="ReportGenerator" Version="4.5.8" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="xunit" Version="2.4.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="Results\passed.txt" />
+        <EmbeddedResource Include="Results\passed.txt" />
+    </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
+        <ProjectReference Include="..\XPath2.TestRunner\XPath2.TestRunner.csproj" />
+    </ItemGroup>
 
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Codecov" Version="1.13.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.msbuild" Version="3.1.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="FluentAssertions" Version="5.10.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="OpenCover" Version="4.7.1221" />
+        <PackageReference Include="ReportGenerator" Version="4.8.12" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="xunit" Version="2.4.1" />
+    </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+        <Reference Include="System" />
+        <Reference Include="Microsoft.CSharp" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+        <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    </ItemGroup>
 
 </Project>

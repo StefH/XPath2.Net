@@ -903,11 +903,13 @@ DocumentTest
    {
       SequenceType type = (SequenceType)$3;
       type.TypeCode = XmlTypeCode.Document;
+      $$ = type;
    }
    | DOCUMENT_NODE '(' SchemaElementTest ')'
    {
       SequenceType type = (SequenceType)$3;
       type.TypeCode = XmlTypeCode.Document;
+      $$ = type;
    }
    ;
 

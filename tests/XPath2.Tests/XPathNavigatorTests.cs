@@ -1,11 +1,14 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using System.Xml;
 using System.Xml.XPath;
 using Wmhelp.XPath2;
 using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
+
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XPathNavigatorTests
     {
         private readonly XPathNavigator _navigator;
@@ -187,6 +190,52 @@ namespace XPath2.Tests
         }
 
         [Fact]
+        public void TestDocumentNodeElementSelection()
+        {
+            var doc = GetTodoListDoc();
+
+            var result1 = doc.XPath2SelectNodes("self::document-node(element(todo-list))");
+            var result2 = doc.XPath2SelectNodes("self::document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
+        public void TestDescendantOrSelfDocumentNodeElementSelection()
+        {
+            var doc = GetTodoListDoc();
+
+            var result1 = doc.XPath2SelectNodes("descendant-or-self::document-node(element(todo-list))");
+            var result2 = doc.XPath2SelectNodes("descendant-or-self::document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
+        public void TestNoDocumentNodeOnChildAxis()
+        {
+            var doc = GetTodoListDoc();
+
+            var result1 = doc.XPath2SelectNodes("/document-node(element(todo-list))");
+            var result2 = doc.XPath2SelectNodes("/document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
+        public void TestDocumentNodeOnAncestorAxis()
+        {
+            var doc = GetTodoListDoc();
+
+            var item1 = doc.XPath2SelectSingleNode("todo-list/todo-item");
+
+            var result1 = item1.XPath2SelectNodes("ancestor::document-node(element(todo-list))");
+            var result2 = item1.XPath2SelectNodes("ancestor::document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
         public void XPath2SelectNodesWithDefaultNamespace()
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
@@ -285,6 +334,28 @@ namespace XPath2.Tests
 
             // Assert
             result.Should().Be(expected);
+        }
+
+        [Fact]
+        public void XPath2Evaluate_AttributeSelection()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result1 = nav.XPath2Evaluate("count(//@id)");
+            var result2 = nav.XPath2Evaluate("count(//attribute::attribute(id))");
+
+            result1.Should().Be(3);
+            result2.Should().Be(3);
+        }
+
+        [Fact]
+        public void XPath2Evaluate_FullPathWithAttributeSelection()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result1 = nav.XPath2Evaluate("count(/todo-list/todo-item/@id)");
+            var result2 = nav.XPath2Evaluate("count(/todo-list/todo-item/attribute::attribute(id))");
+
+            result1.Should().Be(3);
+            result2.Should().Be(3);
         }
     }
 }

@@ -3,7 +3,7 @@
 This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.
 The given implementation based on practice of developing XQuery is fully corresponding to the specification demands.
 
-Project is forked from https://xpath2.codeplex.com/
+Project is copied and forked from https://xpath2.codeplex.com/. Original credits go to Semyon A. Chertkov.
 
 ## Build
 | | |
@@ -15,8 +15,7 @@ Project is forked from https://xpath2.codeplex.com/
 | &nbsp;&nbsp;**Sonar Bugs** | [![Sonar Bugs](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=bugs)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net&resolved=false&types=BUG) |
 | &nbsp;&nbsp;**Sonar Code Smells** | [![Sonar Code Smells](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=code_smells)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net&resolved=false&types=CODE_SMELL) |
 | &nbsp;&nbsp;**Sonar Coverage** | [![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=coverage)](https://sonarcloud.io/component_measures?id=StefH_XPath2.Net&metric=coverage) |
-| &nbsp;&nbsp;**Codecov** | [![codecov](https://codecov.io/gh/StefH/XPath2.Net/branch/master/graph/badge.svg)](https://codecov.io/gh/StefH/XPath2.Net) |
-| |
+| | |
 | ***NuGet*** | &nbsp; |
 | &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
 | &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
@@ -34,7 +33,9 @@ Project is forked from https://xpath2.codeplex.com/
 
 ## Info
 
-It conforms for 12954 from 15133 (85.60%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+It conforms for 12954 <sup>*</sup> from 15133 (85.60%) regarding the test-set `XQTSCatalog.xml` (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+
+<sup>*</sup> Note that depending on your system, you can get 12958 to work. This is because of some tests which test the lowercase functionality from 'K' (Kelvin-sign). More details see this [question](https://stackoverflow.com/questions/68848852/tolowerinvariant-from-a-kelvin-sign-%e2%84%aa-in-c-sharp-has-different-results).
 
 API used is an anology to the standard one built into the platform: you utilize XPath2Expression instead of the common XPathExpression and a set of extension functions for XNode, XPathNavigator and XmlNode classes.
 

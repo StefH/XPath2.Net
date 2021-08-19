@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <PropertyGroup>
     <Version>1.1.2</Version>
@@ -75,6 +75,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Xpath.cs" />
+    <Compile Include="Xpath.cs">
+      <DependentUpon>Xpath.y</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

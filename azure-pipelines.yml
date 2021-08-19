@@ -33,7 +33,7 @@ steps:
 # - https://github.com/Microsoft/vsts-tasks/issues/8291
 #
 - script: |
-    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner begin /k:"StefH_XPath2.Net" /o:"stefh-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(SONAR_TOKEN)" /v:"$(buildId)" /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
+    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner begin /k:"StefH_XPath2.Net" /o:"stefh-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(SONAR_TOKEN)" /v:"$(buildId)" /d:sonar.cs.opencover.reportsPaths="**\coverage.net5.0.opencover.xml"
   displayName: Begin SonarScanner
 
 - task: DotNetCoreCLI@2
@@ -50,11 +50,18 @@ steps:
     arguments: /p:Configuration=Debug --framework netstandard2.0
     projects: $(buildProjects)
 
-# Build tests and run tests for net452 and netcoreapp2.1 (with coverage)
+- task: DotNetCoreCLI@2
+  displayName: Build Debug [netstandard2.1]
+  inputs:
+    command: 'build'
+    arguments: /p:Configuration=Debug --framework netstandard2.1
+    projects: $(buildProjects)
+
+# Build tests and run tests for net452 and net5.0 (with coverage)
 - script: |
     dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net452
-    dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework netcoreapp2.1 --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: 'Build tests and run tests for net452 and netcoreapp2.1 (with coverage)'
+    dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net5.0 --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: 'Build tests and run tests for net452 and net5.0 (with coverage)'
 
 # End SonarScanner
 - script: |

@@ -1,4 +1,4 @@
-﻿using System.Xml;
+using System.Xml;
 using System.Xml.XPath;
 using Wmhelp.XPath2;
 using Wmhelp.XPath2.Extensions;
@@ -6,6 +6,7 @@ using Xunit;
 
 namespace XPath2.Tests.Extensions
 {
+    [Collection("Sequential")]
     public class XPath2ExtensionsTests
     {
         private readonly XPathNavigator _navigator;

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Xml.Linq;
 using FluentAssertions;
 using Wmhelp.XPath2;
@@ -6,6 +6,7 @@ using Xunit;
 
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XNodeExtensionsTests
     {
         [Fact]
