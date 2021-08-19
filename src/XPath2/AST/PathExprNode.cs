@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -35,7 +35,7 @@ namespace Wmhelp.XPath2.AST
                 path[0].type == XPath2ExprType.DescendantOrSelf &&
                 path[0].nodeTest == SequenceType.Node &&
                 path[1].type == XPath2ExprType.Child)
-                _path = new PathStep[] {new PathStep(path[1].nodeTest, XPath2ExprType.Descendant)};
+                _path = new PathStep[] { new PathStep(path[1].nodeTest, XPath2ExprType.Descendant) };
             else
             {
                 bool transform;
@@ -138,7 +138,7 @@ namespace Wmhelp.XPath2.AST
             {
                 tail = XPath2NodeIterator.Create(_path[0].node.Execute(provider, dataPool));
                 if (!(_path[0].node is OrderedBinaryOperatorNode))
-                    orderedSet = orderedSet & tail.IsSingleIterator;
+                    orderedSet = orderedSet && tail.IsSingleIterator;
             }
             else
                 tail = _path[0].Create(Context, dataPool,

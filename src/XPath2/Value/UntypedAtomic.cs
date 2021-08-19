@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -20,7 +20,7 @@ namespace Wmhelp.XPath2.Value
             Value = value;
         }
 
-        public String Value { get; }
+        public string Value { get; }
 
         private object _doubleValue;
 
@@ -46,10 +46,10 @@ namespace Wmhelp.XPath2.Value
 
         private bool CanBeNumber()
         {
-            if (!String.IsNullOrEmpty(Value))
+            if (!string.IsNullOrEmpty(Value))
             {
                 char c = Value[0];
-                return Char.IsDigit(c) || c == '-' || c == '.' ||
+                return char.IsDigit(c) || c == '-' || c == '.' ||
                     (Value.Length == 3 && (c == 'N' || c == 'I'));
             }
             return false;
@@ -66,27 +66,30 @@ namespace Wmhelp.XPath2.Value
             {
                 if (Value == "NaN")
                 {
-                    num = Double.NaN;
+                    num = double.NaN;
                     _doubleValue = num;
                     return true;
                 }
                 else if (Value == "INF")
                 {
-                    num = Double.PositiveInfinity;
+                    num = double.PositiveInfinity;
                     _doubleValue = num;
                     return true;
                 }
                 else if (Value == "-INF")
                 {
-                    num = Double.NegativeInfinity;
+                    num = double.NegativeInfinity;
                     _doubleValue = num;
                     return true;
                 }
                 else
-                    if (Double.TryParse(Value, NumberStyles.Float, CultureInfo.InvariantCulture, out num))
+                    if (double.TryParse(Value, NumberStyles.Float, CultureInfo.InvariantCulture, out num))
                 {
-                    if (num == 0.0 & Value.StartsWith("-"))
+                    if (num == 0.0 && Value.StartsWith("-"))
+                    {
                         num = -num; // -0, -0.0,... etc
+                    }
+
                     _doubleValue = num;
                     return true;
                 }
@@ -95,16 +98,16 @@ namespace Wmhelp.XPath2.Value
             return false;
         }
 
-#region ICloneable Members
+        #region ICloneable Members
 
         public object Clone()
         {
             return new UntypedAtomic(Value);
         }
 
-#endregion
+        #endregion
 
-#region IComparable Members
+        #region IComparable Members
 
         int IComparable.CompareTo(object obj)
         {
@@ -114,9 +117,9 @@ namespace Wmhelp.XPath2.Value
             return Value.CompareTo(src.Value);
         }
 
-#endregion
+        #endregion
 
-#region IConvertible Members
+        #region IConvertible Members
 
         public TypeCode GetTypeCode()
         {
@@ -173,17 +176,27 @@ namespace Wmhelp.XPath2.Value
         {
             try
             {
-                float num;
                 if (Value == "NaN")
-                    num = Single.NaN;
-                else if (Value == "INF")
-                    num = Single.PositiveInfinity;
-                else if (Value == "-INF")
-                    num = Single.NegativeInfinity;
-                else
-                    num = Convert.ToSingle(Value, provider);
-                if (num == 0.0 & Value.StartsWith("-"))
+                {
+                    return float.NaN;
+                }
+
+                if (Value == "INF")
+                {
+                    return float.PositiveInfinity;
+                }
+
+                if (Value == "-INF")
+                {
+                    return float.NegativeInfinity;
+                }
+
+                var num = Convert.ToSingle(Value, provider);
+                if (num == 0.0 && Value.StartsWith("-"))
+                {
                     num = -num; // -0, -0.0,... etc
+                }
+
                 return num;
             }
             catch (FormatException)
@@ -198,17 +211,27 @@ namespace Wmhelp.XPath2.Value
             {
                 if (_doubleValue == null)
                 {
-                    double num;
                     if (Value == "NaN")
-                        num = Double.NaN;
-                    else if (Value == "INF")
-                        num = Double.PositiveInfinity;
-                    else if (Value == "-INF")
-                        num = Double.NegativeInfinity;
-                    else
-                        num = Convert.ToDouble(Value, provider);
-                    if (num == 0.0 & Value.StartsWith("-"))
+                    {
+                        return double.NaN;
+                    }
+
+                    if (Value == "INF")
+                    {
+                        return double.PositiveInfinity;
+                    }
+
+                    if (Value == "-INF")
+                    {
+                        return double.NegativeInfinity;
+                    }
+                    
+                    var num = Convert.ToDouble(Value, provider);
+                    if (num == 0.0 && Value.StartsWith("-"))
+                    {
                         num = -num; // -0, -0.0,... etc
+                    }
+
                     _doubleValue = num;
                 }
                 return (double)_doubleValue;
@@ -313,9 +336,9 @@ namespace Wmhelp.XPath2.Value
             }
         }
 
-#endregion
+        #endregion
 
-#region IEquatable<UntypedAtomic> Members
+        #region IEquatable<UntypedAtomic> Members
 
         bool IEquatable<UntypedAtomic>.Equals(UntypedAtomic other)
         {
@@ -324,9 +347,9 @@ namespace Wmhelp.XPath2.Value
             return Value.Equals(other.Value);
         }
 
-#endregion
+        #endregion
 
-#region IComparable<UntypedAtomic> Members
+        #region IComparable<UntypedAtomic> Members
 
         int IComparable<UntypedAtomic>.CompareTo(UntypedAtomic other)
         {
@@ -335,6 +358,6 @@ namespace Wmhelp.XPath2.Value
             return Value.CompareTo(other.Value);
         }
 
-#endregion
+        #endregion
     }
 }
