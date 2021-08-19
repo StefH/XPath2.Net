@@ -11,6 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Results\passed.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Results\passed.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\XPath2\XPath2.csproj" />
     <ProjectReference Include="..\XPath2.TestRunner\XPath2.TestRunner.csproj" />
   </ItemGroup>

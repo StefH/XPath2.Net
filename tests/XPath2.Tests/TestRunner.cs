@@ -1,6 +1,9 @@
 #if NET5_0_OR_GREATER
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Xml.Linq;
 using FluentAssertions;
 using Wmhelp.XPath2;
 using XPath2.TestRunner;
@@ -13,14 +16,19 @@ namespace XPath2.Tests
     {
         const string uri = "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true";
 
-        private readonly XQTSRunner _runner;
+        private readonly string _passedPath = Path.Combine(Environment.CurrentDirectory, "passed.txt");
+        private readonly List<string> _passed = new List<string>();
 
         public XQTSRunnerTests()
         {
-            var passedWriter = TextWriter.Synchronized(new StreamWriter(Path.Combine(Environment.CurrentDirectory, "passed.txt")));
-            var errorWriter = TextWriter.Synchronized(new StreamWriter(Path.Combine(Environment.CurrentDirectory, "error.txt")));
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("XPath2.Tests.Results.passed.txt");
 
-            _runner = new XQTSRunner(Console.Out, passedWriter, errorWriter);
+            using var reader = new StreamReader(stream);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                _passed.Add(line);
+            }
         }
 
         [Fact]
@@ -33,12 +41,26 @@ namespace XPath2.Tests
             // Arrange
             var parameter = $"{uri}|{Environment.CurrentDirectory}";
 
+            var passedWriter = TextWriter.Synchronized(new StreamWriter(_passedPath));
+            var errorWriter = TextWriter.Synchronized(new StreamWriter(Path.Combine(Environment.CurrentDirectory, "error.txt")));
+
+            var runner = new XQTSRunner(Console.Out, passedWriter, errorWriter);
+
             // Act
-            var result = _runner.Run(parameter, RunType.Sequential);
+            var result = runner.Run(parameter, RunType.Sequential);
+
+            passedWriter.Flush();
+            passedWriter.Close();
+
+            errorWriter.Flush();
+            errorWriter.Close();
 
             // Assert
             result.Total.Should().Be(15133);
-            result.Passed.Should().Be(12958);
+            // result.Passed.Should().Be(12958);
+
+            var passed = File.ReadAllLines(_passedPath);
+            _passed.Should().BeEquivalentTo(passed);
         }
     }
 }

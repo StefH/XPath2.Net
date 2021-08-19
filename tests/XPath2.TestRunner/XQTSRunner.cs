@@ -188,7 +188,8 @@ namespace XPath2.TestRunner
                     {
                         if (_passedWriter != null)
                         {
-                            _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                            // _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                            _passedWriter.WriteLine(item.Name);
                         }
                         Interlocked.Increment(ref _passed);
                     }
@@ -219,7 +220,8 @@ namespace XPath2.TestRunner
                     {
                         if (_passedWriter != null)
                         {
-                            _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                            //_passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                            _passedWriter.WriteLine(item.Name);
                         }
                         Interlocked.Increment(ref _passed);
                     }
