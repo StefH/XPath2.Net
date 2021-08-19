@@ -30,23 +30,7 @@ namespace XPath2.Tests
             while ((line = reader.ReadLine()) != null)
             {
                 _expectedPassed.Add(line);
-            }
-
-            Console.WriteLine("CultureInfo.InvariantCulture = {0}", CultureInfo.InvariantCulture);
-            Console.WriteLine("CultureInfo.InvariantCulture.Name = {0}", CultureInfo.InvariantCulture.Name);
-            Console.WriteLine("CultureInfo.InvariantCulture.CultureTypes = {0}", CultureInfo.InvariantCulture.CultureTypes);
-            Console.WriteLine("CultureInfo.InvariantCulture.DisplayName = {0}", CultureInfo.InvariantCulture.DisplayName);
-            Console.WriteLine("CultureInfo.InvariantCulture.TwoLetterISOLanguageName = {0}", CultureInfo.InvariantCulture.TwoLetterISOLanguageName);
-            Console.WriteLine("CultureInfo.InvariantCulture.ThreeLetterISOLanguageName = {0}", CultureInfo.InvariantCulture.ThreeLetterISOLanguageName);
-
-            Console.WriteLine("CurrentCulture   = {0}", Thread.CurrentThread.CurrentCulture);
-            Console.WriteLine("CurrentUICulture = {0}", Thread.CurrentThread.CurrentUICulture);
-
-            var kelvinSign = "K";
-            Console.WriteLine("{0} - {1}=>ToLower={2} - {3}=>ToLowerInvariant={4}",
-                kelvinSign,
-                kelvinSign.ToLower(), kelvinSign.ToLower() == "k",
-                kelvinSign.ToLowerInvariant(), kelvinSign.ToLowerInvariant() == "k");
+            }            
         }
 
         [Fact]

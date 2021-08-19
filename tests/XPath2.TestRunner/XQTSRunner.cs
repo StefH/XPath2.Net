@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,6 +64,24 @@ namespace XPath2.TestRunner
             _out = writer;
             _passedWriter = passedWriter;
             _errorWriter = errorWriter;
+
+            _out.WriteLine("UseNls = {0}", typeof(CultureInfo).Assembly.GetType("System.Globalization.GlobalizationMode")?.GetProperty("UseNls", BindingFlags.Static | BindingFlags.NonPublic)?.GetValue(null) ?? "null");
+
+            _out.WriteLine("CultureInfo.InvariantCulture = {0}", CultureInfo.InvariantCulture);
+            _out.WriteLine("CultureInfo.InvariantCulture.Name = {0}", CultureInfo.InvariantCulture.Name);
+            _out.WriteLine("CultureInfo.InvariantCulture.CultureTypes = {0}", CultureInfo.InvariantCulture.CultureTypes);
+            _out.WriteLine("CultureInfo.InvariantCulture.DisplayName = {0}", CultureInfo.InvariantCulture.DisplayName);
+            _out.WriteLine("CultureInfo.InvariantCulture.TwoLetterISOLanguageName = {0}", CultureInfo.InvariantCulture.TwoLetterISOLanguageName);
+            _out.WriteLine("CultureInfo.InvariantCulture.ThreeLetterISOLanguageName = {0}", CultureInfo.InvariantCulture.ThreeLetterISOLanguageName);
+
+            _out.WriteLine("CurrentCulture   = {0}", Thread.CurrentThread.CurrentCulture);
+            _out.WriteLine("CurrentUICulture = {0}", Thread.CurrentThread.CurrentUICulture);
+
+            var kelvinSign = "K";
+            _out.WriteLine("{0} - {1}=>ToLower={2} - {3}=>ToLowerInvariant={4}",
+                kelvinSign,
+                kelvinSign.ToLower(), kelvinSign.ToLower() == "k",
+                kelvinSign.ToLowerInvariant(), kelvinSign.ToLowerInvariant() == "k");
         }
 
         public TestRunResult Run(string XQTSCatalogFile, RunType run)
