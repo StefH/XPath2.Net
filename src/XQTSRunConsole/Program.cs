@@ -11,6 +11,8 @@ namespace XQTSRunConsole
         {
             Console.WriteLine("CurrentCulture   = {0}", Thread.CurrentThread.CurrentCulture);
             Console.WriteLine("CurrentUICulture = {0}", Thread.CurrentThread.CurrentUICulture);
+            var kelvinSign = "K";
+            Console.WriteLine("{0} - ToLower={1} - ToLowerInvariant={2}", kelvinSign, kelvinSign.ToLower() == "k", kelvinSign.ToLowerInvariant() == "k");
 
             var passedWriter = args.Length > 1 ? TextWriter.Synchronized(new StreamWriter(args[1])) : null; // Needs to be Synchronized
             var errorWriter = args.Length > 2 ? TextWriter.Synchronized(new StreamWriter(args[2])) : null; // Needs to be Synchronized

@@ -33,6 +33,9 @@ namespace XPath2.Tests
 
             Console.WriteLine("CurrentCulture   = {0}", Thread.CurrentThread.CurrentCulture);
             Console.WriteLine("CurrentUICulture = {0}", Thread.CurrentThread.CurrentUICulture);
+
+            var kelvinSign = "K";
+            Console.WriteLine("{0} - ToLower={1} - ToLowerInvariant={2}", kelvinSign, kelvinSign.ToLower() == "k", kelvinSign.ToLowerInvariant() == "k");
         }
 
         [Fact]
