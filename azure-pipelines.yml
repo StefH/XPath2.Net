@@ -104,4 +104,4 @@ steps:
   inputs:
     command: custom
     custom: nuget
-    arguments: push $(Build.ArtifactStagingDirectory)\packages\*.nupkg  -n true --source https://www.myget.org/F/xpath2/api/v3/index.json --no-service-endpoint --api-key $(MyGetKey)
+    arguments: push $(Build.ArtifactStagingDirectory)\packages\*.nupkg -n -s https://www.myget.org/F/xpath2/api/v3/index.json --no-service-endpoint --api-key $(MyGetKey)
