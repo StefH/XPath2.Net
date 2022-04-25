@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Authors>Stef Heyenrath</Authors>
-    <TargetFrameworks>net452;net5.0</TargetFrameworks>
+    <TargetFrameworks>net452;net6.0</TargetFrameworks>
     <AssemblyName>XPath2.Extensions.Tests</AssemblyName>
     <PackageId>XPath2.Extensions.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -29,17 +29,18 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <!--<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />-->
   </ItemGroup>
 
 </Project>
