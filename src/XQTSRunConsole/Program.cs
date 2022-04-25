@@ -20,11 +20,17 @@ namespace XQTSRunConsole
             // 15133 executed, 12954 (85.60%) succeeded.
             Console.WriteLine("{0} / {1} = {2}%", result2.Passed, result2.Total, result2.Percentage);
 
-            passedWriter.Flush();
-            passedWriter.Close();
+            if (passedWriter != null)
+            {
+                passedWriter.Flush();
+                passedWriter.Close();
+            }
 
-            errorWriter.Flush();
-            errorWriter.Close();
+            if (errorWriter != null)
+            {
+                errorWriter.Flush();
+                errorWriter.Close();
+            }
         }
     }
 }
