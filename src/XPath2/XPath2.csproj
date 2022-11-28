@@ -1,87 +1,89 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
-  <PropertyGroup>
-    <Version>1.1.3</Version>
-    <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET based on standard XPathNavigator API.</Description>
-    <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
-    <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
-    <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <AssemblyName>XPath2</AssemblyName>
-    <PackageId>XPath2</PackageId>
-    <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS</PackageTags>
-    <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
-    <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/StefH/XPath2.Net</RepositoryUrl>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <DefaultLanguage>en-us</DefaultLanguage>
-    <DebugType>full</DebugType>
-    <RootNamespace>Wmhelp.XPath2</RootNamespace>
-    <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <ProjectGuid>{D3804228-91F4-4502-9595-39584EAA0000}</ProjectGuid>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition=" '$(buildType)' == 'azure-pipelines-ci' ">
-    <TargetFrameworks>net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Version>1.1.3</Version>
+        <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET based on standard XPathNavigator API.</Description>
+        <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
+        <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
+        <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
+        <TargetFrameworks>net35;net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <AssemblyName>XPath2</AssemblyName>
+        <PackageId>XPath2</PackageId>
+        <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS</PackageTags>
+        <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
+        <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png</PackageIconUrl>
+        <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
+        <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/StefH/XPath2.Net</RepositoryUrl>
+        <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+        <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+        <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+        <DefaultLanguage>en-us</DefaultLanguage>
+        <DebugType>full</DebugType>
+        <RootNamespace>Wmhelp.XPath2</RootNamespace>
+        <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+        <ProjectGuid>{D3804228-91F4-4502-9595-39584EAA0000}</ProjectGuid>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <LangVersion>11</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(buildType)' == 'azure-pipelines-ci' ">
+        <TargetFrameworks>net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
-  
-  <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
-    <!-- <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride> -->
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
-  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
-  </PropertyGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System" />
-  </ItemGroup>
+    <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
+        <!-- <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride> -->
+        <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
+    </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System" />
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System" />
-  </ItemGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+        <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Xpath.cs" />
-    <Compile Include="Xpath.cs">
-      <DependentUpon>Xpath.y</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1' ">
+        <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
+        <Reference Include="System" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
+        <Reference Include="System" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
+        <Reference Include="System" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="Xpath.cs" />
+        <Compile Include="Xpath.cs">
+            <DependentUpon>Xpath.y</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
 </Project>

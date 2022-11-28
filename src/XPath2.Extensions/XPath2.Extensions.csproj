@@ -1,84 +1,86 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Version>1.1.3</Version>
-    <Description>Non-official extensions for XPath2.dll (generate-id, base64encode, base64decode, json-to-xml and json-to-xmlstring)</Description>
-    <Copyright>Stef Heyenrath</Copyright>
-    <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
-    <Authors>Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <AssemblyName>XPath2.Extensions</AssemblyName>
-    <PackageId>XPath2.Extensions</PackageId>
-    <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS;Extensions</PackageTags>
-    <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <RootNamespace>Wmhelp.XPath2.Extensions</RootNamespace>
-    <DebugType>full</DebugType>
-    <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <ProjectGuid>{D3804228-91F4-4502-9595-39584EBB0000}</ProjectGuid>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition=" '$(buildType)' == 'azure-pipelines-ci' ">
-    <TargetFrameworks>net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Version>1.1.3</Version>
+        <Description>Non-official extensions for XPath2.dll (generate-id, base64encode, base64decode, json-to-xml and json-to-xmlstring)</Description>
+        <Copyright>Stef Heyenrath</Copyright>
+        <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
+        <Authors>Stef Heyenrath</Authors>
+        <TargetFrameworks>net35;net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <AssemblyName>XPath2.Extensions</AssemblyName>
+        <PackageId>XPath2.Extensions</PackageId>
+        <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS;Extensions</PackageTags>
+        <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
+        <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png</PackageIconUrl>
+        <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+        <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+        <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+        <RootNamespace>Wmhelp.XPath2.Extensions</RootNamespace>
+        <DebugType>full</DebugType>
+        <AssemblyOriginatorKeyFile>../XPath2.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+        <ProjectGuid>{D3804228-91F4-4502-9595-39584EBB0000}</ProjectGuid>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <LangVersion>11</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(buildType)' == 'azure-pipelines-ci' ">
+        <TargetFrameworks>net40;net452;netstandard2.0;netstandard2.1</TargetFrameworks>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
-  
-  <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
-    <!-- <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride> -->
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
-  </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\XPath2\XPath2.csproj" />
-  </ItemGroup>
+    <!-- https://github.com/Microsoft/msbuild/issues/1333 -->
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net35' ">
+        <!-- <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride> -->
+        <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="All" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+        <FrameworkPathOverride>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2</FrameworkPathOverride>
+    </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\XPath2\XPath2.csproj" />
+    </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <!--<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />-->
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <!--<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />-->
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
-    <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" PrivateAssets="All" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+        <Reference Include="System" />
+        <Reference Include="System.Xml" />
+        <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+        <Reference Include="System" />
+        <Reference Include="System.Xml" />
+        <!--<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />-->
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+        <Reference Include="System" />
+        <Reference Include="System.Xml" />
+        <!--<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />-->
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
+        <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
+    </ItemGroup>
 
 </Project>
