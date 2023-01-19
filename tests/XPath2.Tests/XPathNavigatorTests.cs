@@ -372,6 +372,39 @@ public class XPathNavigatorTests
 
         // Act 1
         var brandSet = navigator.XPath2SelectNodes("/report/brand");
+
+        // Assert 1
+        brandSet.Count.Should().Be(5);
+
+        // Act 2
+        var brandCount = (int)navigator.XPath2Evaluate("count(/report/brand)");
+
+        // Assert 2
+        brandCount.Should().Be(5);
+        
+        // Act 3
+        var highVolumeBrandSet = navigator.XPath2SelectNodes("/report/brand[units > 20000]");
+
+        // Assert 3
+        highVolumeBrandSet.Count.Should().Be(2);
+
+        // Act 4
+        var highVolumeBrandCount = (int)navigator.XPath2Evaluate("count(/report/brand[units > 20000])");
+
+        // Assert 4
+        highVolumeBrandCount.Should().Be(2);
+    }
+
+    [Fact]
+    public void Issue59_XDocumentParse_XPath2SelectNodes_CountMethod_Returns_Number_Of_Items_In_Expression()
+    {
+        // Arrange
+        var xml = GetXml();
+
+        var navigator = XDocument.Parse(xml).CreateNavigator();
+
+        // Act 1
+        var brandSet = navigator.XPath2SelectNodes("/report/brand");
         var brandCount = (int)navigator.XPath2Evaluate("count(/report/brand)");
 
         // Act 2
@@ -388,7 +421,7 @@ public class XPathNavigatorTests
     }
 
     [Fact]
-    public void Issue59_XmlDocumentInnerXml_XPath2SelectNodes_Count_Returns_Number_Of_Items_In_Expression()
+    public void Issue59_XmlDocumentInnerXml_XPath2SelectNodes_CountMethod_Returns_Number_Of_Items_In_Expression()
     {
         // Arrange
         var doc = new XmlDocument { InnerXml = GetXml() };
