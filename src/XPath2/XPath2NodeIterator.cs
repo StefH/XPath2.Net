@@ -62,7 +62,7 @@ namespace Wmhelp.XPath2
         , ICloneable
 #endif
     {
-        internal int count = -1;
+        private int count = -1;
         private XPathItem curr;
         private int pos;
         private bool iteratorStarted;
