@@ -59,7 +59,7 @@ public class XQTSRunnerTests
         // Assert
         result.Total.Should().Be(15133);
 
-        var passed = File.ReadAllLines(_passedPath).Where(line => !string.IsNullOrEmpty(line));
+        var passed = File.ReadAllLines(_passedPath).Where(line => !string.IsNullOrEmpty(line)).ToList();
         var differences = _expectedPassed.Except(passed);
 
         if (GlobalizationUtils.UseNls())
