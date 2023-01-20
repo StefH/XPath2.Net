@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -362,8 +363,12 @@ public class XPathNavigatorTests
         result2.Should().Be(3);
     }
 
+    /// <summary>
+    /// - https://learn.microsoft.com/en-us/dotnet/api/system.xml.xpath.xpathnodeiterator.count?view=net-7.0
+    /// - Count = Gets the index of the last node in the selected set of nodes.
+    /// </summary>
     [Fact]
-    public void Issue59_XDocumentParse_XPath2SelectNodes_Count_Returns_Number_Of_Items_In_Expression()
+    public void Issue59_XDocumentParse_XPath2SelectNodes_Count_Returns_TheIndexOfTheLastNode()
     {
         // Arrange
         var xml = GetXml();
@@ -374,7 +379,7 @@ public class XPathNavigatorTests
         var brandSet = navigator.XPath2SelectNodes("/report/brand");
 
         // Assert 1
-        brandSet.Count.Should().Be(5);
+        brandSet.Count.Should().Be(4);
 
         // Act 2
         var brandCount = (int)navigator.XPath2Evaluate("count(/report/brand)");
@@ -386,7 +391,7 @@ public class XPathNavigatorTests
         var highVolumeBrandSet = navigator.XPath2SelectNodes("/report/brand[units > 20000]");
 
         // Assert 3
-        highVolumeBrandSet.Count.Should().Be(2);
+        highVolumeBrandSet.Count.Should().Be(1);
 
         // Act 4
         var highVolumeBrandCount = (int)navigator.XPath2Evaluate("count(/report/brand[units > 20000])");
