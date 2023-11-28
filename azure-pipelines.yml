@@ -60,8 +60,9 @@ steps:
 # Build tests and run tests for net452 and net6.0 (with coverage)
 - script: |
     dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net452
-    dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net6.0 --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: 'Build tests and run tests for net452 and net6.0 (with coverage)'
+    dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net6.0
+    dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net8.0 --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: 'Build tests and run tests for net452 and net6.0 and net8.0 (with coverage)'
 
 # End SonarScanner
 - script: |

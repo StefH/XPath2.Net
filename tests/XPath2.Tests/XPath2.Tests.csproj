@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Authors>Stef Heyenrath</Authors>
-        <TargetFrameworks>net452;net6.0</TargetFrameworks>
+        <TargetFrameworks>net452;net6.0;net8.0</TargetFrameworks>
         <AssemblyName>XPath2.Tests</AssemblyName>
         <PackageId>XPath2.Tests</PackageId>
         <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
@@ -37,7 +37,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
         <PackageReference Include="OpenCover" Version="4.7.1221" />
         <PackageReference Include="ReportGenerator" Version="4.8.12" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -45,7 +45,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
         <PackageReference Include="xunit" Version="2.4.1" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
