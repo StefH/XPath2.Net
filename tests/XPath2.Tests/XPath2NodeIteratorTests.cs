@@ -38,8 +38,6 @@ public class XPath2NodeIteratorTests
         text.Should().Be("Value2");
     }
 
-    
-
     [Fact]
     public void ToString_With_MultiValue_Should_Return_StringValueCommaSeparated()
     {
