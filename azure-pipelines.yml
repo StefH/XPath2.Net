@@ -14,11 +14,11 @@ steps:
   displayName: 'Print buildId'
 
 - task: PowerShell@2
-  displayName: "Use JDK11 by default"
+  displayName: "Use JDK17 by default"
   inputs:
     targetType: 'inline'
     script: |
-      $jdkPath = $env:JAVA_HOME_11_X64
+      $jdkPath = $env:JAVA_HOME_17_X64
       Write-Host "##vso[task.setvariable variable=JAVA_HOME]$jdkPath"
 
 # Install SonarScanner

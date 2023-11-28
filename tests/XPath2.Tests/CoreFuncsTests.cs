@@ -54,4 +54,38 @@ public class CoreFuncsTests
         // Assert
         result.Should().Be(" ");
     }
+
+    [Theory]
+    [InlineData(null, null, true)]
+    [InlineData(true, null, false)]
+    [InlineData(null, true, false)]
+    [InlineData("x", "y", false)]
+    [InlineData("x", "x", true)]
+    [InlineData(1, 2, false)]
+    [InlineData(1, 1, true)]
+    public void OperatorEq(object? value1, object? value2, bool expected)
+    {
+        // Act
+        var result = CoreFuncs.OperatorEq(value1, value2);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData(null, null, false)]
+    [InlineData(true, null, true)]
+    [InlineData(null, true, false)]
+    [InlineData("x", "y", false)]
+    [InlineData("y", "x", true)]
+    [InlineData(1, 2, false)]
+    [InlineData(2, 1, true)]
+    public void OperatorGt(object? value1, object? value2, bool expected)
+    {
+        // Act
+        var result = CoreFuncs.OperatorGt(value1, value2);
+
+        // Assert
+        result.Should().Be(expected);
+    }
 }
