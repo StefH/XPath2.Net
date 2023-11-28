@@ -369,7 +369,7 @@ public class XPathNavigatorTests
     [Theory]
     [InlineData("/report/brand", 5, 4)]
     [InlineData("/report/brand[units > 20000]", 2, 1)]
-    public void Issue59_XDocumentParse_XPath2SelectNodes_Count_And_CurrentPosition_Is_Correct(string xpath, int expectedItemCount, int expectedCount)
+    public void Issue59_XDocumentParse_XPath2SelectNodes_Count_And_Enumerator_Is_Correct(string xpath, int expectedItemCount, int expectedCount)
     {
         // Arrange
         var xml = GetXml();
@@ -378,6 +378,27 @@ public class XPathNavigatorTests
 
         // Act
         var nodes = navigator.XPath2SelectNodes(xpath);
+
+        // Assert
+        nodes.Should().HaveCount(expectedItemCount);
+        nodes.Count.Should().Be(expectedCount);
+    }
+
+    /// <summary>
+    /// 
+    /// 
+    /// </summary>
+    [Fact]
+    [InlineData(new[] { "/report/brand" })]
+    public void Issue59_XDocumentParse_XPath2SelectNodes_Count_And_CurrentPosition_Is_Correct(string[] names)
+    {
+        // Arrange
+        var xml = GetXml();
+
+        var navigator = XDocument.Parse(xml).CreateNavigator();
+
+        // Act
+        var nodes = navigator.XPath2SelectNodes("/report/brand");
 
         // Assert
         nodes.Should().HaveCount(expectedItemCount);
