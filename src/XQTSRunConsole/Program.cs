@@ -17,7 +17,7 @@ namespace XQTSRunConsole
 
             var result2 = runner.Run(args[0], RunType.Sequential);
 
-            // 15133 executed, 12954 (85.60%) succeeded.
+            // 15133 executed, 12958 (85.63%) succeeded.
             Console.WriteLine("{0} / {1} = {2}%", result2.Passed, result2.Total, result2.Percentage);
 
             if (passedWriter != null)

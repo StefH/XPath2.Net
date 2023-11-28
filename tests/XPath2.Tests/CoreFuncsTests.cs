@@ -8,18 +8,18 @@ namespace XPath2.Tests;
 public class CoreFuncsTests
 {
     [Theory]
-    //[InlineData("&nbsp;", " ")]
+    [InlineData("&nbsp;", " ")]
     [InlineData("&lt;", "<")]
     [InlineData("&gt;", ">")]
     [InlineData("&amp;", "&")]
     [InlineData("&quot;", "\"")]
     [InlineData("&apos;", "'")]
-    //[InlineData("&cent;", "¢")]
-    //[InlineData("&pound;", "£")]
-    //[InlineData("&yen;", "¥")]
-    //[InlineData("&euro;", "€")]
-    //[InlineData("&copy;", "©")]
-    //[InlineData("&reg;", "®")]
+    [InlineData("&cent;", "¢")]
+    [InlineData("&pound;", "£")]
+    [InlineData("&yen;", "¥")]
+    [InlineData("&euro;", "€")]
+    [InlineData("&copy;", "©")]
+    [InlineData("&reg;", "®")]
     public void NormalizeStringValue_With_HtmlEncodedValue_Should_Return_UnencodedStringValue(string encoded, string expected)
     {
         // Act

@@ -38,7 +38,7 @@ namespace Wmhelp.XPath2
 
         public bool Nillable { get; set; }
 
-        public Type ParameterType { get; set; }
+        public Type? ParameterType { get; set; }
 
         public Type ItemType { get; }
 
@@ -104,7 +104,7 @@ namespace Wmhelp.XPath2
         }
 
 
-        public SequenceType(XmlSchemaType schemaType, XmlTypeCardinality cardinality, Type clrType)
+        public SequenceType(XmlSchemaType schemaType, XmlTypeCardinality cardinality, Type? clrType)
         {
             TypeCode = schemaType.TypeCode;
             SchemaType = schemaType;
