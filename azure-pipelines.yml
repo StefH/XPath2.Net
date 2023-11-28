@@ -33,7 +33,7 @@ steps:
 # - https://github.com/Microsoft/vsts-tasks/issues/8291
 #
 - script: |
-    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner begin /k:"StefH_XPath2.Net" /o:"stefh-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(SONAR_TOKEN)" /v:"$(buildId)" /d:sonar.cs.opencover.reportsPaths="**\coverage.net6.0.opencover.xml"
+    %USERPROFILE%\.dotnet\tools\dotnet-sonarscanner begin /k:"StefH_XPath2.Net" /o:"stefh-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$(SONAR_TOKEN)" /v:"$(buildId)" /d:sonar.cs.opencover.reportsPaths="**\coverage.net8.0.opencover.xml"
   displayName: Begin SonarScanner
 
 - task: DotNetCoreCLI@2
@@ -57,7 +57,7 @@ steps:
     arguments: /p:Configuration=Debug --framework netstandard2.1
     projects: $(buildProjects)
 
-# Build tests and run tests for net452 and net6.0 (with coverage)
+# Build tests and run tests for net452 and net6.0 and net8.0 (with coverage)
 - script: |
     dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net452
     dotnet test ./tests/XPath2.Tests/XPath2.Tests.csproj --configuration Debug --framework net6.0
