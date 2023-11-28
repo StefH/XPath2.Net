@@ -13,7 +13,7 @@ public class XPath2NodeIteratorTests
     {
         // Arrange
         var doc = GetXHTMLSampleDoc();
-        var navigator = doc.CreateNavigator();
+        var navigator = doc.CreateNavigator()!;
 
         // Act
         var nodeIterator = (XPath2NodeIterator)navigator.XPath2Evaluate("/start/node2/subnodeX");
@@ -28,7 +28,7 @@ public class XPath2NodeIteratorTests
     {
         // Arrange
         var doc = GetXHTMLSampleDoc();
-        var navigator = doc.CreateNavigator();
+        var navigator = doc.CreateNavigator()!;
 
         // Act
         var nodeIterator = (XPath2NodeIterator)navigator.XPath2Evaluate("/start/node2/subnode1");
@@ -39,11 +39,11 @@ public class XPath2NodeIteratorTests
     }
 
     [Fact]
-    public void ToString_With_MultieValue_Should_Return_StringValueCommaSeparated()
+    public void ToString_With_MultiValue_Should_Return_StringValueCommaSeparated()
     {
         // Arrange
         var doc = GetXHTMLSampleDoc();
-        var navigator = doc.CreateNavigator();
+        var navigator = doc.CreateNavigator()!;
 
         // Act
         var nodeIterator = (XPath2NodeIterator)navigator.XPath2Evaluate("/start/node2/subnode2");
@@ -53,16 +53,16 @@ public class XPath2NodeIteratorTests
         text.Should().Be("Value3a, Value3b");
     }
 
-    private XmlDocument GetXHTMLSampleDoc()
+    private static XmlDocument GetXHTMLSampleDoc()
     {
-        string xml = "<start>"
-                     + "<node1>Value1</node1>"
-                     + "<node2>"
-                     + "<subnode1>Value2</subnode1>"
-                     + "<subnode2>Value3a</subnode2>"
-                     + "<subnode2>Value3b</subnode2>"
-                     + "</node2>"
-                     + "</start>";
+        var xml = "<start>"
+                  + "<node1>Value1</node1>"
+                  + "<node2>"
+                  + "<subnode1>Value2</subnode1>"
+                  + "<subnode2>Value3a</subnode2>"
+                  + "<subnode2>Value3b</subnode2>"
+                  + "</node2>"
+                  + "</start>";
 
         var doc = new XmlDocument();
         doc.LoadXml(xml);

@@ -1,17 +1,16 @@
 using System.Xml;
 
-namespace XPath2.TestRunner.FileResolvers
+namespace XPath2.TestRunner.FileResolvers;
+
+public interface IFileResolver
 {
-    public interface IFileResolver
-    {
-        XmlDocument Catalog { get; }
+    XmlDocument Catalog { get; }
 
-        string ReadAsString(XmlElement node);
+    string ReadAsString(XmlElement node);
 
-        string GetResultAsString(XmlElement node, string fileName);
+    string GetResultAsString(XmlElement node, string fileName);
 
-        string ResolveFileName(string nodeFilename, string type);
+    string ResolveFileName(string nodeFilename, string type);
 
-        string ResolveFileNameWithQueryExtension(string nodeFilename, string type);
-    }
+    string ResolveFileNameWithQueryExtension(string nodeFilename, string type);
 }

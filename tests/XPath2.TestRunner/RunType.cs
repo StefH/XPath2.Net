@@ -1,9 +1,8 @@
-namespace XPath2.TestRunner
-{
-    public enum RunType
-    {
-        Sequential,
+namespace XPath2.TestRunner;
 
-        Parallel
-    }
+public enum RunType
+{
+    Sequential,
+
+    Parallel
 }
