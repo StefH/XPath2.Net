@@ -760,11 +760,14 @@ public static class CoreFuncs
         }
 
         string value = (string)item;
+
         // Copyright (c) 2006 Microsoft Corporation.  All rights reserved.
         // Original source is XsltFunctions.cs (System.Xml.Xsl.Runtime)
         XmlCharType xmlCharType = XmlCharType.Instance;
         StringBuilder? sb = null;
-        int idx, idxStart = 0, idxSpace = 0;
+        int idx;
+        var idxStart = 0;
+        var idxSpace = 0;
 
         for (idx = 0; idx < value.Length; idx++)
         {
@@ -1345,8 +1348,7 @@ public static class CoreFuncs
         return comp.Compare(nav1, nav2) == 1 ? True : False;
     }
 
-    private static void MagnitudeRelationship(XPath2Context context, XPathItem item1, XPathItem item2,
-        out object x, out object y)
+    private static void MagnitudeRelationship(XPath2Context context, XPathItem item1, XPathItem item2, out object x, out object y)
     {
         x = item1.GetTypedValue();
         y = item2.GetTypedValue();
@@ -1354,23 +1356,39 @@ public static class CoreFuncs
         if (x is UntypedAtomic)
         {
             if (ValueProxy.IsNumeric(y.GetType()))
+            {
                 x = Convert.ToDouble(x, CultureInfo.InvariantCulture);
+            }
             else
-            if (y is string)
-                x = x.ToString();
-            else if (y is not UntypedAtomic)
-                x = item1.ChangeType(new SequenceType(item2.GetSchemaType().TypeCode), context).GetTypedValue();
+            {
+                if (y is string)
+                {
+                    x = x.ToString();
+                }
+                else if (y is not UntypedAtomic)
+                {
+                    x = item1.ChangeType(new SequenceType(item2.GetSchemaType().TypeCode), context).GetTypedValue();
+                }
+            }
         }
 
         if (y is UntypedAtomic)
         {
             if (ValueProxy.IsNumeric(x.GetType()))
+            {
                 y = Convert.ToDouble(y, CultureInfo.InvariantCulture);
+            }
             else
-            if (x is string)
-                y = y.ToString();
-            else if (x is not UntypedAtomic)
-                y = item2.ChangeType(new SequenceType(item1.GetSchemaType().TypeCode), context).GetTypedValue();
+            {
+                if (x is string)
+                {
+                    y = y.ToString();
+                }
+                else if (x is not UntypedAtomic)
+                {
+                    y = item2.ChangeType(new SequenceType(item1.GetSchemaType().TypeCode), context).GetTypedValue();
+                }
+            }
         }
     }
 
