@@ -1,3 +1,10 @@
+# 1.1.4 (29 November 2023)
+- [#60](https://github.com/StefH/XPath2.Net/pull/60) - Add extra unit-tests for issue 59 + implement some Nullable fixes to the code [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#61](https://github.com/StefH/XPath2.Net/pull/61) - Add more unit tests for issue 58 [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#64](https://github.com/StefH/XPath2.Net/pull/64) - handle &amp;nbsp; in NormalizeStringValue() [bug] contributed by [jgilbert2017](https://github.com/jgilbert2017)
+- [#66](https://github.com/StefH/XPath2.Net/pull/66) - Add unit tests for CoreFuncs.NormalizeStringValue [tests] contributed by [StefH](https://github.com/StefH)
+- [#63](https://github.com/StefH/XPath2.Net/issues/63) - Missing parsing for some html-encoded entity references [bug]
+
 # 1.1.3 (25 April 2022)
 - [#49](https://github.com/StefH/XPath2.Net/pull/49) - Fixed rules in XPath.y for DocumentTest and added test cases that sho&#8230; contributed by [martin-honnen](https://github.com/martin-honnen)
 - [#50](https://github.com/StefH/XPath2.Net/pull/50) - Add XPath2.TestRunner Project + ConsoleApp [enhancement] contributed by [StefH](https://github.com/StefH)
