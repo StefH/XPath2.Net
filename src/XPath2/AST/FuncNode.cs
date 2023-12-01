@@ -24,7 +24,8 @@ namespace Wmhelp.XPath2.AST
         public FuncNode(XPath2Context context, string name, string ns)
             : base(context)
         {
-            _func = FunctionTable.Inst.Bind(name, ns, 0);
+            _func = FunctionTable.Inst.Bind(name, ns, 0)
+                ?? FunctionTable.Inst.Bind(name, XmlReservedNs.NsXQueryFunc, 0);
             if (_func == null)
                 throw new XPath2Exception("XPST0017", Resources.XPST0017, name, 0, ns);
             _name = name;
@@ -34,7 +35,8 @@ namespace Wmhelp.XPath2.AST
         public FuncNode(XPath2Context context, string name, string ns, List<object> nodes)
             : base(context)
         {
-            _func = FunctionTable.Inst.Bind(name, ns, nodes.Count);
+            _func = FunctionTable.Inst.Bind(name, ns, nodes.Count)
+                ?? FunctionTable.Inst.Bind(name, XmlReservedNs.NsXQueryFunc, nodes.Count);
             if (_func == null)
                 throw new XPath2Exception("XPST0017", Resources.XPST0017, name, nodes.Count, ns);
             _name = name;
