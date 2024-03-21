@@ -5,6 +5,7 @@
 // All rights reserved.
 
 using System.Collections.Generic;
+using System.Xml.XPath;
 using Wmhelp.XPath2.Iterator;
 
 namespace Wmhelp.XPath2.AST
@@ -16,14 +17,17 @@ namespace Wmhelp.XPath2.AST
     {
         private bool _isOrderedSet;
         private readonly PathStep[] _path;
+        private readonly bool _evaluateFromRoot;
 
         public bool Unordered { get; set; }
 
         public PathStep FirstStep => _path[0];
 
-        public PathExprNode(XPath2Context context, PathStep pathStep)
+        public PathExprNode(XPath2Context context, PathStep pathStep, bool evaluateFromRoot = false)
             : base(context)
         {
+            _evaluateFromRoot = evaluateFromRoot;
+
             List<PathStep> path = new List<PathStep>();
             for (PathStep curr = pathStep; curr != null; curr = curr.Next)
             {
@@ -130,19 +134,35 @@ namespace Wmhelp.XPath2.AST
 
         public override object Execute(IContextProvider provider, object[] dataPool)
         {
+            IContextProvider localProvider;
+
             bool orderedSet = _isOrderedSet;
             bool special = provider != null &&
                            provider.Context.GetType().Name == "XPathDocumentNavigator";
+
+            if (_evaluateFromRoot && provider != null && provider.Context is XPathNavigator nav && ((XPathNavigator)provider.Context).NodeType != XPathNodeType.Root)
+            {
+                var curr = nav.Clone();
+                curr.MoveToRoot();
+                localProvider = new NodeProvider(curr);
+            }
+            else
+            {
+                localProvider = provider;
+            }
+
             XPath2NodeIterator tail;
             if (_path[0].type == XPath2ExprType.Expr)
             {
-                tail = XPath2NodeIterator.Create(_path[0].node.Execute(provider, dataPool));
+                tail = XPath2NodeIterator.Create(_path[0].node.Execute(localProvider, dataPool));
                 if (!(_path[0].node is OrderedBinaryOperatorNode))
                     orderedSet = orderedSet && tail.IsSingleIterator;
             }
             else
+            {
                 tail = _path[0].Create(Context, dataPool,
-                    XPath2NodeIterator.Create(CoreFuncs.ContextNode(provider)), special);
+                    XPath2NodeIterator.Create(CoreFuncs.ContextNode(localProvider)), special);
+            }
             for (int k = 1; k < _path.Length; k++)
                 tail = _path[k].Create(Context, dataPool, tail, special);
             if (!orderedSet)

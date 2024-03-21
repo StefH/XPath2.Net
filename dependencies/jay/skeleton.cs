@@ -365,4 +365,3 @@ t        if (debug != null) debug.shift(yyStates[yyTop], yyState);
 .  }
 . }
 .} // close outermost namespace, that MUST HAVE BEEN opened in the prolog
-// ReSharper Restore All

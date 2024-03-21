@@ -868,7 +868,7 @@ case 71:
 #line 528 "Xpath.y"
   { 
      yyVal = yyVals[0+yyTop] is PathStep 
-       ? new PathExprNode(context, (PathStep)yyVals[0+yyTop]) : yyVals[0+yyTop];
+       ? new PathExprNode(context, (PathStep)yyVals[0+yyTop], true) : yyVals[0+yyTop];
   }
   break;
 case 72:
@@ -877,7 +877,7 @@ case 72:
      PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
         XPath2ExprType.DescendantOrSelf);
      descendantOrSelf.AddLast(PathStep.Create(context, yyVals[0+yyTop]));
-     yyVal = new PathExprNode(context, descendantOrSelf);
+     yyVal = new PathExprNode(context, descendantOrSelf, true);
   }
   break;
 case 73:

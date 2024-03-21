@@ -527,14 +527,14 @@ PathExpr
   | '/' RelativePathExpr
   { 
      $$ = $2 is PathStep 
-       ? new PathExprNode(context, (PathStep)$2) : $2;
+       ? new PathExprNode(context, (PathStep)$2, true) : $2;
   }
   | DOUBLE_SLASH RelativePathExpr
   {
      PathStep descendantOrSelf = new PathStep(SequenceType.Node, 
         XPath2ExprType.DescendantOrSelf);
      descendantOrSelf.AddLast(PathStep.Create(context, $2));
-     $$ = new PathExprNode(context, descendantOrSelf);
+     $$ = new PathExprNode(context, descendantOrSelf, true);
   }
   | RelativePathExpr
   {
