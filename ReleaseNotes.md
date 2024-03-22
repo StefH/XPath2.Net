@@ -1,3 +1,7 @@
+# 1.1.5 (22 March 2024)
+- [#67](https://github.com/StefH/XPath2.Net/pull/67) - Correct wrong context handling [bug] contributed by [cbridet](https://github.com/cbridet)
+- [#7](https://github.com/StefH/XPath2.Net/issues/7) - wrong context handling [bug]
+
 # 1.1.4 (29 November 2023)
 - [#60](https://github.com/StefH/XPath2.Net/pull/60) - Add extra unit-tests for issue 59 + implement some Nullable fixes to the code [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#61](https://github.com/StefH/XPath2.Net/pull/61) - Add more unit tests for issue 58 [enhancement] contributed by [StefH](https://github.com/StefH)

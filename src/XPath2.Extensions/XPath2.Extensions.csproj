@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>1.1.4</Version>
         <Description>Non-official extensions for XPath2.dll (generate-id, base64encode, base64decode, json-to-xml and json-to-xmlstring)</Description>
         <Copyright>Stef Heyenrath</Copyright>
         <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
@@ -26,8 +25,6 @@
         <SignAssembly>true</SignAssembly>
         <ProjectGuid>{D3804228-91F4-4502-9595-39584EBB0000}</ProjectGuid>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <LangVersion>11</LangVersion>
-        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(buildType)' == 'azure-pipelines-ci' ">
@@ -41,8 +38,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
         <PackageReference Include="Nullable" Version="1.3.1">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
 
@@ -68,23 +65,19 @@
     <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
         <Reference Include="System" />
         <Reference Include="System.Xml" />
-        <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
         <Reference Include="System" />
         <Reference Include="System.Xml" />
-        <!--<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />-->
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
         <Reference Include="System" />
         <Reference Include="System.Xml" />
-        <!--<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />-->
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
-        <!--<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />-->
     </ItemGroup>
 
 </Project>
