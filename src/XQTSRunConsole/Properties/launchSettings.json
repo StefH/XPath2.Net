@@ -1,30 +1,16 @@
 {
     "profiles": {
-        "XQTSRunConsole": {
-            "commandName": "Project",
-            "commandLineArgs": "C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\XQTSCatalog.xml C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
-        },
-        "XQTSRunConsole-online": {
-            "commandName": "Project",
-            "commandLineArgs": "https://raw.githubusercontent.com/StefH/XML-Query-Test-Suite-1.0/main/XQTS_1_0_2/XQTSCatalog.xml C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
-        },
-        "XQTSRunConsole-zip": {
-            "commandName": "Project",
-            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\passed.txt C:\\Users\\azurestef\\Downloads\\XQTS_1_0_2\\error.txt"
-        },
-
-        "XQTSRunConsoleSX79R5": {
-            "commandName": "Project",
-            "commandLineArgs": "C:\\XQTS_1_0_2\\XQTSCatalog.xml C:\\XQTS_1_0_2\\passed.txt C:\\XQTS_1_0_2\\error.txt"
-        },
-
-        "XQTSRunConsoleLaptop": {
+        "XQTSRunConsole-local": {
             "commandName": "Project",
             "commandLineArgs": "C:\\dev\\XQTS_1_0_2\\XQTSCatalog.xml C:\\dev\\XQTS_1_0_2\\passed.txt C:\\dev\\XQTS_1_0_2\\error.txt"
         },
-        "XQTSRunConsoleLaptop-zip": {
+        "XQTSRunConsole-online": {
             "commandName": "Project",
-            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true|C:\\tmp C:\\tmp\\passed.txt C:\\tmp\\error.txt"
+            "commandLineArgs": "https://raw.githubusercontent.com/StefH/XML-Query-Test-Suite-1.0/main/XQTS_1_0_2/XQTSCatalog.xml C:\\dev\\XQTS_1_0_2\\passed.txt C:\\dev\\XQTS_1_0_2\\error.txt"
+        },
+        "XQTSRunConsole-online-zip": {
+            "commandName": "Project",
+            "commandLineArgs": "https://github.com/StefH/XML-Query-Test-Suite-1.0/blob/main/XQTS_1_0_2.zip?raw=true|C:\\tmp C:\\dev\\XQTS_1_0_2\\passed.txt C:\\dev\\XQTS_1_0_2\\error.txt"
         }
     }
 }
