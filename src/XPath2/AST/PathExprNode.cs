@@ -134,13 +134,12 @@ namespace Wmhelp.XPath2.AST
 
         public override object Execute(IContextProvider provider, object[] dataPool)
         {
-            IContextProvider localProvider;
-
             bool orderedSet = _isOrderedSet;
             bool special = provider != null &&
                            provider.Context.GetType().Name == "XPathDocumentNavigator";
 
-            if (_evaluateFromRoot && provider != null && provider.Context is XPathNavigator nav && ((XPathNavigator)provider.Context).NodeType != XPathNodeType.Root)
+            IContextProvider localProvider;
+            if (_evaluateFromRoot && provider != null && provider.Context is XPathNavigator nav && nav.NodeType != XPathNodeType.Root)
             {
                 var curr = nav.Clone();
                 curr.MoveToRoot();
