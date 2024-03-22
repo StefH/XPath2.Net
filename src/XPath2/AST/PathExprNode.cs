@@ -138,7 +138,7 @@ namespace Wmhelp.XPath2.AST
             bool special = provider != null &&
                            provider.Context.GetType().Name == "XPathDocumentNavigator";
 
-            IContextProvider localProvider;
+            IContextProvider? localProvider;
             if (_evaluateFromRoot && provider != null && provider.Context is XPathNavigator nav && nav.NodeType != XPathNodeType.Root)
             {
                 var curr = nav.Clone();
