@@ -1,7 +1,7 @@
+using FluentAssertions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using FluentAssertions;
 using Wmhelp.XPath2;
 using Xunit;
 
@@ -449,8 +449,6 @@ public class XPathNavigatorTests
         highVolumeBrandSet.Should().HaveCount(2);
     }
 
-    //var doc = new XmlDocument { InnerXml = "<root>foo</root>" };
-
     private string GetXml() => @"<?xml version=""1.0"" encoding=""utf-8""?>
 <!-- chocolate.xml -->
 <report month=""8"" year=""2006"">
@@ -476,4 +474,43 @@ public class XPathNavigatorTests
         <units>19268</units>
     </brand>
 </report>";
+
+    [Fact]
+    public void Issue7_XPath2Evaluate_FromNonRootContext_WithRelativeNode()
+    {
+        var doc = new XmlDocument { InnerXml = XPathNavigatorTests.GetXmlIssue7() };
+
+        var rootNavigator = doc.CreateNavigator()!;
+
+        var nonRootNavigator = rootNavigator.XPath2SelectSingleNode("/root/level1/level2");
+
+        var fullRelative = nonRootNavigator.XPath2Evaluate("sum((level3/value3.1, level3/value3.2, level3/value3.3)) = 6");
+        var fullAbsolute = nonRootNavigator.XPath2Evaluate("sum((/root/level1/level2/level3/value3.1, /root/level1/level2/level3/value3.2, /root/level1/level2/level3/value3.3)) = 6");
+        var mixRelativeAbsolute = nonRootNavigator.XPath2Evaluate("sum((/root/level1/level2/level3/value3.1, level3/value3.2, //value3.3)) = 6");
+        var result3 = nonRootNavigator.XPath2Evaluate("sum((level3/value3.1, level3/value3.2, level3/value3.3)) = 7");
+
+        fullRelative.Should().Be(true);
+        fullAbsolute.Should().Be(true);
+        mixRelativeAbsolute.Should().Be(true);
+        result3.Should().Be(false);
+    }
+
+    private static string GetXmlIssue7() => @"<?xml version=""1.0"" encoding=""utf-8""?>
+<root>
+    <level1>
+        <value1.1>Value 1.1</value1.1>
+        <value1.2>Value 1.2</value1.2>
+        <value1.3>Value 1.3</value1.3>
+        <level2>
+            <value2.1>Value 2.1</value2.1>
+            <value2.2>Value 2.2</value2.2>
+            <value2.3>Value 2.3</value2.3>
+            <level3>
+                <value3.1>1</value3.1>
+                <value3.2>2</value3.2>
+                <value3.3>3</value3.3>
+            </level3>
+        </level2>
+    </level1>
+</root>";
 }
