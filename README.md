@@ -17,12 +17,12 @@ Project is copied and forked from https://xpath2.codeplex.com/. Original credits
 | &nbsp;&nbsp;**Sonar Coverage** | [![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=coverage)](https://sonarcloud.io/component_measures?id=StefH_XPath2.Net&metric=coverage) |
 | | |
 | ***NuGet*** | &nbsp; |
-| &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
-| &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
+| &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://shields.io/nuget/v/XPath2)](https://www.nuget.org/packages/XPath2) |
+| &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://shields.io/nuget/v/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
 | | |
 | ***MyGet (previews)*** | &nbsp; |
-| &nbsp;&nbsp;**XPath2** | [![MyGet](https://buildstats.info/myget/xpath2/XPath2?includePreReleases=true)](https://www.myget.org/feed/xpath2/package/nuget/XPath2) |
-| &nbsp;&nbsp;**XPath2.Extensions** | [![MyGet](https://buildstats.info/myget/xpath2/XPath2.Extensions?includePreReleases=true)](https://www.myget.org/feed/xpath2/package/nuget/XPath2.Extensions) |
+| &nbsp;&nbsp;**XPath2** | [![MyGet](https://shields.io/myget/xpath2/vpre/XPath2?label=MyGet)](https://www.myget.org/feed/xpath2/package/nuget/XPath2) |
+| &nbsp;&nbsp;**XPath2.Extensions** | [![MyGet](https://shields.io/myget/xpath2/vpre/XPath2.Extensions?label=MyGet)](https://www.myget.org/feed/xpath2/package/nuget/XPath2.Extensions) |
 
 ## Supported frameworks
 - .NET 3.5
