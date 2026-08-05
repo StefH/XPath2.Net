@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Net.Http;
 using System.Xml;
-using Ionic.Zip;
 
 namespace XPath2.TestRunner.FileResolvers;
 
@@ -39,10 +39,7 @@ public class OnlineZipFileResolver : FileResolverBase, IFileResolver
 
         tw.WriteLine("ExtractToDirectory");
         sw.Start();
-        using (var zip = ZipFile.Read(zipFile))
-        {
-            zip.ExtractAll(extractLocation, ExtractExistingFileAction.DoNotOverwrite);
-        }
+        ZipFile.ExtractToDirectory(zipFile, extractLocation);
         sw.Stop();
         tw.WriteLine(sw.Elapsed);
 
