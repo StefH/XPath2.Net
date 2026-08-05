@@ -53,21 +53,18 @@ namespace Wmhelp.XPath2
         {
             if (value == null)
                 return Undefined.Value;
-            XmlNode xmlNode = value as XmlNode;
-            if (xmlNode != null)
+
+            if (value is XmlNode xmlNode)
                 return xmlNode.CreateNavigator();
-            XNode xnode = value as XNode;
-            if (xnode != null)
+            else if (value is XNode xnode)
                 return xnode.CreateNavigator();
-            XPath2NodeIterator iter = value as XPath2NodeIterator;
-            if (iter != null)
+            else if (value is XPath2NodeIterator)
                 return iter;
-            IEnumerable<XNode> en = value as IEnumerable<XNode>;
-            if (en != null)
+            else if (value is IEnumerable<XNode> en)
                 return new NodeIterator(CreateIterator(en));
-            IEnumerable<Object> eno = value as IEnumerable<Object>;
-            if (eno != null)
+            else if (value is IEnumerable<object> eno)
                 return new NodeIterator(CreateIterator(eno));
+
             return value;
         }
 
@@ -112,9 +109,11 @@ namespace Wmhelp.XPath2
                 {
                     XPathNavigator curr = (XPathNavigator)item;
                     XObject o = (XObject)curr.UnderlyingObject;
-                    if (!(o is T))
+
+                    if (o is T t)
+                        yield return t;
+                    else 
                         throw new InvalidOperationException(String.Format("Unexpected evaluation {0}", o.GetType()));
-                    yield return (T)o;
                 }
                 else
                     throw new InvalidOperationException(String.Format("Unexpected evaluation {0}", item.TypedValue.GetType()));
@@ -191,16 +190,17 @@ namespace Wmhelp.XPath2
         public object Evaluate(IContextProvider provider, IDictionary<XmlQualifiedName, object> vars)
         {
             object res = ExpressionTree.Execute(provider, BindExpr(vars));
-            if (res is XPathItem)
+            if (res is XPathItem item) 
             {
-                XPathItem item = (XPathItem)res;
                 if (!item.IsNode)
                     res = item.TypedValue;
             }
+            
             resultType = CoreFuncs.GetXPath2ResultType(res);
-            ValueProxy proxy = res as ValueProxy;
-            if (proxy != null)
+
+            if (res is ValueProxy proxy)
                 return proxy.Value;
+            
             return res;
         }
 
@@ -211,7 +211,8 @@ namespace Wmhelp.XPath2
             {
                 Type type = props.GetType();
                 if (type.IsArray)
-                    throw new ArgumentException("props");
+                    throw new ArgumentException(nameof(props));
+                
                 PropertyInfo[] propsInfo = type.GetProperties();
                 vars = new Dictionary<XmlQualifiedName, object>(propsInfo.Length);
                 for (int k = 0; k < propsInfo.Length; k++)
@@ -232,4 +233,5 @@ namespace Wmhelp.XPath2
             return resultType.Value;
         }
     }
+
 }
